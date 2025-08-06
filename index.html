@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BlamerX - Data Science & ML Portfolio</title>
+    <!-- Favicon -->
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>👋</text></svg>">
+    <!-- Fonts and Icons -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <!-- AOS Animation -->
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body>
+    <!-- Loader -->
+    <div class="loader" id="loader">
+        <div class="loader-content">
+            <div class="loader-spinner"></div>
+            <p>Loading Portfolio...</p>
+        </div>
+    </div>
+
+    <!-- Background Effects -->
+    <div id="particles-js"></div>
+    <canvas id="confetti-canvas"></canvas>
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <a href="#home" class="logo heading-font text-glow">BlamerX</a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home" class="text-glow">Home</a></li>
+                <li><a href="#about" class="text-glow">About</a></li>
+                <li><a href="#skills" class="text-glow">Skills</a></li>
+                <li><a href="#projects" class="text-glow">Projects</a></li>
+                <li><a href="#contact" class="text-glow">Contact</a></li>
+            </ul>
+            <div class="menu-toggle" id="menuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content Container -->
+    <main id="mainContent">
+        <!-- Sections will be loaded dynamically here -->
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-social">
+                <a href="https://www.linkedin.com/in/adarshkumar13/" target="_blank">
+                    <i class="fab fa-linkedin rotate-icon"></i>
+                </a>
+                <a href="https://www.kaggle.com/blamerx" target="_blank">
+                    <i class="fab fa-kaggle rotate-icon"></i>
+                </a>
+                <a href="https://github.com/BlamerX" target="_blank">
+                    <i class="fab fa-github rotate-icon"></i>
+                </a>
+                <a href="mailto:adarshkumar1301@gmail.com">
+                    <i class="fas fa-envelope rotate-icon"></i>
+                </a>
+            </div>
+            <p class="footer-text">© 2023 BlamerX. Built with passion for data science and machine learning.</p>
+        </div>
+    </footer>
+
+    <!-- Back to Top -->
+    <div class="back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <!-- External Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+
+    <!-- Section Scripts -->
+    <script src="js/sections/hero.js"></script>
+    <script src="js/sections/about.js"></script>
+    <script src="js/sections/skills.js"></script>
+    <script src="js/sections/projects.js"></script>
+    <script src="js/sections/contact.js"></script>
+
+    <!-- Main Script -->
+    <script src="js/script.js"></script>
+</body>
+
+</html>
