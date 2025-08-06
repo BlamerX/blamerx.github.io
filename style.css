@@ -242,6 +242,7 @@ nav.scrolled {
   min-height: 1.2em;
 }
 
+/* Removed cursor blinking animation */
 .hero-subtitle {
   font-size: 1.25rem;
   color: var(--text-secondary);
@@ -322,7 +323,7 @@ nav.scrolled {
   align-items: center;
 }
 
-/* ML Model Animation */
+/* ML Model Animation - Enhanced Design */
 .ml-model {
   position: relative;
   width: 100%;
@@ -346,12 +347,15 @@ nav.scrolled {
   100% {
     transform: translateY(0) rotateY(0deg);
   }
+
   25% {
     transform: translateY(-10px) rotateY(5deg);
   }
+
   50% {
     transform: translateY(0) rotateY(0deg);
   }
+
   75% {
     transform: translateY(-10px) rotateY(-5deg);
   }
@@ -378,6 +382,7 @@ nav.scrolled {
   0% {
     transform: scale(1);
   }
+
   100% {
     transform: scale(1.1);
     box-shadow: 0 0 20px var(--primary-color);
@@ -394,6 +399,7 @@ nav.scrolled {
   0% {
     transform: scale(1);
   }
+
   100% {
     transform: scale(1.1);
     box-shadow: 0 0 20px var(--secondary-color);
@@ -410,6 +416,7 @@ nav.scrolled {
   0% {
     transform: scale(1);
   }
+
   100% {
     transform: scale(1.1);
     box-shadow: 0 0 20px var(--accent-color);
@@ -489,7 +496,7 @@ section {
   margin: 24px auto 0;
 }
 
-/* About Section */
+/* About Section - Enhanced Design */
 .about-container {
   display: flex;
   flex-direction: column;
@@ -523,6 +530,7 @@ section {
   0% {
     background-position: 0% 50%;
   }
+
   100% {
     background-position: 100% 50%;
   }
@@ -736,7 +744,7 @@ section {
   transform: translateX(5px);
 }
 
-/* Skills Section */
+/* Skills Section - Enhanced Visual */
 .skills-container {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -856,90 +864,119 @@ section {
 .skill-icon.python {
   color: #3776ab;
 }
+
 .skill-icon.sql {
   color: #f29111;
 }
+
 .skill-icon.js {
   color: #f0db4f;
 }
+
 .skill-icon.html {
   color: #e44d26;
 }
+
 .skill-icon.r {
   color: #276dc3;
 }
+
 .skill-icon.bash {
   color: #4eaa25;
 }
+
 .skill-icon.tensorflow {
   color: #ff6f00;
 }
+
 .skill-icon.pytorch {
   color: #ee4c2c;
 }
+
 .skill-icon.scikit {
   color: #f7931e;
 }
+
 .skill-icon.opencv {
   color: #5c3ee8;
 }
+
 .skill-icon.nltk {
   color: #3cb371;
 }
+
 .skill-icon.bert {
   color: #ffa500;
 }
+
 .skill-icon.pandas {
   color: #150458;
 }
+
 .skill-icon.numpy {
   color: #4d77cf;
 }
+
 .skill-icon.spark {
   color: #e25a1c;
 }
+
 .skill-icon.mysql {
   color: #4479a1;
 }
+
 .skill-icon.mongodb {
   color: #4db33d;
 }
+
 .skill-icon.redis {
   color: #d82c20;
 }
+
 .skill-icon.flask {
   color: #000000;
 }
+
 .skill-icon.django {
   color: #092e20;
 }
+
 .skill-icon.streamlit {
   color: #ff4b4b;
 }
+
 .skill-icon.fastapi {
   color: #009688;
 }
+
 .skill-icon.docker {
   color: #2496ed;
 }
+
 .skill-icon.aws {
   color: #ff9900;
 }
+
 .skill-icon.matplotlib {
   color: #11557c;
 }
+
 .skill-icon.seaborn {
   color: #4dbbd5;
 }
+
 .skill-icon.plotly {
   color: #3f4f75;
 }
+
 .skill-icon.tableau {
   color: #e9762b;
 }
+
 .skill-icon.powerbi {
   color: #f2c811;
 }
+
 .skill-icon.d3 {
   color: #f9a03c;
 }
@@ -1021,6 +1058,7 @@ section {
   0% {
     transform: rotate(45deg) translateX(-25%);
   }
+
   100% {
     transform: rotate(45deg) translateX(25%);
   }
@@ -1130,7 +1168,7 @@ section {
   transform: translateY(-2px);
 }
 
-/* Contact Section */
+/* Contact Section - Enhanced */
 .contact-container {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -1555,9 +1593,11 @@ footer {
   0% {
     transform: scale(1);
   }
+
   50% {
     transform: scale(1.05);
   }
+
   100% {
     transform: scale(1);
   }
