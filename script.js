@@ -1,193 +1,258 @@
-// Initialize AOS
-AOS.init({
-  duration: 800,
-  once: true,
-  offset: 100,
+/* -------------------
+	Home Section Autotyper
+------------------- */
+
+const typed = new Typed('.autotype', {
+    strings: ['ML Engineer', 'AI Enthusiast', 'Data Scientist'],
+    typeSpeed: 100,
+    backSpeed: 50,
+    loop: true
 });
-// Hide loader when page is loaded
-window.addEventListener("load", () => {
-  setTimeout(() => {
-    document.getElementById("loader").classList.add("hidden");
-  }, 500);
-  // Initialize animations for elements when they enter viewport
-  initScrollAnimations();
-});
-// Mobile menu toggle
-const menuToggle = document.getElementById("menuToggle");
-const navLinks = document.getElementById("navLinks");
-menuToggle.addEventListener("click", () => {
-  navLinks.classList.toggle("active");
-});
-// Close mobile menu when clicking on a link
-document.querySelectorAll(".nav-links a").forEach((link) => {
-  link.addEventListener("click", () => {
-    navLinks.classList.remove("active");
-  });
-});
-// Navbar scroll effect
-const navbar = document.getElementById("navbar");
-window.addEventListener("scroll", () => {
-  if (window.scrollY > 50) {
-    navbar.classList.add("scrolled");
-  } else {
-    navbar.classList.remove("scrolled");
-  }
-});
-// Smooth scrolling for navigation links
-document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
-  anchor.addEventListener("click", function (e) {
-    e.preventDefault();
-    const target = document.querySelector(this.getAttribute("href"));
-    if (target) {
-      window.scrollTo({
-        top: target.offsetTop - 70,
-        behavior: "smooth",
-      });
+
+/* -------------------
+	Skills
+------------------- */
+
+const skills = {
+    'Programming Languages': {
+        'Python': 'fab fa-python',
+        'C': 'fab fa-cuttlefish',
+        'C++': 'fab fa-cuttlefish',
+        'SQL': 'fas fa-database',
+        'HTML/CSS': 'fab fa-html5'
+    },
+    'Machine Learning & AI': {
+        'TensorFlow': 'fas fa-robot',
+        'Keras': 'fas fa-layer-group',
+        'Scikit-learn': 'fas fa-cogs',
+        'OpenCV': 'fas fa-camera'
+    },
+    'Data Engineering & Development': {
+        'MySQL': 'fas fa-database',
+        'Google Colab': 'fab fa-google',
+        'Kaggle': 'fab fa-kaggle',
+        'Git': 'fab fa-git-alt',
+        'VS Code': 'fas fa-code'
+    },
+    'Web Development': {
+        'Flask': 'fas fa-flask',
+        'Streamlit': 'fas fa-stream'
+    },
+    'Data Visualization': {
+        'Plotly': 'fas fa-chart-line',
+        'Seaborn': 'fas fa-chart-bar',
+        'Matplotlib': 'fas fa-chart-pie'
     }
-  });
-});
-// Scroll progress bar
-const scrollProgress = document.getElementById("scrollProgress");
-window.addEventListener("scroll", () => {
-  const scrollHeight =
-    document.documentElement.scrollHeight - window.innerHeight;
-  const scrollPosition = window.scrollY;
-  const scrollPercentage = (scrollPosition / scrollHeight) * 100;
-  scrollProgress.style.width = `${scrollPercentage}%`;
-});
-// Back to top button
-const backToTop = document.getElementById("backToTop");
-window.addEventListener("scroll", () => {
-  if (window.scrollY > 500) {
-    backToTop.classList.add("visible");
-  } else {
-    backToTop.classList.remove("visible");
-  }
-});
-backToTop.addEventListener("click", () => {
-  window.scrollTo({
-    top: 0,
-    behavior: "smooth",
-  });
-});
-// Typing effect for hero title (removed cursor)
-const typed = new Typed(".typed-text", {
-  strings: ["Machine Learning^1000", "Deep Learning^1000", "AI Systems^1000"],
-  typeSpeed: 80,
-  backSpeed: 40,
-  loop: true,
-  showCursor: false,
-});
-// ML Animation removed as requested
-// Contact form removed as requested
-// Initialize particles.js
-particlesJS("particles-js", {
-  particles: {
-    number: { value: 80, density: { enable: true, value_area: 800 } },
-    color: { value: "#6366f1" },
-    shape: { type: "circle" },
-    opacity: { value: 0.5, random: true },
-    size: { value: 3, random: true },
-    line_linked: {
-      enable: true,
-      distance: 150,
-      color: "#6366f1",
-      opacity: 0.1,
-      width: 1,
-    },
-    move: {
-      enable: true,
-      speed: 1,
-      direction: "none",
-      random: true,
-      straight: false,
-      out_mode: "out",
-      bounce: false,
-    },
-  },
-  interactivity: {
-    detect_on: "canvas",
-    events: {
-      onhover: { enable: true, mode: "repulse" },
-      onclick: { enable: true, mode: "push" },
-      resize: true,
-    },
-  },
-});
-// Initialize animations for elements when they enter viewport
-function initScrollAnimations() {
-  const aboutCards = document.querySelectorAll(".about-card");
-  const skillCategories = document.querySelectorAll(".skill-category");
-  const projectCards = document.querySelectorAll(".project-card");
-  // Intersection Observer for animations
-  const observerOptions = {
-    root: null,
-    rootMargin: "0px",
-    threshold: 0.2,
-  };
-  const observer = new IntersectionObserver((entries, observer) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        if (entry.target.classList.contains("about-card")) {
-          entry.target.classList.add("animated");
-        } else if (entry.target.classList.contains("skill-category")) {
-          entry.target.classList.add("animated");
-        } else if (entry.target.classList.contains("project-card")) {
-          entry.target.classList.add("animated");
-        }
-        observer.unobserve(entry.target);
-      }
-    });
-  }, observerOptions);
-  aboutCards.forEach((card) => observer.observe(card));
-  skillCategories.forEach((category) => observer.observe(category));
-  projectCards.forEach((card) => observer.observe(card));
+};
+
+const skillsGrid = document.querySelector('.skills-grid');
+
+for (const category in skills) {
+    for (const skill in skills[category]) {
+        const skillCard = document.createElement('div');
+        skillCard.classList.add('skill-card');
+
+        const icon = document.createElement('i');
+        icon.className = skills[category][skill];
+        skillCard.appendChild(icon);
+
+        const title = document.createElement('h3');
+        title.textContent = skill;
+        skillCard.appendChild(title);
+
+        skillsGrid.appendChild(skillCard);
+    }
 }
-// Confetti effect
-function showConfetti() {
-  const canvas = document.getElementById("confetti-canvas");
-  const ctx = canvas.getContext("2d");
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-  const confetti = [];
-  const confettiCount = 150;
-  const gravity = 0.5;
-  const colors = ["#6366f1", "#8b5cf6", "#ec4899", "#f8fafc"];
-  for (let i = 0; i < confettiCount; i++) {
-    confetti.push({
-      x: Math.random() * canvas.width,
-      y: -20,
-      width: Math.random() * 10 + 5,
-      height: Math.random() * 10 + 5,
-      speed: Math.random() * 3 + 2,
-      rotation: Math.random() * 360,
-      rotationSpeed: Math.random() * 5,
-      color: colors[Math.floor(Math.random() * colors.length)],
-    });
-  }
-  function drawConfetti() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    for (let i = 0; i < confetti.length; i++) {
-      const c = confetti[i];
-      ctx.save();
-      ctx.translate(c.x + c.width / 2, c.y + c.height / 2);
-      ctx.rotate((c.rotation * Math.PI) / 180);
-      ctx.fillStyle = c.color;
-      ctx.fillRect(-c.width / 2, -c.height / 2, c.width, c.height);
-      ctx.restore();
-      c.y += c.speed;
-      c.speed += gravity;
-      c.rotation += c.rotationSpeed;
-      if (c.y > canvas.height) {
-        confetti.splice(i, 1);
-        i--;
-      }
+
+/* -------------------
+	Projects
+------------------- */
+
+const projects = [
+    {
+        title: 'Portrait Generation Using GANs',
+        description: 'Developed Generative Adversarial Networks to create realistic portrait images from noise. Implemented DCGAN architecture with impressive results.',
+        image: 'https://images.pexels.com/photos/1804075/pexels-photo-1804075.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
+        skills: ['Python', 'TensorFlow', 'Deep Learning', 'Computer Vision'],
+        github: 'https://github.com/BlamerX/Portrait-Generation-Using-GANs',
+        kaggle: 'https://www.kaggle.com/code/blamerx/beyond-the-canvas',
+        demo: '#'
+    },
+    {
+        title: 'AQI Prediction System',
+        description: 'Built a real-time Air Quality Index prediction system deployed as a web application. Used historical weather and pollution data with machine learning models.',
+        image: 'https://images.pexels.com/photos/158161/smog-city-air-pollution-158161.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
+        skills: ['Python', 'Flask', 'Streamlit', 'Environment'],
+        github: 'https://github.com/BlamerX/Air-Quality-Index-Prediction-Website',
+        kaggle: 'https://www.kaggle.com/code/blamerx/india-air-quality-index-eda-prediction',
+        demo: '#'
+    },
+    {
+        title: 'Stock Price Forecasting',
+        description: 'Created an LSTM-based model to predict stock prices using historical data. Integrated with real-time data feeds and deployed as a web application for live predictions.',
+        image: 'https://images.pexels.com/photos/7567529/pexels-photo-7567529.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
+        skills: ['Python', 'TensorFlow', 'Time Series', 'Finance'],
+        github: 'https://github.com/BlamerX/Stock-Price-Prediction-WebSite',
+        kaggle: '#',
+        demo: 'https://stock-price-prediction-yr17.onrender.com/'
+    },
+    {
+        title: 'Deep Learning Projects',
+        description: 'Collection of various deep learning projects including CNNs, RNNs, and other neural network architectures.',
+        image: 'https://images.pexels.com/photos/574071/pexels-photo-574071.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
+        skills: ['Python', 'TensorFlow', 'Keras', 'Deep Learning'],
+        github: 'https://github.com/BlamerX/Deep-Learning-Projects',
+        kaggle: 'https://www.kaggle.com/code/blamerx/sign-language-eda-100-acc',
+        demo: '#'
+    },
+    {
+        title: 'Skin Cancer Detection',
+        description: 'Developed a deep learning model using DenseNet121 for skin cancer classification with data augmentation techniques to improve model accuracy.',
+        image: 'https://images.pexels.com/photos/4021775/pexels-photo-4021775.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
+        skills: ['Python', 'TensorFlow', 'DenseNet121', 'Healthcare'],
+        github: 'https://github.com/BlamerX/Deep-Learning-Projects',
+        kaggle: 'https://www.kaggle.com/code/blamerx/skin-cancer-classification-densenet121-and-aug',
+        demo: '#'
+    },
+    {
+        title: 'Celebal Summer Internship',
+        description: 'Projects completed during my Data Science internship at Celebal Technologies, including data analysis and machine learning models.',
+        image: 'https://images.pexels.com/photos/3861969/pexels-photo-3861969.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
+        skills: ['Python', 'Pandas', 'Numpy', 'Data Science'],
+        github: 'https://github.com/BlamerX/Celebal-Summer-Internship-2023',
+        kaggle: '#',
+        demo: '#'
     }
-    if (confetti.length > 0) {
-      requestAnimationFrame(drawConfetti);
+];
+
+const projectsSwiperWrapper = document.querySelector('.projects-swiper .swiper-wrapper');
+
+projects.forEach(project => {
+    const slide = document.createElement('div');
+    slide.classList.add('swiper-slide');
+
+    let skillsHTML = '';
+    project.skills.forEach(skill => {
+        skillsHTML += `<span>${skill}</span>`;
+    });
+
+    slide.innerHTML = `
+        <img src="${project.image}" alt="${project.title}">
+        <div class="project-content">
+            <h3>${project.title}</h3>
+            <div class="project-skills">${skillsHTML}</div>
+            <p>${project.description}</p>
+            <div class="project-links">
+                <a href="${project.github}" target="_blank" class="github">GitHub</a>
+                <a href="${project.kaggle}" target="_blank" class="kaggle">Kaggle</a>
+                <a href="${project.demo}" target="_blank" class="demo">Demo</a>
+            </div>
+        </div>
+    `;
+
+    projectsSwiperWrapper.appendChild(slide);
+});
+
+const projectsSwiper = new Swiper('.projects-swiper', {
+    effect: 'coverflow',
+    grabCursor: true,
+    centeredSlides: true,
+    slidesPerView: 'auto',
+    coverflowEffect: {
+        rotate: 50,
+        stretch: 0,
+        depth: 100,
+        modifier: 1,
+        slideShadows: true,
+    },
+});
+
+/* -------------------
+	Animations
+------------------- */
+
+gsap.registerPlugin(ScrollTrigger);
+
+// Header animation
+gsap.to('nav', { y: 0, duration: 1, ease: 'power3.out', delay: 0.5 });
+
+// Header scroll effect
+window.addEventListener('scroll', () => {
+    const nav = document.querySelector('nav');
+    if (window.scrollY > 50) {
+        nav.classList.add('scrolled');
     } else {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+        nav.classList.remove('scrolled');
     }
-  }
-  drawConfetti();
+});
+
+// Home section animation
+gsap.to('#home h1', { opacity: 1, duration: 1, ease: 'power3.out', delay: 1 });
+
+// About section animation
+gsap.to('.about-image', {
+    opacity: 1,
+    duration: 1,
+    ease: 'power3.out',
+    scrollTrigger: {
+        trigger: '.about-image',
+        start: 'top 80%',
+    }
+});
+
+gsap.to('.about-text', {
+    opacity: 1,
+    duration: 1,
+    ease: 'power3.out',
+    scrollTrigger: {
+        trigger: '.about-text',
+        start: 'top 80%',
+    }
+});
+
+gsap.to('.about-card', {
+    opacity: 1,
+    duration: 0.8,
+    stagger: 0.2,
+    ease: 'power3.out',
+    scrollTrigger: {
+        trigger: '.about-cards',
+        start: 'top 80%',
+    }
+});
+
+// Skills section animation
+gsap.to('.skill-card', {
+    opacity: 1,
+    duration: 0.8,
+    stagger: 0.1,
+    ease: 'power3.out',
+    scrollTrigger: {
+        trigger: '.skills-grid',
+        start: 'top 80%',
+    }
+});
+
+// Projects section animation
+gsap.to('.projects-swiper', {
+    opacity: 1,
+    duration: 1,
+    ease: 'power3.out',
+    scrollTrigger: {
+        trigger: '.projects-swiper',
+        start: 'top 80%',
+    }
+});
+
+/* -------------------
+	Smooth Scrolling
+------------------- */
+
+const lenis = new Lenis();
+
+function raf(time) {
+    lenis.raf(time);
+    requestAnimationFrame(raf);
 }
+
+requestAnimationFrame(raf);
