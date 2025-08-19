@@ -1,4 +1,3 @@
-<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,26 +5,47 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>BlamerX - Data Science & ML Portfolio</title>
-
     <!-- Favicon -->
     <link rel="icon"
         href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>👋</text></svg>">
-
     <!-- Fonts and Icons -->
     <link
         href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-
     <!-- AOS Animation -->
     <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
-
     <!-- Custom CSS -->
     <link rel="stylesheet" href="style.css" />
+    <style>
+        /* Additional styles for skill icons */
+        .skill-icon.c {
+            color: #5c6bc0;
+        }
+
+        .skill-icon.cpp {
+            color: #00599c;
+        }
+
+        .skill-icon.colab {
+            color: #f9ab00;
+        }
+
+        .skill-icon.vscode {
+            color: #0078d7;
+        }
+
+        .skill-icon.kaggle {
+            color: #20beff;
+        }
+
+        .skill-icon.git {
+            color: #f05032;
+        }
+    </style>
 </head>
 
 <body>
-
     <!-- Loader -->
     <div class="loader" id="loader">
         <div class="loader-content">
@@ -33,12 +53,10 @@
             <p>Loading Portfolio...</p>
         </div>
     </div>
-
     <!-- Background Effects -->
     <div id="particles-js"></div>
     <canvas id="confetti-canvas"></canvas>
     <div class="scroll-progress" id="scrollProgress"></div>
-
     <!-- Navigation -->
     <nav id="navbar">
         <div class="nav-container">
@@ -48,7 +66,6 @@
                 <li><a href="#about" class="text-glow">About</a></li>
                 <li><a href="#skills" class="text-glow">Skills</a></li>
                 <li><a href="#projects" class="text-glow">Projects</a></li>
-                <li><a href="#contact" class="text-glow">Contact</a></li>
             </ul>
             <div class="menu-toggle" id="menuToggle">
                 <span></span>
@@ -69,16 +86,10 @@
                         <i class="fas fa-briefcase"></i>
                         View Projects
                     </a>
-                    <a href="#contact" class="btn btn-secondary">
-                        <i class="fas fa-envelope"></i>
-                        Get In Touch
-                    </a>
                 </div>
             </div>
             <div class="hero-visual" data-aos="fade-left">
-                <div class="ml-model" id="mlModel">
-                    <div class="model-container"></div>
-                </div>
+                <!-- ML Animation removed as requested -->
             </div>
         </div>
     </section>
@@ -95,28 +106,14 @@
                 </div>
                 <div class="about-text">
                     <h2>Adarsh Kumar</h2>
-                    <p>I'm a passionate Data Scientist and Machine Learning Engineer with expertise in building
-                        intelligent solutions that transform data into actionable insights. With a strong background in
-                        computer science and specialized knowledge in AI and ML, I enjoy tackling complex problems and
-                        creating innovative solutions.</p>
+                    <p>I'm a passionate Data Scientist and Machine Learning enthusiast with expertise in building
+                        intelligent solutions that transform data into actionable insights. With a background in
+                        Data Science, Data Analytics, and Machine Learning, I've been actively contributing to the field
+                        since 2021 with 13 public repositories showcasing my work.</p>
                     <p>My journey in data science began during my studies at KIIT, where I developed a keen interest in
-                        machine learning and its applications. Since then, I've worked on various projects spanning from
+                        machine learning and its applications. I've worked on various projects spanning from
                         computer vision to natural language processing, always striving to push the boundaries of what's
                         possible with AI.</p>
-                </div>
-            </div>
-            <div class="about-stats">
-                <div class="stat-item card-hover">
-                    <div class="stat-number">15+</div>
-                    <div class="stat-label">Projects Completed</div>
-                </div>
-                <div class="stat-item card-hover">
-                    <div class="stat-number">2</div>
-                    <div class="stat-label">Years Experience</div>
-                </div>
-                <div class="stat-item card-hover">
-                    <div class="stat-number">5+</div>
-                    <div class="stat-label">Certifications</div>
                 </div>
             </div>
             <div class="about-cards">
@@ -125,13 +122,12 @@
                         <i class="fas fa-briefcase rotate-icon"></i>
                     </div>
                     <h3>Experience</h3>
-                    <p>Professional experience in data science and machine learning with a focus on delivering impactful
-                        solutions.</p>
+                    <p>Academic and project-based experience in data science and machine learning.</p>
                     <ul>
                         <li>Data Science Intern at Celebal Technologies</li>
-                        <li>ML Researcher at KIIT Research Lab</li>
-                        <li>Developed AQI prediction system</li>
-                        <li>Created data pipelines for processing</li>
+                        <li>Data Analytics Consulting Virtual Internship at KPMG</li>
+                        <li>Academic projects in ML and Data Science</li>
+                        <li>Kaggle Notebook Expert</li>
                     </ul>
                 </div>
                 <div class="about-card card-hover">
@@ -158,8 +154,9 @@
                         <li>GANs for Image Generation</li>
                         <li>Skin Cancer Detection System</li>
                         <li>Stock Price Forecasting</li>
-                        <li>Resume Screening System</li>
-                        <li>Customer Support Chatbot</li>
+                        <li>AQI Prediction System</li>
+                        <li>Deep Learning Projects</li>
+                        <li>Machine Learning Basics</li>
                     </ul>
                 </div>
             </div>
@@ -181,36 +178,29 @@
                         </div>
                         <div class="skill-name">Python</div>
                     </a>
+                    <a href="https://en.wikipedia.org/wiki/C_(programming_language)" target="_blank" class="skill-item">
+                        <div class="skill-icon c">
+                            <i class="fas fa-c"></i>
+                        </div>
+                        <div class="skill-name">C</div>
+                    </a>
+                    <a href="https://en.wikipedia.org/wiki/C%2B%2B" target="_blank" class="skill-item">
+                        <div class="skill-icon cpp">
+                            <i class="fas fa-copyright"></i>
+                        </div>
+                        <div class="skill-name">C++</div>
+                    </a>
                     <a href="https://www.mysql.com/" target="_blank" class="skill-item">
                         <div class="skill-icon sql">
                             <i class="fas fa-database"></i>
                         </div>
                         <div class="skill-name">SQL</div>
                     </a>
-                    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank"
-                        class="skill-item">
-                        <div class="skill-icon js">
-                            <i class="fab fa-js"></i>
-                        </div>
-                        <div class="skill-name">JavaScript</div>
-                    </a>
                     <a href="https://developer.mozilla.org/en-US/docs/Web/HTML" target="_blank" class="skill-item">
                         <div class="skill-icon html">
                             <i class="fab fa-html5"></i>
                         </div>
                         <div class="skill-name">HTML/CSS</div>
-                    </a>
-                    <a href="https://www.r-project.org/" target="_blank" class="skill-item">
-                        <div class="skill-icon r">
-                            <i class="fas fa-chart-line"></i>
-                        </div>
-                        <div class="skill-name">R</div>
-                    </a>
-                    <a href="https://www.gnu.org/software/bash/" target="_blank" class="skill-item">
-                        <div class="skill-icon bash">
-                            <i class="fas fa-terminal"></i>
-                        </div>
-                        <div class="skill-name">Bash</div>
                     </a>
                 </div>
             </div>
@@ -223,11 +213,11 @@
                         </div>
                         <div class="skill-name">TensorFlow</div>
                     </a>
-                    <a href="https://pytorch.org/" target="_blank" class="skill-item">
-                        <div class="skill-icon pytorch">
-                            <i class="fas fa-fire"></i>
+                    <a href="https://keras.io/" target="_blank" class="skill-item">
+                        <div class="skill-icon keras">
+                            <i class="fas fa-layer-group"></i>
                         </div>
-                        <div class="skill-name">PyTorch</div>
+                        <div class="skill-name">Keras</div>
                     </a>
                     <a href="https://scikit-learn.org/" target="_blank" class="skill-item">
                         <div class="skill-icon scikit">
@@ -241,58 +231,40 @@
                         </div>
                         <div class="skill-name">OpenCV</div>
                     </a>
-                    <a href="https://www.nltk.org/" target="_blank" class="skill-item">
-                        <div class="skill-icon nltk">
-                            <i class="fas fa-comments"></i>
-                        </div>
-                        <div class="skill-name">NLTK</div>
-                    </a>
-                    <a href="https://github.com/google-research/bert" target="_blank" class="skill-item">
-                        <div class="skill-icon bert">
-                            <i class="fas fa-brain"></i>
-                        </div>
-                        <div class="skill-name">BERT</div>
-                    </a>
                 </div>
             </div>
             <div class="skill-category card-hover" data-aos="fade-up" data-aos-delay="200">
-                <h3><i class="fas fa-database rotate-icon"></i> Data Engineering</h3>
+                <h3><i class="fas fa-database rotate-icon"></i> Data Engineering & Development</h3>
                 <div class="skill-grid">
-                    <a href="https://pandas.pydata.org/" target="_blank" class="skill-item">
-                        <div class="skill-icon pandas">
-                            <i class="fas fa-table"></i>
-                        </div>
-                        <div class="skill-name">Pandas</div>
-                    </a>
-                    <a href="https://numpy.org/" target="_blank" class="skill-item">
-                        <div class="skill-icon numpy">
-                            <i class="fas fa-calculator"></i>
-                        </div>
-                        <div class="skill-name">NumPy</div>
-                    </a>
-                    <a href="https://spark.apache.org/" target="_blank" class="skill-item">
-                        <div class="skill-icon spark">
-                            <i class="fas fa-bolt"></i>
-                        </div>
-                        <div class="skill-name">Apache Spark</div>
-                    </a>
                     <a href="https://www.mysql.com/" target="_blank" class="skill-item">
                         <div class="skill-icon mysql">
                             <i class="fas fa-database"></i>
                         </div>
                         <div class="skill-name">MySQL</div>
                     </a>
-                    <a href="https://www.mongodb.com/" target="_blank" class="skill-item">
-                        <div class="skill-icon mongodb">
-                            <i class="fas fa-leaf"></i>
+                    <a href="https://colab.research.google.com/" target="_blank" class="skill-item">
+                        <div class="skill-icon colab">
+                            <i class="fas fa-code"></i>
                         </div>
-                        <div class="skill-name">MongoDB</div>
+                        <div class="skill-name">Google Colab</div>
                     </a>
-                    <a href="https://redis.io/" target="_blank" class="skill-item">
-                        <div class="skill-icon redis">
-                            <i class="fas fa-memory"></i>
+                    <a href="https://www.kaggle.com/" target="_blank" class="skill-item">
+                        <div class="skill-icon kaggle">
+                            <i class="fab fa-kaggle"></i>
                         </div>
-                        <div class="skill-name">Redis</div>
+                        <div class="skill-name">Kaggle</div>
+                    </a>
+                    <a href="https://git-scm.com/" target="_blank" class="skill-item">
+                        <div class="skill-icon git">
+                            <i class="fab fa-git-alt"></i>
+                        </div>
+                        <div class="skill-name">Git</div>
+                    </a>
+                    <a href="https://code.visualstudio.com/" target="_blank" class="skill-item">
+                        <div class="skill-icon vscode">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <div class="skill-name">VS Code</div>
                     </a>
                 </div>
             </div>
@@ -305,46 +277,22 @@
                         </div>
                         <div class="skill-name">Flask</div>
                     </a>
-                    <a href="https://www.djangoproject.com/" target="_blank" class="skill-item">
-                        <div class="skill-icon django">
-                            <i class="fas fa-dharmachakra"></i>
-                        </div>
-                        <div class="skill-name">Django</div>
-                    </a>
                     <a href="https://streamlit.io/" target="_blank" class="skill-item">
                         <div class="skill-icon streamlit">
                             <i class="fas fa-stream"></i>
                         </div>
                         <div class="skill-name">Streamlit</div>
                     </a>
-                    <a href="https://fastapi.tiangolo.com/" target="_blank" class="skill-item">
-                        <div class="skill-icon fastapi">
-                            <i class="fas fa-tachometer-alt"></i>
-                        </div>
-                        <div class="skill-name">FastAPI</div>
-                    </a>
-                    <a href="https://www.docker.com/" target="_blank" class="skill-item">
-                        <div class="skill-icon docker">
-                            <i class="fab fa-docker"></i>
-                        </div>
-                        <div class="skill-name">Docker</div>
-                    </a>
-                    <a href="https://aws.amazon.com/" target="_blank" class="skill-item">
-                        <div class="skill-icon aws">
-                            <i class="fab fa-aws"></i>
-                        </div>
-                        <div class="skill-name">AWS</div>
-                    </a>
                 </div>
             </div>
             <div class="skill-category card-hover" data-aos="fade-up" data-aos-delay="400">
                 <h3><i class="fas fa-chart-pie rotate-icon"></i> Data Visualization</h3>
                 <div class="skill-grid">
-                    <a href="https://matplotlib.org/" target="_blank" class="skill-item">
-                        <div class="skill-icon matplotlib">
-                            <i class="fas fa-chart-bar"></i>
+                    <a href="https://plotly.com/" target="_blank" class="skill-item">
+                        <div class="skill-icon plotly">
+                            <i class="fas fa-chart-line"></i>
                         </div>
-                        <div class="skill-name">Matplotlib</div>
+                        <div class="skill-name">Plotly</div>
                     </a>
                     <a href="https://seaborn.pydata.org/" target="_blank" class="skill-item">
                         <div class="skill-icon seaborn">
@@ -352,29 +300,11 @@
                         </div>
                         <div class="skill-name">Seaborn</div>
                     </a>
-                    <a href="https://plotly.com/" target="_blank" class="skill-item">
-                        <div class="skill-icon plotly">
-                            <i class="fas fa-chart-line"></i>
+                    <a href="https://matplotlib.org/" target="_blank" class="skill-item">
+                        <div class="skill-icon matplotlib">
+                            <i class="fas fa-chart-bar"></i>
                         </div>
-                        <div class="skill-name">Plotly</div>
-                    </a>
-                    <a href="https://www.tableau.com/" target="_blank" class="skill-item">
-                        <div class="skill-icon tableau">
-                            <i class="fas fa-chart-pie"></i>
-                        </div>
-                        <div class="skill-name">Tableau</div>
-                    </a>
-                    <a href="https://powerbi.microsoft.com/" target="_blank" class="skill-item">
-                        <div class="skill-icon powerbi">
-                            <i class="fas fa-chart-area"></i>
-                        </div>
-                        <div class="skill-name">Power BI</div>
-                    </a>
-                    <a href="https://d3js.org/" target="_blank" class="skill-item">
-                        <div class="skill-icon d3">
-                            <i class="fas fa-project-diagram"></i>
-                        </div>
-                        <div class="skill-name">D3.js</div>
+                        <div class="skill-name">Matplotlib</div>
                     </a>
                 </div>
             </div>
@@ -389,12 +319,13 @@
         <div class="projects-grid">
             <div class="project-card card-hover" data-aos="fade-up">
                 <div class="project-image">
-                    <i class="fas fa-brain"></i>
+                    <i class="fas fa-portrait"></i>
                 </div>
                 <div class="project-content">
-                    <h3 class="project-title">GANs for Image Generation</h3>
-                    <p class="project-description">Developed Generative Adversarial Networks to create realistic images
-                        from noise. Implemented DCGAN and StyleGAN architectures with impressive results.</p>
+                    <h3 class="project-title">Portrait Generation Using GANs</h3>
+                    <p class="project-description">Developed Generative Adversarial Networks to create realistic
+                        portrait images
+                        from noise. Implemented DCGAN architecture with impressive results.</p>
                     <div class="project-tags">
                         <span class="project-tag">Python</span>
                         <span class="project-tag">TensorFlow</span>
@@ -402,10 +333,15 @@
                         <span class="project-tag">Computer Vision</span>
                     </div>
                     <div class="project-links">
-                        <a href="#" class="project-link">
-                            <i class="fab fa-github"></i> Code
+                        <a href="https://github.com/BlamerX/Portrait-Generation-Using-GANs" class="project-link"
+                            target="_blank">
+                            <i class="fab fa-github"></i> GitHub
                         </a>
-                        <a href="#" class="project-link">
+                        <a href="https://www.kaggle.com/code/blamerx/beyond-the-canvas" class="project-link"
+                            target="_blank">
+                            <i class="fab fa-kaggle"></i> Kaggle
+                        </a>
+                        <a href="#" class="project-link disabled">
                             <i class="fas fa-external-link-alt"></i> Demo
                         </a>
                     </div>
@@ -413,24 +349,28 @@
             </div>
             <div class="project-card card-hover" data-aos="fade-up" data-aos-delay="100">
                 <div class="project-image">
-                    <i class="fas fa-heartbeat"></i>
+                    <i class="fas fa-wind"></i>
                 </div>
                 <div class="project-content">
-                    <h3 class="project-title">Skin Cancer Detection</h3>
-                    <p class="project-description">Built a CNN-based model to detect skin cancer from dermatoscopic
-                        images with 95% accuracy. Used transfer learning with pre-trained models for optimal
-                        performance.</p>
+                    <h3 class="project-title">AQI Prediction System</h3>
+                    <p class="project-description">Built a real-time Air Quality Index prediction system deployed as a
+                        web application. Used historical weather and pollution data with machine learning models.</p>
                     <div class="project-tags">
                         <span class="project-tag">Python</span>
-                        <span class="project-tag">TensorFlow</span>
-                        <span class="project-tag">Computer Vision</span>
-                        <span class="project-tag">Healthcare</span>
+                        <span class="project-tag">Flask</span>
+                        <span class="project-tag">Streamlit</span>
+                        <span class="project-tag">Environment</span>
                     </div>
                     <div class="project-links">
-                        <a href="#" class="project-link">
-                            <i class="fab fa-github"></i> Code
+                        <a href="https://github.com/BlamerX/Air-Quality-Index-Prediction-Website" class="project-link"
+                            target="_blank">
+                            <i class="fab fa-github"></i> GitHub
                         </a>
-                        <a href="#" class="project-link">
+                        <a href="https://www.kaggle.com/code/blamerx/india-air-quality-index-eda-prediction"
+                            class="project-link" target="_blank">
+                            <i class="fab fa-kaggle"></i> Kaggle
+                        </a>
+                        <a href="#" class="project-link disabled">
                             <i class="fas fa-external-link-alt"></i> Demo
                         </a>
                     </div>
@@ -452,10 +392,15 @@
                         <span class="project-tag">Finance</span>
                     </div>
                     <div class="project-links">
-                        <a href="#" class="project-link">
-                            <i class="fab fa-github"></i> Code
+                        <a href="https://github.com/BlamerX/Stock-Price-Prediction-WebSite" class="project-link"
+                            target="_blank">
+                            <i class="fab fa-github"></i> GitHub
                         </a>
-                        <a href="#" class="project-link">
+                        <a href="#" class="project-link disabled">
+                            <i class="fab fa-kaggle"></i> Kaggle
+                        </a>
+                        <a href="https://stock-price-prediction-yr17.onrender.com/" class="project-link"
+                            target="_blank">
                             <i class="fas fa-external-link-alt"></i> Demo
                         </a>
                     </div>
@@ -463,23 +408,29 @@
             </div>
             <div class="project-card card-hover" data-aos="fade-up" data-aos-delay="300">
                 <div class="project-image">
-                    <i class="fas fa-file-alt"></i>
+                    <i class="fas fa-brain"></i>
                 </div>
                 <div class="project-content">
-                    <h3 class="project-title">Resume Screening System</h3>
-                    <p class="project-description">Developed an NLP-based system to screen and rank resumes based on job
-                        descriptions. Implemented using BERT and similarity metrics for accurate matching.</p>
+                    <h3 class="project-title">Deep Learning Projects</h3>
+                    <p class="project-description">Collection of various deep learning projects including CNNs, RNNs,
+                        and other
+                        neural network architectures.</p>
                     <div class="project-tags">
                         <span class="project-tag">Python</span>
-                        <span class="project-tag">NLP</span>
-                        <span class="project-tag">BERT</span>
-                        <span class="project-tag">HR Tech</span>
+                        <span class="project-tag">TensorFlow</span>
+                        <span class="project-tag">Keras</span>
+                        <span class="project-tag">Deep Learning</span>
                     </div>
                     <div class="project-links">
-                        <a href="#" class="project-link">
-                            <i class="fab fa-github"></i> Code
+                        <a href="https://github.com/BlamerX/Deep-Learning-Projects" class="project-link"
+                            target="_blank">
+                            <i class="fab fa-github"></i> GitHub
                         </a>
-                        <a href="#" class="project-link">
+                        <a href="https://www.kaggle.com/code/blamerx/sign-language-eda-100-acc" class="project-link"
+                            target="_blank">
+                            <i class="fab fa-kaggle"></i> Kaggle
+                        </a>
+                        <a href="#" class="project-link disabled">
                             <i class="fas fa-external-link-alt"></i> Demo
                         </a>
                     </div>
@@ -487,23 +438,28 @@
             </div>
             <div class="project-card card-hover" data-aos="fade-up" data-aos-delay="400">
                 <div class="project-image">
-                    <i class="fas fa-wind"></i>
+                    <i class="fas fa-microscope"></i>
                 </div>
                 <div class="project-content">
-                    <h3 class="project-title">AQI Prediction System</h3>
-                    <p class="project-description">Built a real-time Air Quality Index prediction system deployed as a
-                        web application. Used historical weather and pollution data with machine learning models.</p>
+                    <h3 class="project-title">Skin Cancer Detection</h3>
+                    <p class="project-description">Developed a deep learning model using DenseNet121 for skin cancer
+                        classification with data augmentation techniques to improve model accuracy.</p>
                     <div class="project-tags">
                         <span class="project-tag">Python</span>
-                        <span class="project-tag">Flask</span>
-                        <span class="project-tag">Streamlit</span>
-                        <span class="project-tag">Environment</span>
+                        <span class="project-tag">TensorFlow</span>
+                        <span class="project-tag">DenseNet121</span>
+                        <span class="project-tag">Healthcare</span>
                     </div>
                     <div class="project-links">
-                        <a href="#" class="project-link">
-                            <i class="fab fa-github"></i> Code
+                        <a href="https://github.com/BlamerX/Deep-Learning-Projects" class="project-link"
+                            target="_blank">
+                            <i class="fab fa-github"></i> GitHub
                         </a>
-                        <a href="#" class="project-link">
+                        <a href="https://www.kaggle.com/code/blamerx/skin-cancer-classification-densenet121-and-aug"
+                            class="project-link" target="_blank">
+                            <i class="fab fa-kaggle"></i> Kaggle
+                        </a>
+                        <a href="#" class="project-link disabled">
                             <i class="fas fa-external-link-alt"></i> Demo
                         </a>
                     </div>
@@ -511,23 +467,28 @@
             </div>
             <div class="project-card card-hover" data-aos="fade-up" data-aos-delay="500">
                 <div class="project-image">
-                    <i class="fas fa-comments"></i>
+                    <i class="fas fa-cogs"></i>
                 </div>
                 <div class="project-content">
-                    <h3 class="project-title">Customer Support Chatbot</h3>
-                    <p class="project-description">Created an intelligent chatbot using NLP techniques to handle
-                        customer queries. Integrated with messaging platforms for seamless user experience.</p>
+                    <h3 class="project-title">Celebal Summer Internship</h3>
+                    <p class="project-description">Projects completed during my Data Science internship at Celebal
+                        Technologies,
+                        including data analysis and machine learning models.</p>
                     <div class="project-tags">
                         <span class="project-tag">Python</span>
-                        <span class="project-tag">NLP</span>
-                        <span class="project-tag">Chatbot</span>
-                        <span class="project-tag">Customer Service</span>
+                        <span class="project-tag">Pandas</span>
+                        <span class="project-tag">Numpy</span>
+                        <span class="project-tag">Data Science</span>
                     </div>
                     <div class="project-links">
-                        <a href="#" class="project-link">
-                            <i class="fab fa-github"></i> Code
+                        <a href="https://github.com/BlamerX/Celebal-Summer-Internship-2023" class="project-link"
+                            target="_blank">
+                            <i class="fab fa-github"></i> GitHub
                         </a>
-                        <a href="#" class="project-link">
+                        <a href="#" class="project-link disabled">
+                            <i class="fab fa-kaggle"></i> Kaggle
+                        </a>
+                        <a href="#" class="project-link disabled">
                             <i class="fas fa-external-link-alt"></i> Demo
                         </a>
                     </div>
@@ -535,76 +496,6 @@
             </div>
         </div>
     </section>
-
-    <!-- Contact Section -->
-    <section id="contact">
-        <div class="section-header" data-aos="fade-up">
-            <h2 class="section-title">Get In Touch</h2>
-            <p class="section-subtitle">Feel free to reach out for collaborations or just a friendly hello</p>
-        </div>
-        <div class="contact-container">
-            <div class="contact-info" data-aos="fade-right">
-                <a href="https://maps.google.com/?q=India" target="_blank" class="contact-item card-hover">
-                    <div class="contact-icon">
-                        <i class="fas fa-map-marker-alt"></i>
-                    </div>
-                    <div class="contact-details">
-                        <h3>Location</h3>
-                        <p>India</p>
-                    </div>
-                </a>
-                <a href="mailto:adarshkumar1301@gmail.com" class="contact-item card-hover">
-                    <div class="contact-icon">
-                        <i class="fas fa-envelope"></i>
-                    </div>
-                    <div class="contact-details">
-                        <h3>Email</h3>
-                        <p>adarshkumar1301@gmail.com</p>
-                    </div>
-                </a>
-                <a href="https://linkedin.com/in/adarshkumar13/" target="_blank" class="contact-item card-hover">
-                    <div class="contact-icon">
-                        <i class="fab fa-linkedin"></i>
-                    </div>
-                    <div class="contact-details">
-                        <h3>LinkedIn</h3>
-                        <p>linkedin.com/in/adarshkumar13/</p>
-                    </div>
-                </a>
-                <a href="https://kaggle.com/blamerx" target="_blank" class="contact-item card-hover">
-                    <div class="contact-icon">
-                        <i class="fab fa-kaggle"></i>
-                    </div>
-                    <div class="contact-details">
-                        <h3>Kaggle</h3>
-                        <p>kaggle.com/blamerx</p>
-                    </div>
-                </a>
-            </div>
-            <div class="contact-form" data-aos="fade-left">
-                <form id="contactForm">
-                    <div class="form-group">
-                        <label for="name">Name</label>
-                        <input type="text" id="name" name="name" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" name="email" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="subject">Subject</label>
-                        <input type="text" id="subject" name="subject" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="message">Message</label>
-                        <textarea id="message" name="message" rows="5" required></textarea>
-                    </div>
-                    <button type="submit" class="submit-btn">Send Message</button>
-                </form>
-            </div>
-        </div>
-    </section>
-
     <!-- Footer -->
     <footer>
         <div class="footer-content">
@@ -625,17 +516,14 @@
             <p class="footer-text">© 2023 BlamerX. Built with passion for data science and machine learning.</p>
         </div>
     </footer>
-
     <!-- Back to Top -->
     <div class="back-to-top" id="backToTop">
         <i class="fas fa-arrow-up"></i>
     </div>
-
     <!-- External Scripts -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-
     <!-- Custom JS -->
     <script src="script.js"></script>
 </body>

@@ -78,189 +78,8 @@ const typed = new Typed(".typed-text", {
   loop: true,
   showCursor: false,
 });
-// ML Model Animation - Enhanced Logic
-const mlModel = document.getElementById("mlModel");
-const modelContainer = mlModel.querySelector(".model-container");
-// Define node positions
-const nodes = [
-  // Input layer
-  { id: "i1", x: 50, y: 75, type: "input", label: "I1" },
-  { id: "i2", x: 50, y: 150, type: "input", label: "I2" },
-  { id: "i3", x: 50, y: 225, type: "input", label: "I3" },
-  // Hidden layer
-  { id: "h1", x: 200, y: 50, type: "hidden", label: "H1" },
-  { id: "h2", x: 200, y: 125, type: "hidden", label: "H2" },
-  { id: "h3", x: 200, y: 200, type: "hidden", label: "H3" },
-  { id: "h4", x: 200, y: 275, type: "hidden", label: "H4" },
-  // Output layer
-  { id: "o1", x: 350, y: 100, type: "output", label: "O1" },
-  { id: "o2", x: 350, y: 200, type: "output", label: "O2" },
-];
-// Define connections
-const connections = [
-  // Input to Hidden
-  { from: "i1", to: "h1" },
-  { from: "i1", to: "h2" },
-  { from: "i1", to: "h3" },
-  { from: "i2", to: "h2" },
-  { from: "i2", to: "h3" },
-  { from: "i2", to: "h4" },
-  { from: "i3", to: "h2" },
-  { from: "i3", to: "h3" },
-  { from: "i3", to: "h4" },
-  // Hidden to Output
-  { from: "h1", to: "o1" },
-  { from: "h2", to: "o1" },
-  { from: "h2", to: "o2" },
-  { from: "h3", to: "o1" },
-  { from: "h3", to: "o2" },
-  { from: "h4", to: "o2" },
-];
-// Create nodes
-nodes.forEach((node) => {
-  const nodeElement = document.createElement("div");
-  nodeElement.className = `model-node ${node.type}`;
-  nodeElement.id = node.id;
-  nodeElement.style.left = `${node.x}px`;
-  nodeElement.style.top = `${node.y}px`;
-  nodeElement.textContent = node.label;
-  modelContainer.appendChild(nodeElement);
-});
-// Create connections
-connections.forEach((conn) => {
-  const fromNode = nodes.find((n) => n.id === conn.from);
-  const toNode = nodes.find((n) => n.id === conn.to);
-  const connection = document.createElement("div");
-  connection.className = "connection";
-  // Calculate angle and length for connection
-  const angle = Math.atan2(toNode.y - fromNode.y, toNode.x - fromNode.x);
-  const distance = Math.sqrt(
-    Math.pow(toNode.x - fromNode.x, 2) + Math.pow(toNode.y - fromNode.y, 2)
-  );
-  connection.style.width = `${distance}px`;
-  connection.style.left = `${fromNode.x + 15}px`;
-  connection.style.top = `${fromNode.y + 15}px`;
-  connection.style.transform = `rotate(${angle}rad)`;
-  modelContainer.appendChild(connection);
-});
-// Create data packets
-const packets = [];
-const packetPaths = [
-  // Path 1: i1 -> h2 -> o1
-  [
-    { nodeId: "i1", duration: 1000 },
-    { nodeId: "h2", duration: 1000 },
-    { nodeId: "o1", duration: 1000 },
-  ],
-  // Path 2: i2 -> h3 -> o2
-  [
-    { nodeId: "i2", duration: 1200 },
-    { nodeId: "h3", duration: 1200 },
-    { nodeId: "o2", duration: 1200 },
-  ],
-  // Path 3: i3 -> h4 -> o2
-  [
-    { nodeId: "i3", duration: 1400 },
-    { nodeId: "h4", duration: 1400 },
-    { nodeId: "o2", duration: 1400 },
-  ],
-  // Path 4: i1 -> h1 -> o1
-  [
-    { nodeId: "i1", duration: 1600 },
-    { nodeId: "h1", duration: 1600 },
-    { nodeId: "o1", duration: 1600 },
-  ],
-];
-// Create packets for each path
-packetPaths.forEach((path, pathIndex) => {
-  const packet = document.createElement("div");
-  packet.className = "data-packet";
-  modelContainer.appendChild(packet);
-  packets.push({
-    element: packet,
-    path: path,
-    currentStep: 0,
-    progress: 0,
-    startTime: Date.now() + pathIndex * 400, // Stagger start times
-  });
-});
-// Animate packets
-function animatePackets() {
-  const currentTime = Date.now();
-  packets.forEach((packet) => {
-    if (currentTime < packet.startTime) return;
-    const currentStep = packet.path[packet.currentStep];
-    const nextStep = packet.path[packet.currentStep + 1];
-    if (!nextStep) {
-      // Reset to beginning of path
-      packet.currentStep = 0;
-      packet.progress = 0;
-      return;
-    }
-    // Calculate progress based on time
-    const elapsed = currentTime - packet.startTime;
-    const stepDuration = currentStep.duration;
-    const totalElapsedForStep =
-      elapsed % packet.path.reduce((sum, step) => sum + step.duration, 0);
-    // Find current step based on elapsed time
-    let accumulatedTime = 0;
-    for (let i = 0; i < packet.path.length - 1; i++) {
-      accumulatedTime += packet.path[i].duration;
-      if (totalElapsedForStep < accumulatedTime) {
-        packet.currentStep = i;
-        packet.progress =
-          (totalElapsedForStep - (accumulatedTime - packet.path[i].duration)) /
-          packet.path[i].duration;
-        break;
-      }
-    }
-    // Get current and next nodes
-    const fromNode = nodes.find(
-      (n) => n.id === packet.path[packet.currentStep].nodeId
-    );
-    const toNode = nodes.find(
-      (n) => n.id === packet.path[packet.currentStep + 1].nodeId
-    );
-    // Calculate position
-    const x = fromNode.x + 15 + (toNode.x - fromNode.x) * packet.progress - 5;
-    const y = fromNode.y + 15 + (toNode.y - fromNode.y) * packet.progress - 5;
-    packet.element.style.left = `${x}px`;
-    packet.element.style.top = `${y}px`;
-  });
-  requestAnimationFrame(animatePackets);
-}
-animatePackets();
-// Add layer labels
-const labels = [
-  { text: "Input", x: 50, y: 20 },
-  { text: "Hidden", x: 200, y: 20 },
-  { text: "Output", x: 350, y: 20 },
-];
-labels.forEach((label) => {
-  const labelElement = document.createElement("div");
-  labelElement.className = "model-label";
-  labelElement.textContent = label.text;
-  labelElement.style.left = `${label.x}px`;
-  labelElement.style.top = `${label.y}px`;
-  labelElement.style.transform = "translateX(-50%)";
-  modelContainer.appendChild(labelElement);
-});
-// Contact form submission
-const contactForm = document.getElementById("contactForm");
-contactForm.addEventListener("submit", (e) => {
-  e.preventDefault();
-  // Get form values
-  const name = document.getElementById("name").value;
-  const email = document.getElementById("email").value;
-  const subject = document.getElementById("subject").value;
-  const message = document.getElementById("message").value;
-  // Here you would typically send the form data to a server
-  // For now, we'll just show a success message
-  showConfetti();
-  alert(`Thank you for your message, ${name}! I'll get back to you soon.`);
-  // Reset form
-  contactForm.reset();
-});
+// ML Animation removed as requested
+// Contact form removed as requested
 // Initialize particles.js
 particlesJS("particles-js", {
   particles: {
@@ -300,8 +119,6 @@ function initScrollAnimations() {
   const aboutCards = document.querySelectorAll(".about-card");
   const skillCategories = document.querySelectorAll(".skill-category");
   const projectCards = document.querySelectorAll(".project-card");
-  const contactItems = document.querySelectorAll(".contact-item");
-  const contactForm = document.querySelector(".contact-form");
   // Intersection Observer for animations
   const observerOptions = {
     root: null,
@@ -317,10 +134,6 @@ function initScrollAnimations() {
           entry.target.classList.add("animated");
         } else if (entry.target.classList.contains("project-card")) {
           entry.target.classList.add("animated");
-        } else if (entry.target.classList.contains("contact-item")) {
-          entry.target.classList.add("animated");
-        } else if (entry.target.classList.contains("contact-form")) {
-          entry.target.classList.add("animated");
         }
         observer.unobserve(entry.target);
       }
@@ -329,8 +142,6 @@ function initScrollAnimations() {
   aboutCards.forEach((card) => observer.observe(card));
   skillCategories.forEach((category) => observer.observe(category));
   projectCards.forEach((card) => observer.observe(card));
-  contactItems.forEach((item) => observer.observe(item));
-  observer.observe(contactForm);
 }
 // Confetti effect
 function showConfetti() {
