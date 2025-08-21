@@ -424,25 +424,3 @@ footer {
         transform: none !important;
     }
 }
-
-/* Ensure content is visible after a delay as fallback */
-.content h1,
-.about-image,
-.about-text,
-.about-card {
-    opacity: 1;
-    transform: translateX(0) translateY(0);
-    transition: opacity 1s ease, transform 1s ease;
-}
-
-.skill-card {
-    opacity: 1;
-    transform: scale(1);
-    transition: opacity 1s ease, transform 1s ease;
-}
-
-.projects-swiper {
-    opacity: 1;
-    transform: translateY(0);
-    transition: opacity 1s ease, transform 1s ease;
-}
