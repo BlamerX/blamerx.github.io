@@ -20,25 +20,29 @@
                 </ul>
             </nav>
             <section id="home" class="section">
+                <canvas id="bg"></canvas>
+                <div class="section-overlay"></div>
                 <div class="content">
                     <h1>Data Scientist &<br><span class="autotype"></span></h1>
                 </div>
             </section>
             <section id="about" class="section">
+                <canvas id="about-bg"></canvas>
+                <div class="section-overlay"></div>
                 <div class="content">
                     <h2>About Me</h2>
                     <div class="about-redesigned">
                         <div class="about-image">
-                            <img src="https://images.pexels.com/photos/3861958/pexels-photo-3861958.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" alt="About Me">
+                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80" alt="Adarsh Kumar">
                         </div>
                         <div class="about-text">
                             <h3>Adarsh Kumar</h3>
-                            <p>I'm a passionate Data Scientist and Machine Learning enthusiast with expertise in building intelligent solutions that transform data into actionable insights. With a background in Data Science, Data Analytics, and Machine Learning, I've been actively contributing to the field since 2021 with 13 public repositories showcasing my work.</p>
-                            <p>My journey in data science began during my studies at KIIT, where I developed a keen interest in machine learning and its applications. I've worked on various projects spanning from computer vision to natural language processing, always striving to push the boundaries of what's possible with AI.</p>
+                            <p>I'm a passionate Data Scientist and Machine Learning engineer with expertise in building intelligent solutions that transform data into actionable insights. With a background in Computer Science from KIIT, I've been actively contributing to the field since 2021 with 13 public repositories showcasing my work.</p>
+                            <p>My journey in data science began during my studies, where I developed a keen interest in machine learning and its applications. I've worked on various projects spanning from computer vision to natural language processing, always striving to push the boundaries of what's possible with AI.</p>
                         </div>
                     </div>
                     <div class="about-cards">
-                        <div class="about-card">
+                        <div class="about-card" data-tilt data-tilt-glare data-tilt-max-glare="0.8">
                             <div class="about-card-icon"><i class="fas fa-briefcase"></i></div>
                             <h3>Experience</h3>
                             <ul>
@@ -48,7 +52,7 @@
                                 <li>Kaggle Notebook Expert</li>
                             </ul>
                         </div>
-                        <div class="about-card">
+                        <div class="about-card" data-tilt data-tilt-glare data-tilt-max-glare="0.8">
                             <div class="about-card-icon"><i class="fas fa-graduation-cap"></i></div>
                             <h3>Education</h3>
                             <ul>
@@ -58,7 +62,7 @@
                                 <li>Research on deep learning applications</li>
                             </ul>
                         </div>
-                        <div class="about-card">
+                        <div class="about-card" data-tilt data-tilt-glare data-tilt-max-glare="0.8">
                             <div class="about-card-icon"><i class="fas fa-rocket"></i></div>
                             <h3>Projects</h3>
                             <ul>
@@ -74,19 +78,175 @@
                 </div>
             </section>
             <section id="skills" class="section">
+                <canvas id="skills-bg"></canvas>
+                <div class="section-overlay"></div>
                 <div class="content">
                     <h2>Skills</h2>
                     <div class="skills-grid">
-                        <!-- Skills will be injected here by JavaScript -->
+                        <div class="skill-card" data-tilt>
+                            <i class="fab fa-python"></i>
+                            <h3>Python</h3>
+                        </div>
+                        <div class="skill-card" data-tilt>
+                            <i class="fab fa-cuttlefish"></i>
+                            <h3>C</h3>
+                        </div>
+                        <div class="skill-card" data-tilt>
+                            <i class="fab fa-cuttlefish"></i>
+                            <h3>C++</h3>
+                        </div>
+                        <div class="skill-card" data-tilt>
+                            <i class="fas fa-database"></i>
+                            <h3>SQL</h3>
+                        </div>
+                        <div class="skill-card" data-tilt>
+                            <i class="fab fa-html5"></i>
+                            <h3>HTML/CSS</h3>
+                        </div>
+                        <div class="skill-card" data-tilt>
+                            <i class="fas fa-robot"></i>
+                            <h3>TensorFlow</h3>
+                        </div>
+                        <div class="skill-card" data-tilt>
+                            <i class="fas fa-layer-group"></i>
+                            <h3>Keras</h3>
+                        </div>
+                        <div class="skill-card" data-tilt>
+                            <i class="fas fa-cogs"></i>
+                            <h3>Scikit-learn</h3>
+                        </div>
+                        <div class="skill-card" data-tilt>
+                            <i class="fas fa-camera"></i>
+                            <h3>OpenCV</h3>
+                        </div>
+                        <div class="skill-card" data-tilt>
+                            <i class="fas fa-database"></i>
+                            <h3>MySQL</h3>
+                        </div>
+                        <div class="skill-card" data-tilt>
+                            <i class="fab fa-google"></i>
+                            <h3>Google Colab</h3>
+                        </div>
+                        <div class="skill-card" data-tilt>
+                            <i class="fab fa-kaggle"></i>
+                            <h3>Kaggle</h3>
+                        </div>
+                        <div class="skill-card" data-tilt>
+                            <i class="fab fa-git-alt"></i>
+                            <h3>Git</h3>
+                        </div>
+                        <div class="skill-card" data-tilt>
+                            <i class="fas fa-code"></i>
+                            <h3>VS Code</h3>
+                        </div>
+                        <div class="skill-card" data-tilt>
+                            <i class="fas fa-flask"></i>
+                            <h3>Flask</h3>
+                        </div>
+                        <div class="skill-card" data-tilt>
+                            <i class="fas fa-stream"></i>
+                            <h3>Streamlit</h3>
+                        </div>
+                        <div class="skill-card" data-tilt>
+                            <i class="fas fa-chart-line"></i>
+                            <h3>Plotly</h3>
+                        </div>
+                        <div class="skill-card" data-tilt>
+                            <i class="fas fa-chart-bar"></i>
+                            <h3>Seaborn</h3>
+                        </div>
+                        <div class="skill-card" data-tilt>
+                            <i class="fas fa-chart-pie"></i>
+                            <h3>Matplotlib</h3>
+                        </div>
                     </div>
                 </div>
             </section>
             <section id="projects" class="section">
+                <canvas id="projects-bg"></canvas>
+                <div class="section-overlay"></div>
                 <div class="content">
                     <h2>Projects</h2>
                     <div class="swiper-container projects-swiper">
                         <div class="swiper-wrapper">
-                            <!-- Project slides will be injected here by JavaScript -->
+                            <div class="swiper-slide" data-tilt>
+            <img src="https://images.pexels.com/photos/1804075/pexels-photo-1804075.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" alt="Portrait Generation Using GANs">
+            <div class="project-content">
+                <h3>Portrait Generation Using GANs</h3>
+                <div class="project-skills"><span>Python</span><span>TensorFlow</span><span>Deep Learning</span><span>Computer Vision</span></div>
+                <p>Developed Generative Adversarial Networks to create realistic portrait images from noise. Implemented DCGAN architecture with impressive results.</p>
+                <div class="project-links">
+                    <a href="https://github.com/BlamerX/Portrait-Generation-Using-GANs" target="_blank" class="github">GitHub</a>
+                    <a href="https://www.kaggle.com/code/blamerx/beyond-the-canvas" target="_blank" class="kaggle">Kaggle</a>
+                    <a href="#" target="_blank" class="demo">Demo</a>
+                </div>
+            </div>
+        </div>
+        <div class="swiper-slide" data-tilt>
+            <img src="https://images.unsplash.com/photo-1518198045442-952e595a1a3d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80" alt="AQI Prediction System">
+            <div class="project-content">
+                <h3>AQI Prediction System</h3>
+                <div class="project-skills"><span>Python</span><span>Flask</span><span>Streamlit</span><span>Environment</span></div>
+                <p>Built a real-time Air Quality Index prediction system deployed as a web application. Used historical weather and pollution data with machine learning models to forecast air quality.</p>
+                <div class="project-links">
+                    <a href="https://github.com/BlamerX/Air-Quality-Index-Prediction-Website" target="_blank" class="github">GitHub</a>
+                    <a href="https://www.kaggle.com/code/blamerx/india-air-quality-index-eda-prediction" target="_blank" class="kaggle">Kaggle</a>
+                    <a href="#" target="_blank" class="demo">Demo</a>
+                </div>
+            </div>
+        </div>
+        <div class="swiper-slide" data-tilt>
+            <img src="https://images.pexels.com/photos/7567529/pexels-photo-7567529.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" alt="Stock Price Forecasting">
+            <div class="project-content">
+                <h3>Stock Price Forecasting</h3>
+                <div class="project-skills"><span>Python</span><span>TensorFlow</span><span>Time Series</span><span>Finance</span></div>
+                <p>Created an LSTM-based model to predict stock prices using historical data. Integrated with real-time data feeds and deployed as a web application for live predictions.</p>
+                <div class="project-links">
+                    <a href="https://github.com/BlamerX/Stock-Price-Prediction-WebSite" target="_blank" class="github">GitHub</a>
+                    <a href="#" target="_blank" class="kaggle">Kaggle</a>
+                    <a href="https://stock-price-prediction-yr17.onrender.com/" target="_blank" class="demo">Demo</a>
+                </div>
+            </div>
+        </div>
+        <div class="swiper-slide" data-tilt>
+            <img src="https://images.pexels.com/photos/574071/pexels-photo-574071.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" alt="Deep Learning Projects">
+            <div class="project-content">
+                <h3>Deep Learning Projects</h3>
+                <div class="project-skills"><span>Python</span><span>TensorFlow</span><span>Keras</span><span>Deep Learning</span></div>
+                <p>Collection of various deep learning projects including CNNs, RNNs, and other neural network architectures.</p>
+                <div class="project-links">
+                    <a href="https://github.com/BlamerX/Deep-Learning-Projects" target="_blank" class="github">GitHub</a>
+                    <a href="https://www.kaggle.com/code/blamerx/sign-language-eda-100-acc" target="_blank" class="kaggle">Kaggle</a>
+                    <a href="#" target="_blank" class="demo">Demo</a>
+                </div>
+            </div>
+        </div>
+        <div class="swiper-slide" data-tilt>
+            <img src="https://images.pexels.com/photos/4021775/pexels-photo-4021775.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" alt="Skin Cancer Detection">
+            <div class="project-content">
+                <h3>Skin Cancer Detection</h3>
+                <div class="project-skills"><span>Python</span><span>TensorFlow</span><span>DenseNet121</span><span>Healthcare</span></div>
+                <p>Developed a deep learning model using DenseNet121 for skin cancer classification with data augmentation techniques to improve model accuracy.</p>
+                <div class="project-links">
+                    <a href="https://github.com/BlamerX/Deep-Learning-Projects" target="_blank" class="github">GitHub</a>
+                    <a href="https://www.kaggle.com/code/blamerx/skin-cancer-classification-densenet121-and-aug" target="_blank" class="kaggle">Kaggle</a>
+                    <a href="#" target="_blank" class="demo">Demo</a>
+                </div>
+            </div>
+        </div>
+        <div class="swiper-slide" data-tilt>
+            <img src="https://images.pexels.com/photos/3861969/pexels-photo-3861969.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" alt="Celebal Summer Internship">
+            <div class="project-content">
+                <h3>Celebal Summer Internship</h3>
+                <div class="project-skills"><span>Python</span><span>Pandas</span><span>Numpy</span><span>Data Science</span></div>
+                <p>Projects completed during my Data Science internship at Celebal Technologies, including data analysis and machine learning models.</p>
+                <div class="project-links">
+                    <a href="https://github.com/BlamerX/Celebal-Summer-Internship-2023" target="_blank" class="github">GitHub</a>
+                    <a href="#" target="_blank" class'="kaggle">Kaggle</a>
+                    <a href="#" target="_blank" class="demo">Demo</a>
+                </div>
+            </div>
+        </div>
                         </div>
                     </div>
                 </div>
@@ -102,8 +262,10 @@
         </div>
     </div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/ScrollTrigger.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.2/vanilla-tilt.min.js"></script>
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
     <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.27/bundled/lenis.min.js"></script>
