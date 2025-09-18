@@ -4,386 +4,475 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BlamerX - Data Science & ML Portfolio</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
-    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css" />
+    <title>Adarsh Kumar - Data Scientist & ML Engineer</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon"
+        href="data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3e%3ccircle cx='50' cy='50' r='40' fill='%232563eb'/%3e%3ctext x='50' y='65' font-family='Arial, sans-serif' font-size='40' text-anchor='middle' fill='white'%3eAK%3c/text%3e%3c/svg%3e"
+        type="image/svg+xml">
+    <script src="https://unpkg.com/typed.js@2.0.16/dist/typed.umd.js"></script>
 </head>
 
 <body>
-    <nav>
-        <a href="#home" class="logo">BlamerX</a>
-        <ul>
-            <li><a href="#about">About</a></li>
-            <li><a href="#skills">Skills</a></li>
-            <li><a href="#projects">Projects</a></li>
-            <li><a href="#milestones">Milestones</a></li>
-            <li><a href="#achievements">Achievements</a></li>
-        </ul>
-    </nav>
-
-    <section id="home" class="section">
-        <canvas id="bg"></canvas>
-        <div class="section-overlay"></div>
-        <div class="content">
-            <h1>Data Scientist <br>&<br><span class="autotype"></span></h1>
-            <div class="scroll-down">
-                <a href="#about">
-                    <i class="fas fa-chevron-down"></i>
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <section id="about" class="section">
-        <div class="section-overlay"></div>
-        <div class="content">
-            <h2>About Me</h2>
-            <div class="about-redesigned">
-                <div class="about-image">
-                    <div class="profile-3d" id="profile-3d"></div>
-                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80"
-                        alt="Adarsh Kumar">
-                </div>
-                <div class="about-text">
-                    <h3>Adarsh Kumar</h3>
-                    <p>I'm a passionate Data Scientist and Machine Learning engineer with expertise in building
-                        intelligent solutions that transform data into actionable insights. With a background in
-                        Computer Science from KIIT and currently pursuing an M.S. in Computer Science (AI Track) at San
-                        Jose State University, I've been actively contributing to the field since 2021 with 13 public
-                        repositories showcasing my work.</p>
-                    <p>My journey in data science began during my studies, where I developed a keen interest in machine
-                        learning and its applications. I've worked on various projects spanning from computer vision to
-                        natural language processing, always striving to push the boundaries of what's possible with AI.
-                    </p>
-                    <div class="about-stats">
-                        <div class="stat">
-                            <h4 id="github-repos">0</h4>
-                            <p>Public Repos</p>
-                        </div>
-                        <div class="stat">
-                            <h4 id="total-skills">0</h4>
-                            <p>Skills</p>
-                        </div>
+    <!-- Preloader -->
+    <div id="preloader">
+        <div class="loader"></div>
+    </div>
+    <!-- Hero Section -->
+    <section id="hero" class="hero">
+        <!-- Header & Navigation -->
+        <header>
+            <nav class="navbar">
+                <div class="nav-container">
+                    <a href="#hero" class="nav-logo">BlamerX</a>
+                    <ul class="nav-menu">
+                        <li class="nav-item">
+                            <a href="#hero" class="nav-link">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#about" class="nav-link">About</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#skills" class="nav-link">Skills</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#projects" class="nav-link">Projects</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#milestones" class="nav-link">Milestones</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#achievements" class="nav-link">Achievements</a>
+                        </li>
+                    </ul>
+                    <div class="nav-toggle">
+                        <span class="bar"></span>
+                        <span class="bar"></span>
+                        <span class="bar"></span>
                     </div>
                 </div>
+            </nav>
+        </header>
+        <div class="hero-container">
+            <h1>Adarsh Kumar</h1>
+            <h3><span class="auto-type"></span></h3>
+
+        </div>
+    </section>
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <div class="section-header">
+                <h2>About Me</h2>
             </div>
-            <div class="about-cards">
-                <div class="about-card">
-                    <div class="about-card-icon"><i class="fas fa-briefcase"></i></div>
-                    <h3>Experience</h3>
-                    <ul>
-                        <li>Data Science Intern at Celebal Technologies</li>
-                        <li>Data Analytics Consulting Virtual Internship at KPMG</li>
-                        <li>Kaggle Notebook Expert</li>
-                    </ul>
-                </div>
-                <div class="about-card">
-                    <div class="about-card-icon"><i class="fas fa-graduation-cap"></i></div>
-                    <h3>Education</h3>
-                    <ul>
-                        <li>B.Tech in Computer Science and Communication Engineering from KIIT (2020-2024)</li>
-                        <li>Machine Learning and Data Science Certification from Scaler (2022)</li>
-                        <li>AI Classroom Series Certification from Microsoft (2021)</li>
-                        <li>Class XII from FIITJEE Junior College, Visakhapatnam (2017-2019)</li>
-                        <li>Class X from Navy Children School, Visakhapatnam (2006-2017)</li>
-                    </ul>
-                </div>
-                <div class="about-card">
-                    <div class="about-card-icon"><i class="fas fa-rocket"></i></div>
-                    <h3>Projects</h3>
-                    <ul>
-                        <li>GANs for Image Generation</li>
-                        <li>Skin Cancer Detection System</li>
-                        <li>Stock Price Forecasting</li>
-                        <li>AQI Prediction System</li>
-                        <li>Deep Learning Projects</li>
-                        <li>Machine Learning Basics</li>
-                    </ul>
-                </div>
+            <div class="about-content">
+                <p>I'm a passionate Data Scientist and Machine Learning engineer with expertise in building intelligent
+                    solutions that transform data into actionable insights. With a background in Computer Science from
+                    KIIT and currently pursuing an M.S. in Computer Science (AI Track) at San Jose State University,
+                    I've been actively contributing to the field since 2021 with 13 public repositories showcasing my
+                    work.</p>
+                <p>My journey in data science began during my studies, where I developed a keen interest in machine
+                    learning and its applications. I've worked on various projects spanning from computer vision to
+                    natural language processing, always striving to push the boundaries of what's possible with AI.</p>
             </div>
         </div>
     </section>
 
-    <section id="skills" class="section">
-        <div class="section-overlay"></div>
-        <div class="content">
-            <h2>Skills</h2>
+    <!-- Skills Section -->
+    <section id="skills" class="skills">
+        <div class="container">
+            <div class="section-header">
+                <h2>Skills</h2>
+            </div>
             <div class="skills-container">
-                <div class="skills-grid">
-                    <div class="skill-card">
-                        <i class="fab fa-python"></i>
-                        <h3>Python</h3>
-                    </div>
-                    <div class="skill-card">
-                        <i class="fab fa-cuttlefish"></i>
-                        <h3>C/C++</h3>
-                    </div>
-                    <div class="skill-card">
-                        <i class="fas fa-database"></i>
-                        <h3>SQL</h3>
-                    </div>
-                    <div class="skill-card">
-                        <i class="fab fa-html5"></i>
-                        <h3>HTML/CSS</h3>
-                    </div>
-                    <div class="skill-card">
-                        <i class="fas fa-robot"></i>
-                        <h3>TensorFlow</h3>
-                    </div>
-                    <div class="skill-card">
-                        <i class="fas fa-layer-group"></i>
-                        <h3>Keras</h3>
-                    </div>
-                    <div class="skill-card">
-                        <i class="fas fa-cogs"></i>
-                        <h3>Scikit-learn</h3>
-                    </div>
-                    <div class="skill-card">
-                        <i class="fas fa-camera"></i>
-                        <h3>OpenCV</h3>
-                    </div>
-                    <div class="skill-card">
-                        <i class="fas fa-database"></i>
-                        <h3>MySQL</h3>
-                    </div>
-                    <div class="skill-card">
-                        <i class="fab fa-google"></i>
-                        <h3>Google Colab</h3>
-                    </div>
-                    <div class="skill-card">
-                        <i class="fab fa-kaggle"></i>
-                        <h3>Kaggle</h3>
-                    </div>
-                    <div class="skill-card">
-                        <i class="fab fa-git-alt"></i>
-                        <h3>Git</h3>
-                    </div>
-                    <div class="skill-card">
-                        <i class="fas fa-code"></i>
-                        <h3>VS Code</h3>
-                    </div>
-                    <div class="skill-card">
-                        <i class="fas fa-flask"></i>
-                        <h3>Flask</h3>
-                    </div>
-                    <div class="skill-card">
-                        <i class="fas fa-stream"></i>
-                        <h3>Streamlit</h3>
-                    </div>
-                    <div class="skill-card">
-                        <i class="fab fa-js"></i>
-                        <h3>JavaScript</h3>
-                    </div>
-                    <div class="skill-card">
-                        <i class="fab fa-react"></i>
-                        <h3>React.js</h3>
-                    </div>
-                    <div class="skill-card">
-                        <i class="fab fa-node-js"></i>
-                        <h3>Node.js</h3>
-                    </div>
+                <div class="skill-category">
+                    <h3>Programming Languages</h3>
+                    <ul>
+                        <li>
+                            <div class="skill-logo">
+                                <i class="fab fa-python"></i>
+                                <span>Python</span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="skill-logo">
+                                <i class="fab fa-cuttlefish"></i>
+                                <span>C/C++</span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="skill-logo">
+                                <i class="fas fa-database"></i>
+                                <span>SQL</span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="skill-logo">
+                                <i class="fab fa-html5"></i>
+                                <span>HTML/CSS</span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="skill-logo">
+                                <i class="fab fa-js"></i>
+                                <span>JavaScript</span>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
 
-                <div class="skills-visualization">
-                    <div class="skill-radar" id="skill-radar"></div>
+                <div class="skill-category">
+                    <h3>Machine Learning & AI</h3>
+                    <ul>
+                        <li>
+                            <div class="skill-logo">
+                                <i class="fas fa-brain"></i>
+                                <span>TensorFlow</span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="skill-logo">
+                                <i class="fas fa-network-wired"></i>
+                                <span>Keras</span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="skill-logo">
+                                <i class="fas fa-chart-line"></i>
+                                <span>Scikit-learn</span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="skill-logo">
+                                <i class="fas fa-eye"></i>
+                                <span>OpenCV</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="skill-category">
+                    <h3>Databases & Tools</h3>
+                    <ul>
+                        <li>
+                            <div class="skill-logo">
+                                <i class="fas fa-database"></i>
+                                <span>MySQL</span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="skill-logo">
+                                <i class="fas fa-cloud"></i>
+                                <span>Google Colab</span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="skill-logo">
+                                <i class="fab fa-kaggle"></i>
+                                <span>Kaggle</span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="skill-logo">
+                                <i class="fab fa-git"></i>
+                                <span>Git</span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="skill-logo">
+                                <i class="fas fa-code"></i>
+                                <span>VS Code</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="skill-category">
+                    <h3>Web Technologies</h3>
+                    <ul>
+                        <li>
+                            <div class="skill-logo">
+                                <i class="fas fa-server"></i>
+                                <span>Flask</span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="skill-logo">
+                                <i class="fas fa-stream"></i>
+                                <span>Streamlit</span>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="projects" class="section">
-        <div class="section-overlay"></div>
-        <div class="content">
-            <h2>Featured Projects</h2>
-            <div class="swiper-container projects-swiper">
-                <div class="swiper-wrapper">
-                    <div class="swiper-slide">
-                        <div class="project-3d" id="project-3d-1"></div>
-                        <img src="https://images.pexels.com/photos/1804075/pexels-photo-1804075.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
-                            alt="Portrait Generation Using GANs">
-                        <div class="project-content">
-                            <h3>Portrait Generation Using GANs</h3>
-                            <div class="project-skills"><span>Python</span><span>TensorFlow</span><span>Deep
-                                    Learning</span><span>Computer Vision</span></div>
-                            <p>Developed Generative Adversarial Networks to create realistic portrait images from noise.
-                                Implemented DCGAN architecture with impressive results.</p>
-                            <div class="project-links">
-                                <a href="https://github.com/BlamerX/Portrait-Generation-Using-GANs" target="_blank"
-                                    class="github">GitHub</a>
-                                <a href="https://www.kaggle.com/code/blamerx/beyond-the-canvas" target="_blank"
-                                    class="kaggle">Kaggle</a>
-                                <a href="#" target="_blank" class="demo">Demo</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="project-3d" id="project-3d-2"></div>
-                        <img src="https://images.unsplash.com/photo-1518198045442-952e595a1a3d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80"
-                            alt="AQI Prediction System">
-                        <div class="project-content">
-                            <h3>AQI Prediction System</h3>
-                            <div class="project-skills">
-                                <span>Python</span><span>Flask</span><span>Streamlit</span><span>Environment</span>
-                            </div>
-                            <p>Built a real-time Air Quality Index prediction system deployed as a web application. Used
-                                historical weather and pollution data with machine learning models to forecast air
-                                quality.</p>
-                            <div class="project-links">
-                                <a href="https://github.com/BlamerX/Air-Quality-Index-Prediction-Website"
-                                    target="_blank" class="github">GitHub</a>
-                                <a href="https://www.kaggle.com/code/blamerx/india-air-quality-index-eda-prediction"
-                                    target="_blank" class="kaggle">Kaggle</a>
-                                <a href="#" target="_blank" class="demo">Demo</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="project-3d" id="project-3d-3"></div>
-                        <img src="https://images.pexels.com/photos/7567529/pexels-photo-7567529.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
-                            alt="Stock Price Forecasting">
-                        <div class="project-content">
-                            <h3>Stock Price Forecasting</h3>
-                            <div class="project-skills"><span>Python</span><span>TensorFlow</span><span>Time
-                                    Series</span><span>Finance</span></div>
-                            <p>Created an LSTM-based model to predict stock prices using historical data. Integrated
-                                with real-time data feeds and deployed as a web application for live predictions.</p>
-                            <div class="project-links">
-                                <a href="https://github.com/BlamerX/Stock-Price-Prediction-WebSite" target="_blank"
-                                    class="github">GitHub</a>
-                                <a href="#" target="_blank" class="kaggle">Kaggle</a>
-                                <a href="https://stock-price-prediction-yr17.onrender.com/" target="_blank"
-                                    class="demo">Demo</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="project-3d" id="project-3d-4"></div>
-                        <img src="https://images.pexels.com/photos/574071/pexels-photo-574071.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
-                            alt="Deep Learning Projects">
-                        <div class="project-content">
-                            <h3>Deep Learning Projects</h3>
-                            <div class="project-skills">
-                                <span>Python</span><span>TensorFlow</span><span>Keras</span><span>Deep Learning</span>
-                            </div>
-                            <p>Collection of various deep learning projects including CNNs, RNNs, and other neural
-                                network architectures.</p>
-                            <div class="project-links">
-                                <a href="https://github.com/BlamerX/Deep-Learning-Projects" target="_blank"
-                                    class="github">GitHub</a>
-                                <a href="https://www.kaggle.com/code/blamerx/sign-language-eda-100-acc" target="_blank"
-                                    class="kaggle">Kaggle</a>
-                                <a href="#" target="_blank" class="demo">Demo</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="project-3d" id="project-3d-5"></div>
-                        <img src="https://images.pexels.com/photos/4021775/pexels-photo-4021775.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
-                            alt="Skin Cancer Detection">
-                        <div class="project-content">
-                            <h3>Skin Cancer Detection</h3>
-                            <div class="project-skills">
-                                <span>Python</span><span>TensorFlow</span><span>DenseNet121</span><span>Healthcare</span>
-                            </div>
-                            <p>Developed a deep learning model using DenseNet121 for skin cancer classification with
-                                data augmentation techniques to improve model accuracy.</p>
-                            <div class="project-links">
-                                <a href="https://github.com/BlamerX/Deep-Learning-Projects" target="_blank"
-                                    class="github">GitHub</a>
-                                <a href="https://www.kaggle.com/code/blamerx/skin-cancer-classification-densenet121-and-aug"
-                                    target="_blank" class="kaggle">Kaggle</a>
-                                <a href="#" target="_blank" class="demo">Demo</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="project-3d" id="project-3d-6"></div>
-                        <img src="https://images.pexels.com/photos/3861969/pexels-photo-3861969.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
-                            alt="Celebal Summer Internship">
-                        <div class="project-content">
-                            <h3>Celebal Summer Internship</h3>
-                            <div class="project-skills">
-                                <span>Python</span><span>Pandas</span><span>Numpy</span><span>Data Science</span>
-                            </div>
-                            <p>Projects completed during my Data Science internship at Celebal Technologies, including
-                                data analysis and machine learning models.</p>
-                            <div class="project-links">
-                                <a href="https://github.com/BlamerX/Celebal-Summer-Internship-2023" target="_blank"
-                                    class="github">GitHub</a>
-                                <a href="#" target="_blank" class="kaggle">Kaggle</a>
-                                <a href="#" target="_blank" class="demo">Demo</a>
-                            </div>
+    <!-- Projects Section -->
+    <section id="projects" class="projects">
+        <div class="container">
+            <div class="section-header">
+                <h2>Featured Projects</h2>
+            </div>
+            <div class="projects-container">
+                <!-- Project 1 -->
+                <div class="project-card">
+                    <img src="https://placehold.co/600x400/3b82f6/white?text=Portrait+Generation+Using+GANs"
+                        alt="Portrait Generation Using GANs" class="project-image">
+                    <div class="project-content">
+                        <h3>Portrait Generation Using GANs</h3>
+                        <p class="project-skills">Python, TensorFlow, Deep Learning, Computer Vision</p>
+                        <p class="project-description">Developed Generative Adversarial Networks to create realistic
+                            portrait images from noise. Implemented DCGAN architecture with impressive results,
+                            achieving generator and discriminator loss values of 0.8 and 0.6 with 80% accuracy in
+                            matching dataset characteristics.</p>
+                        <div class="project-links">
+                            <a href="https://github.com/BlamerX/Portrait-Generation-Using-GANs" target="_blank"
+                                class="btn btn-small">GitHub</a>
+                            <a href="https://www.kaggle.com/code/blamerx/beyond-the-canvas" target="_blank"
+                                class="btn btn-small">Kaggle</a>
+                            <a href="#" class="btn btn-small btn-disabled">Demo</a>
                         </div>
                     </div>
                 </div>
-                <div class="swiper-pagination"></div>
-            </div>
-        </div>
-    </section>
 
-    <section id="milestones" class="section">
-        <canvas id="milestones-bg"></canvas>
-        <div class="section-overlay"></div>
-        <div class="content">
-            <h2>Key Achievements & Milestones</h2>
-            <div class="timeline-container">
-                <div class="timeline" id="timeline">
-                    <!-- Timeline markers will be added dynamically -->
+                <!-- Project 2 -->
+                <div class="project-card">
+                    <img src="https://placehold.co/600x400/3b82f6/white?text=AQI+Prediction+System"
+                        alt="AQI Prediction System" class="project-image">
+                    <div class="project-content">
+                        <h3>AQI Prediction System</h3>
+                        <p class="project-skills">Python, Flask, Streamlit, Environment</p>
+                        <p class="project-description">Built a real-time Air Quality Index prediction system deployed as
+                            a web application. Used historical weather and pollution data with machine learning models
+                            to forecast air quality. Created web scraping pipeline for 470+ Indian cities and enhanced
+                            data visualization clarity by 40%.</p>
+                        <div class="project-links">
+                            <a href="https://github.com/BlamerX/Air-Quality-Index-Prediction-Website" target="_blank"
+                                class="btn btn-small">GitHub</a>
+                            <a href="https://www.kaggle.com/code/blamerx/india-air-quality-index-eda-prediction"
+                                target="_blank" class="btn btn-small">Kaggle</a>
+                            <a href="#" class="btn btn-small btn-disabled">Demo</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 3 -->
+                <div class="project-card">
+                    <img src="https://placehold.co/600x400/3b82f6/white?text=Stock+Price+Forecasting"
+                        alt="Stock Price Forecasting" class="project-image">
+                    <div class="project-content">
+                        <h3>Stock Price Forecasting</h3>
+                        <p class="project-skills">Python, TensorFlow, Time Series, Finance</p>
+                        <p class="project-description">Created an LSTM-based model to predict stock prices using
+                            historical data. Integrated with real-time data feeds and deployed as a web application for
+                            live predictions. Implemented advanced feature engineering and achieved competitive
+                            forecasting accuracy.</p>
+                        <div class="project-links">
+                            <a href="https://github.com/BlamerX/Stock-Price-Prediction-WebSite" target="_blank"
+                                class="btn btn-small">GitHub</a>
+                            <a href="https://stock-price-prediction-yr17.onrender.com/" target="_blank"
+                                class="btn btn-small">Demo</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 4 -->
+                <div class="project-card">
+                    <img src="https://placehold.co/600x400/3b82f6/white?text=Deep+Learning+Projects"
+                        alt="Deep Learning Projects" class="project-image">
+                    <div class="project-content">
+                        <h3>Deep Learning Projects</h3>
+                        <p class="project-skills">Python, TensorFlow, Keras, Deep Learning</p>
+                        <p class="project-description">Collection of various deep learning projects including CNNs,
+                            RNNs, and other neural network architectures. Features implementations of advanced models
+                            for image recognition, natural language processing, and sequence prediction.</p>
+                        <div class="project-links">
+                            <a href="https://github.com/BlamerX/Deep-Learning-Projects" target="_blank"
+                                class="btn btn-small">GitHub</a>
+                            <a href="https://www.kaggle.com/code/blamerx/sign-language-eda-100-acc" target="_blank"
+                                class="btn btn-small">Kaggle</a>
+                            <a href="#" class="btn btn-small btn-disabled">Demo</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 5 -->
+                <div class="project-card">
+                    <img src="https://placehold.co/600x400/3b82f6/white?text=Skin+Cancer+Detection"
+                        alt="Skin Cancer Detection" class="project-image">
+                    <div class="project-content">
+                        <h3>Skin Cancer Detection</h3>
+                        <p class="project-skills">Python, TensorFlow, DenseNet121, Healthcare</p>
+                        <p class="project-description">Developed a deep learning model using DenseNet121 for skin cancer
+                            classification with data augmentation techniques to improve model accuracy. Implemented
+                            advanced preprocessing pipelines and achieved over 90% classification accuracy.</p>
+                        <div class="project-links">
+                            <a href="https://github.com/BlamerX/Deep-Learning-Projects" target="_blank"
+                                class="btn btn-small">GitHub</a>
+                            <a href="https://www.kaggle.com/code/blamerx/skin-cancer-classification-densenet121-and-aug"
+                                target="_blank" class="btn btn-small">Kaggle</a>
+                            <a href="#" class="btn btn-small btn-disabled">Demo</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 6 -->
+                <div class="project-card">
+                    <img src="https://placehold.co/600x400/3b82f6/white?text=Celebal+Summer+Internship"
+                        alt="Celebal Summer Internship Projects" class="project-image">
+                    <div class="project-content">
+                        <h3>Celebal Summer Internship Projects</h3>
+                        <p class="project-skills">Python, Pandas, NumPy, Data Science</p>
+                        <p class="project-description">Projects completed during Data Science internship at Celebal
+                            Technologies, including data analysis and machine learning models. Focused on real-world
+                            business applications and practical implementation of data science solutions.</p>
+                        <div class="project-links">
+                            <a href="https://github.com/BlamerX/Celebal-Summer-Internship-2023" target="_blank"
+                                class="btn btn-small">GitHub</a>
+                            <a href="#" class="btn btn-small btn-disabled">Demo</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="achievements" class="section">
-        <div class="section-overlay"></div>
-        <div class="content">
-            <h2>Achievements</h2>
-            <div class="achievements-grid">
-                <div class="achievement-card">
-                    <div class="achievement-icon"><i class="fas fa-award"></i></div>
-                    <h3>Kaggle Notebook Expert</h3>
-                    <p class="achievement-year">2024</p>
+    <!-- Milestones Section -->
+    <section id="milestones" class="milestones">
+        <div class="container">
+            <div class="section-header">
+                <h2>Milestones</h2>
+            </div>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-year">2024</div>
+                    <div class="timeline-content">
+                        <h3>Kaggle Notebook Expert</h3>
+                        <p>Recognized as a "Kaggle Notebook Expert" and achieved "Top 10% Performer in Notebooks" on the
+                            Kaggle platform, demonstrating expertise in data science and machine learning through
+                            high-quality notebook contributions.</p>
+                    </div>
                 </div>
-                <div class="achievement-card">
-                    <div class="achievement-icon"><i class="fas fa-chart-line"></i></div>
-                    <h3>Top 10% Kaggle Contributor</h3>
-                    <p class="achievement-year">2024</p>
+                <div class="timeline-item">
+                    <div class="timeline-year">2023</div>
+                    <div class="timeline-content">
+                        <h3>Data Science Internship at Celebal Technologies</h3>
+                        <p>Successfully completed a 3-month Data Science internship, developing and deploying a
+                            real-time AQI prediction system. Created a web scraping pipeline for 470+ Indian cities,
+                            enhanced data visualization clarity by 40%, and built a robust ML model achieving MSE of
+                            2.3.</p>
+                    </div>
                 </div>
-                <div class="achievement-card">
-                    <div class="achievement-icon"><i class="fas fa-graduation-cap"></i></div>
-                    <h3>Microsoft AI Classroom Series Certification</h3>
-                    <p class="achievement-year">2021</p>
+                <div class="timeline-item">
+                    <div class="timeline-year">2023</div>
+                    <div class="timeline-content">
+                        <h3>Skin Cancer Classification Model</h3>
+                        <p>Designed an end-to-end deep learning pipeline using DenseNet121 for skin cancer
+                            classification. Implemented advanced data augmentation techniques resulting in 25% increase
+                            in model accuracy and achieved over 90% classification accuracy.</p>
+                    </div>
                 </div>
-                <div class="achievement-card">
-                    <div class="achievement-icon"><i class="fas fa-certificate"></i></div>
-                    <h3>Scaler ML & Data Science Certification</h3>
-                    <p class="achievement-year">2022</p>
+                <div class="timeline-item">
+                    <div class="timeline-year">2023</div>
+                    <div class="timeline-content">
+                        <h3>KPMG Data Analytics Virtual Internship</h3>
+                        <p>Completed virtual internship program focused on data analytics consulting, gaining practical
+                            experience in real-world business data analysis and consulting methodologies.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">2022</div>
+                    <div class="timeline-content">
+                        <h3>Machine Learning and Data Science Certification</h3>
+                        <p>Completed comprehensive certification program in Machine Learning and Data Science, gaining
+                            advanced knowledge and practical skills in data analysis, predictive modeling, and machine
+                            learning algorithms.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">2021</div>
+                    <div class="timeline-content">
+                        <h3>AI Classroom Series Certification</h3>
+                        <p>Completed the AI Classroom Series June Session from Microsoft, gaining foundational knowledge
+                            in artificial intelligence concepts, applications, and implementation strategies.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">2020</div>
+                    <div class="timeline-content">
+                        <h3>B.Tech Computer Science Admission</h3>
+                        <p>Enrolled in Bachelor of Technology program in Computer Science and Communication Engineering,
+                            maintaining a CGPA of 8.54/10 throughout the program while developing multiple AI/ML
+                            projects.</p>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- Achievements Section -->
+    <section id="achievements" class="achievements">
+        <div class="container">
+            <div class="section-header">
+                <h2>Achievements</h2>
+            </div>
+            <div class="achievements-container">
+                <div class="achievement-item">
+                    <h3>Kaggle Notebook Expert (2024)</h3>
+                    <p>Recognized for expertise in data science and machine learning through high-quality notebook
+                        contributions</p>
+                </div>
+                <div class="achievement-item">
+                    <h3>Top 10% Kaggle Contributor (2024)</h3>
+                    <p>Ranked among the top performers in notebooks on the Kaggle platform</p>
+                </div>
+                <div class="achievement-item">
+                    <h3>Scaler ML & Data Science Certification (2022)</h3>
+                    <p>Completed comprehensive certification in Machine Learning and Data Science</p>
+                </div>
+                <div class="achievement-item">
+                    <h3>Microsoft AI Classroom Series Certification (2021)</h3>
+                    <p>Gained foundational knowledge in artificial intelligence concepts and applications</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- Footer -->
     <footer>
-        <div class="social-links">
-            <a href="https://github.com/BlamerX" target="_blank"><i class="fab fa-github"></i></a>
-            <a href="https://www.linkedin.com/in/adarshkumar13/" target="_blank"><i class="fab fa-linkedin"></i></a>
-            <a href="mailto:adarshkumar1301@gmail.com"><i class="fas fa-envelope"></i></a>
-            <a href="https://www.kaggle.com/blamerx" target="_blank"><i class="fab fa-kaggle"></i></a>
+        <div class="container">
+            <div class="footer-content">
+                <p>&copy; 2024 Adarsh Kumar. All Rights Reserved.</p>
+                <div class="footer-links">
+                    <a href="mailto:adarshkumar1301@gmail.com" class="footer-link">
+                        <i class="fas fa-envelope"></i>
+                    </a>
+                    <a href="https://github.com/BlamerX" target="_blank" class="footer-link">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="https://www.linkedin.com/in/adarshkumar13/" target="_blank" class="footer-link">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                    <a href="https://www.kaggle.com/blamerx" target="_blank" class="footer-link">
+                        <i class="fab fa-kaggle"></i>
+                    </a>
+                </div>
+            </div>
         </div>
-        <p>&copy; 2025 Adarsh Kumar. All rights reserved.</p>
     </footer>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/ScrollTrigger.min.js"></script>
-    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
-    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.27/bundled/lenis.min.js"></script>
-    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/motionone@1.0.0/dist/motion.umd.js"></script>
     <script src="script.js"></script>
+</body>
+
+</html>
+</div>
+</div>
+</footer>
+
+<script src="script.js"></script>
 </body>
 
 </html>
