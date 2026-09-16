@@ -60,7 +60,7 @@ body {
   background: var(--bg);
   color: var(--text);
   line-height: 1.6;
-  font-size: 16px;
+  font-size: 18px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
@@ -79,6 +79,27 @@ body > * {
   position: relative;
   z-index: 2;
 }
+
+/* Inline SVG Sprite - define once, use everywhere */
+.sprite {
+  position: absolute;
+  width: 0;
+  height: 0;
+  visibility: hidden;
+}
+
+.icon {
+  display: block;
+  width: 1em;
+  height: 1em;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.icon use { fill: currentColor; }
 a {
   color: inherit;
 }
@@ -86,6 +107,9 @@ img {
   max-width: 100%;
   display: block;
 }
+
+/* SVG Reset */
+svg { max-width: 100%; height: auto; }
 ::selection {
   background: var(--accent);
   color: var(--bg-elev);
@@ -107,9 +131,9 @@ img {
 }
 .container {
   width: 100%;
-  max-width: 980px;
+  max-width: 1100px;
   margin: 0 auto;
-  padding: 0 28px;
+  padding: 0 clamp(20px, 4vw, 40px);
 }
 
 .progress {
@@ -179,36 +203,36 @@ img {
   border-bottom-color: var(--border-soft);
 }
 .header-inner {
-  height: 66px;
+  height: 72px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 16px;
+  gap: 20px;
 }
 .brand {
   font-family: "Fraunces", Georgia, serif;
-  font-size: 1.06rem;
+  font-size: 1.25rem;
   font-weight: 500;
   letter-spacing: -0.012em;
   text-decoration: none;
   color: var(--text);
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   transition: color 0.25s var(--ease);
 }
 .brand:hover {
   color: var(--accent);
 }
 .brand-mark {
-  width: 26px;
-  height: 26px;
-  border-radius: 7px;
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
   background: linear-gradient(135deg, var(--accent), var(--accent-2));
   display: grid;
   place-items: center;
   font-family: "Fraunces", Georgia, serif;
-  font-size: 0.72rem;
+  font-size: 0.85rem;
   font-weight: 600;
   color: #fff;
   box-shadow: 0 2px 8px var(--accent-glow);
@@ -219,10 +243,10 @@ img {
   gap: 1px;
 }
 .nav-link {
-  padding: 7px 12px;
-  border-radius: 8px;
-  font-size: 0.845rem;
-  font-weight: 450;
+  padding: 10px 18px;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 500;
   color: var(--muted);
   text-decoration: none;
   position: relative;
@@ -266,7 +290,7 @@ img {
 }
 
 .hero {
-  padding: 152px 0 88px;
+  padding: 180px 0 100px;
   position: relative;
 }
 .hero::before {
@@ -299,13 +323,13 @@ img {
 .hero-eyebrow {
   display: inline-flex;
   align-items: center;
-  gap: 9px;
-  margin: 0 0 20px;
-  padding: 5px 14px 5px 11px;
-  border-radius: 999px;
+  gap: 12px;
+  margin: 0 0 24px;
+  padding: 6px 18px 6px 12px;
+  border-radius: 26px;
   background: var(--bg-elev);
   border: 1px solid var(--border);
-  font-size: 0.75rem;
+  font-size: 0.9rem;
   font-weight: 500;
   color: var(--muted);
   box-shadow: var(--shadow-sm);
@@ -327,12 +351,12 @@ img {
   }
 }
 .hero-name {
-  margin: 0 0 12px;
+  margin: 0 0 16px;
   font-family: "Fraunces", Georgia, serif;
   font-weight: 500;
-  font-size: clamp(2.7rem, 7.2vw, 4.4rem);
-  line-height: 0.98;
-  letter-spacing: -0.038em;
+  font-size: clamp(3rem, 8vw, 5rem);
+  line-height: 1;
+  letter-spacing: -0.04em;
 }
 .hero-name em {
   font-style: normal;
@@ -383,11 +407,11 @@ img {
   }
 }
 .hero-lead {
-  margin: 0 0 34px;
-  max-width: 540px;
-  font-size: 1.05rem;
+  margin: 0 0 42px;
+  max-width: 640px;
+  font-size: 1.15rem;
   color: var(--text-soft);
-  line-height: 1.65;
+  line-height: 1.72;
 }
 .hero-lead b {
   font-weight: 550;
@@ -467,8 +491,8 @@ img {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 0;
-  margin-top: 76px;
-  padding-top: 30px;
+  margin-top: 96px;
+  padding-top: 40px;
   border-top: 1px solid var(--border-soft);
 }
 .stat {
@@ -514,9 +538,9 @@ img {
 }
 .stat-num {
   font-family: "Fraunces", Georgia, serif;
-  font-size: 1.85rem;
+  font-size: 2.1rem;
   font-weight: 500;
-  letter-spacing: -0.025em;
+  letter-spacing: -0.03em;
   font-variant-numeric: tabular-nums;
   line-height: 1.05;
   color: var(--text);
@@ -546,60 +570,66 @@ img {
   background: linear-gradient(90deg, var(--accent), var(--accent-2));
   transition: width 1.5s var(--ease-out);
 }
-.stat.reveal.in .stat-bar i {
+.reveal.in .stat-bar i,
+  .skills-radar-wrap.in .radar-dot,
+  .project-card.in .pc-metric-bar i,
+  .kaggle-card.in .kg-tier-bar i,
+  .radar-data.in,
+  .radar-dot.in {
   width: var(--w, 0);
+  opacity: 1;
 }
 .stat-label {
-  font-size: 0.78rem;
+  font-size: 0.92rem;
   color: var(--muted);
   line-height: 1.45;
 }
 
 .section {
-  padding: 96px 0;
+  padding: 120px 0;
   border-top: 1px solid var(--border-soft);
-  scroll-margin-top: 70px;
+  scroll-margin-top: 80px;
   position: relative;
 }
 .section-head {
-  margin-bottom: 48px;
+  margin-bottom: 60px;
 }
 .section-label {
-  margin: 0 0 12px;
-  font-size: 0.72rem;
+  margin: 0 0 16px;
+  font-size: 0.9rem;
   font-weight: 600;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--accent);
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
 }
 .section-label::before {
   content: "";
-  width: 18px;
-  height: 1px;
+  width: 22px;
+  height: 2px;
   background: var(--accent);
 }
 .section-title {
   margin: 0;
   font-family: "Fraunces", Georgia, serif;
   font-weight: 500;
-  font-size: clamp(1.65rem, 3.7vw, 2.15rem);
-  letter-spacing: -0.028em;
+  font-size: clamp(1.85rem, 4.2vw, 2.4rem);
+  letter-spacing: -0.032em;
   line-height: 1.15;
 }
 
 .about-grid {
   display: grid;
-  grid-template-columns: 1.4fr 1fr;
-  gap: 64px;
+  grid-template-columns: 1.6fr 1fr;
+  gap: 72px;
   align-items: start;
 }
 .about-text p {
-  margin: 0 0 18px;
+  margin: 0 0 22px;
   color: var(--text-soft);
-  font-size: 0.97rem;
+  font-size: 1.12rem;
   line-height: 1.72;
 }
 .about-text p:last-child {
@@ -2394,10 +2424,22 @@ img {
     transform 0.8s var(--ease-out);
   transition-delay: var(--delay, 0s);
 }
+
 .reveal.in {
   opacity: 1;
   transform: none;
 }
+
+.reveal.delay-1 { --delay: 0.05s; }
+.reveal.delay-2 { --delay: 0.08s; }
+.reveal.delay-3 { --delay: 0.12s; }
+.reveal.delay-4 { --delay: 0.16s; }
+.reveal.delay-5 { --delay: 0.2s; }
+.reveal.delay-6 { --delay: 0.24s; }
+.reveal.delay-7 { --delay: 0.28s; }
+.reveal.delay-8 { --delay: 0.32s; }
+.reveal.delay-9 { --delay: 0.35s; }
+.reveal.delay-10 { --delay: 0.4s; }
 
 @media (max-width: 900px) {
   .about-grid {

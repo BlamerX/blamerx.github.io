@@ -18,166 +18,85 @@
 </head>
 
 <body>
+    <svg class="sprite" aria-hidden="true"><symbol id="icon-chevron-up" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></symbol><symbol id="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></symbol><symbol id="icon-arrow-up-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></symbol><symbol id="icon-github" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.73.5.5 5.73.5 12a11.5 11.5 0 0 0 7.86 10.92c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.34-1.3-1.7-1.3-1.7-1.06-.72.08-.7.08-.7 1.17.08 1.79 1.2 1.79 1.2 1.04 1.79 2.73 1.27 3.4.97.1-.76.41-1.27.74-1.56-2.55-.29-5.24-1.28-5.24-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.8 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.12 3.05.74.81 1.18 1.84 1.18 3.1 0 4.43-2.69 5.4-5.25 5.69.42.36.79 1.08.79 2.18v3.23c0 .31.21.67.8.56A11.5 11.5 0 0 0 23.5 12C23.5 5.73 18.27.5 12 .5Z"/></symbol><symbol id="icon-kaggle" viewBox="0 0 24 24" fill="currentColor"><path d="M18.825 23.859c-.022.092-.117.141-.281.141h-3.139c-.187 0-.351-.082-.492-.248l-5.178-6.589-1.448 1.374v5.111c0 .235-.117.352-.351.352H5.505c-.236 0-.354-.117-.354-.352V.353c0-.233.118-.353.354-.353h2.431c.234 0 .351.12.351.353v14.343l6.203-6.272c.165-.165.33-.246.495-.246h3.239c.144 0 .236.06.285.18.046.149.034.255-.036.315l-6.555 6.344 6.836 8.507c.095.104.117.208.07.336z"/></symbol><symbol id="icon-email" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="4.5" width="19" height="15" rx="2.5"/><path d="m3 7 9 6 9-6"/></symbol><symbol id="icon-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></symbol><symbol id="icon-download" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4.5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4.5l2-2 2 2H19a2 2 0 0 1 2 2Z"/><path d="M14 10L9 15M9 15L14 20M9 15V20"/></symbol><symbol id="icon-graduation" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12v5c0 1.7 2.7 3 6 3s6-1.3 6-3v-5"/></symbol><symbol id="icon-star" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 15 9l7 .5-5.5 4.5 2 7-6.5-4-6.5 4 2-7L2 9.5 9 9z"/></symbol><symbol id="icon-briefcase" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></symbol><symbol id="icon-sync" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M3 21v-5h5"/></symbol></svg>
 
     <div class="progress" id="progress"></div>
 
     <button class="back-to-top" id="backToTop" aria-label="Back to top">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"
-            stroke-linejoin="round">
-            <path d="M12 19V5M5 12l7-7 7 7" />
-        </svg>
+      <svg class="icon icon-chevron-up" width="16" height="16" aria-hidden="true"></svg>
     </button>
 
-    <header class="site-header" id="header">
-        <div class="container header-inner">
-            <a href="#home" class="brand">
-                <span class="brand-mark">AK</span>
-                Adarsh Kumar
-            </a>
-            <nav class="nav" id="nav" aria-label="Main">
-                <a href="#about" class="nav-link">About</a>
-                <a href="#skills" class="nav-link">Skills</a>
-                <a href="#activity" class="nav-link">Activity</a>
-                <a href="#journey" class="nav-link">Journey</a>
-                <a href="#projects" class="nav-link">Projects</a>
-                <a href="#awards" class="nav-link">Recognition</a>
-                <a href="#contact" class="nav-link">Contact</a>
-            </nav>
-            <button class="menu-btn" id="menuBtn" aria-label="Menu" aria-expanded="false">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"
-                    stroke-linecap="round">
-                    <path d="M3 6h18M3 12h18M3 18h18" />
-                </svg>
-            </button>
-        </div>
-    </header>
+<header class="site-header" id="header">
+    <div class="container header-inner">
+      <a href="#home" class="brand"><span class="brand-mark">AK</span>Adarsh Kumar</a>
+      <nav class="nav" id="nav" aria-label="Main">
+        <a href="#about" class="nav-link">About</a>
+        <a href="#skills" class="nav-link">Skills</a>
+        <a href="#activity" class="nav-link">Activity</a>
+        <a href="#journey" class="nav-link">Journey</a>
+        <a href="#projects" class="nav-link">Projects</a>
+        <a href="#awards" class="nav-link">Recognition</a>
+        <a href="#contact" class="nav-link">Contact</a>
+      </nav>
+      <button class="menu-btn" id="menuBtn" aria-label="Menu" aria-expanded="false">
+        <svg class="icon" width="16" height="16" aria-hidden="true"><use href="#icon-menu"/></svg>
+      </button>
+    </div>
+  </header>
 
     <main>
 
         <section class="hero" id="home">
             <div class="container">
-                <div class="hero-eyebrow reveal">
+                <div class="hero-eyebrow reveal delay-4">
                     <span class="dot"></span>
-                    Open to Data Science &amp; ML roles
+                    Open to Data Science & ML roles
                 </div>
-                <h1 class="hero-name reveal" style="--delay:.05s">Adarsh <em>Kumar</em></h1>
-                <p class="hero-typer reveal" style="--delay:.08s">
+                <h1 class="hero-name reveal delay-1">Adarsh <em>Kumar</em></h1>
+                <p class="hero-typer reveal delay-2">
                     <span class="typer-prefix">I build in</span>
                     <span class="typer-text" id="typer"></span><span class="typer-cursor" aria-hidden="true"></span>
                 </p>
-                <p class="hero-lead reveal" style="--delay:.12s">
+                <p class="hero-lead reveal delay-3">
                     I turn messy real-world data into working products.
                     Currently focused on <b>computer vision</b> and <b>applied machine learning</b>.
                 </p>
-                <div class="cta-row reveal" style="--delay:.16s">
-                    <a class="btn btn-primary" href="#projects">
-                        View projects
-                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M5 12h14M13 6l6 6-6 6" />
-                        </svg>
-                    </a>
-                    <a class="btn btn-ghost"
-                        href="https://drive.google.com/file/d/17zyf6v5fFwTNjZ0SgRUzsUSqvnd6VC9i/view?usp=sharing"
-                        target="_blank" rel="noopener">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M12 3v12M7 10l5 5 5-5M5 21h14" />
-                        </svg>
-                        Résumé
-                    </a>
-                    <div class="socials">
-                        <a class="social-link" href="https://github.com/BlamerX" target="_blank" rel="noopener"
-                            aria-label="GitHub">
-                            <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor">
-                                <path
-                                    d="M12 .5C5.73.5.5 5.73.5 12a11.5 11.5 0 0 0 7.86 10.92c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.34-1.3-1.7-1.3-1.7-1.06-.72.08-.7.08-.7 1.17.08 1.79 1.2 1.79 1.2 1.04 1.79 2.73 1.27 3.4.97.1-.76.41-1.27.74-1.56-2.55-.29-5.24-1.28-5.24-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.8 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.12 3.05.74.81 1.18 1.84 1.18 3.1 0 4.43-2.69 5.4-5.25 5.69.42.36.79 1.08.79 2.18v3.23c0 .31.21.67.8.56A11.5 11.5 0 0 0 23.5 12C23.5 5.73 18.27.5 12 .5Z" />
-                            </svg>
-                        </a>
-                        <a class="social-link" href="https://www.kaggle.com/blamerx" target="_blank" rel="noopener"
-                            aria-label="Kaggle">
-                            <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor">
-                                <path
-                                    d="M18.825 23.859c-.022.092-.117.141-.281.141h-3.139c-.187 0-.351-.082-.492-.248l-5.178-6.589-1.448 1.374v5.111c0 .235-.117.352-.351.352H5.505c-.236 0-.354-.117-.354-.352V.353c0-.233.118-.353.354-.353h2.431c.234 0 .351.12.351.353v14.343l6.203-6.272c.165
-
--.165.33-.246.495-.246h3.239c.144 0 .236.06.285.18.046.149.034.255-.036.315l-6.555 6.344 6.836 8.507c.095.104.117.208.07.336z" />
-                            </svg>
-                        </a>
-                        <a class="social-link" href="https://www.linkedin.com/in/adarshkumar13/" target="_blank"
-                            rel="noopener" aria-label="LinkedIn">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                                <path
-                                    d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29ZM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12Zm1.78 13.02H3.56V9h3.56v11.45ZM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0Z" />
-                            </svg>
-                        </a>
-                        <a class="social-link" href="mailto:adarsh.kumar@example.com" aria-label="Email">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                                <rect x="2.5" y="4.5" width="19" height="15" rx="2.5" />
-                                <path d="m3 7 9 6 9-6" />
-                            </svg>
-                        </a>
-                    </div>
-                </div>
-                <div class="stats">
-                    <div class="stat reveal" style="--delay:.2s">
-                        <div class="stat-head">
-                            <span class="stat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"
-                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round">
-                                    <path d="M12 2 3 7v10l9 5 9-5V7l-9-5Z" />
-                                    <path d="M12 12 3 7M12 12l9-5M12 12v10" />
-                                </svg></span>
-                            <span class="stat-kicker">Projects</span>
-                        </div>
-                        <div class="stat-num" data-count="6">6</div>
-                        <div class="stat-bar"><i style="--w:85%"></i></div>
-                        <div class="stat-label">ML &amp; DL products shipped</div>
-                    </div>
-                    <div class="stat reveal" style="--delay:.24s">
-                        <div class="stat-head">
-                            <span class="stat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"
-                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round">
-                                    <path d="M12 2 15 9l7 .5-5.5 4.5 2 7-6.5-4-6.5 4 2-7L2 9.5 9 9z" />
-                                </svg></span>
-                            <span class="stat-kicker">Kaggle</span>
-                        </div>
-                        <div class="stat-num"><span class="unit-pre">Top</span> <span data-kaggle="percentile">1%</span>
-                        </div>
-                        <div class="stat-bar"><i style="--w:99%"></i></div>
-                        <div class="stat-label
-
-">notebook ranking globally</div>
-                    </div>
-                    <div class="stat reveal" style="--delay:.28s">
-                        <div class="stat-head">
-                            <span class="stat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"
-                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round">
-                                    <circle cx="12" cy="12" r="9" />
-                                    <path d="M3 12h18M12 3a15 15 0 0 1 0 18 15 15 0 0 1 0-18Z" />
-                                </svg></span>
-                            <span class="stat-kicker">Data</span>
-                        </div>
-                        <div class="stat-num" data-count="470" data-suffix="+">470<span class="unit">+</span></div>
-                        <div class="stat-bar"><i style="--w:94%"></i></div>
-                        <div class="stat-label">cities in the AQI pipeline</div>
-                    </div>
-                    <div class="stat reveal" style="--delay:.32s">
-                        <div class="stat-head">
-                            <span class="stat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"
-                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round">
-                                    <path d="M12 2v20M2 12h20" />
-                                </svg></span>
-                            <span class="stat-kicker">Python</span>
-                        </div>
-                        <div class="stat-num" data-count="4" data-suffix="+">4<span class="unit">+</span></div>
-                        <div class="stat-bar"><i style="--w:80%"></i></div>
-                        <div class="stat-label">years of daily practice</div>
-                    </div>
-                </div>
+<div class="cta-row reveal delay-5">
+        <a class="btn btn-primary" href="#projects">View projects<svg width="13" height="13" aria-hidden="true"><use href="#icon-arrow"/></svg></a>
+        <a class="btn btn-ghost" href="https://drive.google.com/file/d/17zyf6v5fFwTNjZ0SgRUzsUSqvnd6VC9i/view?usp=sharing" target="_blank" rel="noopener"><svg width="14" height="14" aria-hidden="true"><use href="#icon-download"/></svg>Résumé</a>
+        <div class="socials">
+          <a class="social-link" href="https://github.com/BlamerX" target="_blank" rel="noopener" aria-label="GitHub"><svg width="17" height="17" aria-hidden="true"><use href="#icon-github"/></svg></a>
+          <a class="social-link" href="https://www.kaggle.com/blamerx" target="_blank" rel="noopener" aria-label="Kaggle"><svg width="17" height="17" aria-hidden="true"><use href="#icon-kaggle"/></svg></a>
+          <a class="social-link" href="https://www.linkedin.com/in/adarshkumar13/" target="_blank" rel="noopener" aria-label="LinkedIn"><svg width="16" height="16" aria-hidden="true"><use href="#icon-arrow"/></svg></a>
+          <a class="social-link" href="mailto:adarsh.kumar@example.com" aria-label="Email"><svg width="16" height="16" aria-hidden="true"><use href="#icon-email"/></svg></a>
+        </div>
+      </div>
+<div class="stats">
+      <div class="stat reveal delay-5">
+        <div class="stat-head"><span class="stat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 3 7v10l9 5 9-5V7l-9-5Z"/><path d="M12 12 3 7M12 12l9-5M12 12v10"/></svg></span><span class="stat-kicker">Projects</span></div>
+        <div class="stat-num" data-count="15">15+</div>
+        <div class="stat-bar"><i style="--w:85%"></i></div>
+        <div class="stat-label">ML/DL applications delivered</div>
+      </div>
+      <div class="stat reveal delay-6">
+        <div class="stat-head"><span class="stat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 15 9l7 .5-5.5 4.5 2 7-6.5-4-6.5 4 2-7L2 9.5 9 9z"/></svg></span><span class="stat-kicker">Kaggle</span></div>
+        <div class="stat-num"><span class="unit-pre">Top</span> <span data-kaggle="percentile">1%</span></div>
+        <div class="stat-bar"><i style="--w:99%"></i></div>
+        <div class="stat-label">notebook ranking globally</div>
+      </div>
+      <div class="stat reveal delay-7">
+        <div class="stat-head"><span class="stat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h18M12 3v18"/></svg></span><span class="stat-kicker">Contrib</span></div>
+        <div class="stat-num" data-count="150" data-suffix="+">150<span class="unit">+</span></div>
+        <div class="stat-bar"><i style="--w:80%"></i></div>
+        <div class="stat-label">Kaggle contributions</div>
+      </div>
+      <div class="stat reveal delay-8">
+        <div class="stat-head"><span class="stat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M2 12h20"/></svg></span><span class="stat-kicker">Python</span></div>
+        <div class="stat-num" data-count="4" data-suffix="+">4<span class="unit">+</span></div>
+        <div class="stat-bar"><i style="--w:80%"></i></div>
+        <div class="stat-label">years coding daily</div>
+      </div>
+    </div>
             </div>
         </section>
 
@@ -188,14 +107,10 @@
                     <h2 class="section-title">The short version.</h2>
                 </div>
                 <div class="about-grid">
-                    <div class="about-text reveal">
-                        <p>I studied <b>Computer Science and Communication Engineering</b> at KIIT, Bhubaneswar, and I
-                            now work across machine learning, deep learning and data engineering.</p>
-                        <p>I like taking a problem from raw data to a shipped product — scraping, cleaning, modelling,
-                            evaluating, and putting it in front of a user.</p>
-                        <p>On the side I'm active on Kaggle, where I've been recognised as a <span
-                                data-kaggle="tierLabel">Notebook Expert</span>. I lean toward projects that are visually
-                            satisfying as well as technically sound.</p>
+                    <div class="about-text reveal delay-4">
+                        <p>I studied <b>Computer Science and Communication Engineering</b> at KIIT, Bhubaneswar, and I now work across machine learning, deep learning and data engineering.</p>
+                        <p>I like taking a problem from raw data to a shipped product — scraping, cleaning, modelling, evaluating, and putting it in front of a user.</p>
+                        <p>On the side I'm active on Kaggle, where I've been recognised as a <span data-kaggle="tierLabel">Notebook Expert</span>. I lean toward projects that are visually satisfying as well as technically sound.</p>
                         <div class="currently">
                             <span class="currently-label">Currently exploring</span>
                             <span class="currently-tag">LLM fine-tuning</span>
@@ -204,25 +119,22 @@
                             <span class="currently-tag">MLOps</span>
                         </div>
                     </div>
-                    <div class="reveal" style="--delay:.1s">
+                    <div class="reveal delay-5">
                         <ul class="edu-list">
                             <li class="edu-item">
                                 <div class="edu-school">Kalinga Institute of Industrial Technology</div>
                                 <div class="edu-degree">B.Tech — Computer Science &amp; Communication Engineering</div>
-                                <div class="edu-meta">Bhubaneswar<span class="dot">·</span>2020 – 2024<span
-                                        class="dot">·</span>CGPA 8.54</div>
+                                <div class="edu-meta">Bhubaneswar<span class="dot">·</span>2020 – 2024<span class="dot">·</span>CGPA 8.54</div>
                             </li>
                             <li class="edu-item">
                                 <div class="edu-school">FIITJEE Junior College</div>
                                 <div class="edu-degree">Class XII — BIE-AP</div>
-                                <div class="edu-meta">Visakhapatnam<span class="dot">·</span>2017 – 2019<span
-                                        class="dot">·</span>CGPA 7.46</div>
+                                <div class="edu-meta">Visakhapatnam<span class="dot">·</span>2017 – 2019<span class="dot">·</span>CGPA 7.46</div>
                             </li>
                             <li class="edu-item">
                                 <div class="edu-school">Navy Children School</div>
                                 <div class="edu-degree">Class X — CBSE</div>
-                                <div class="edu-meta">Visakhapatnam<span class="dot">·</span>2006 – 2017<span
-                                        class="dot">·</span>CGPA 8.2</div>
+                                <div class="edu-meta">Visakhapatnam<span class="dot">·</span>2006 – 2017<span class="dot">·</span>CGPA 8.2</div>
                             </li>
                         </ul>
                     </div>
@@ -314,66 +226,48 @@
                     </div>
                 </div>
                 <div class="skills-grid">
-                    <div class="skill-group reveal">
+                    <div class="skill-group reveal delay-10">
                         <h3>Languages</h3>
                         <div class="tags">
-                            <span class="tag"><img src="https://cdn.simpleicons.org/python/3776AB" alt=""
-                                    loading="lazy">Python</span>
-                            <span class="tag"><img src="https://cdn.simpleicons.org/cplusplus/00599C" alt=""
-                                    loading="lazy">C++</span>
-                            <span class="tag"><img src="https://cdn.simpleicons.org/c/6E7B8B" alt=""
-                                    loading="lazy">C</span>
-                            <span class="tag"><img src="https://cdn.simpleicons.org/mysql/4479A1" alt=""
-                                    loading="lazy">MySQL</span>
-                            <span class="tag"><img src="https://cdn.simpleicons.org/html5/E34F26" alt=""
-                                    loading="lazy">HTML</span>
-                            <span class="tag"><img src="https://cdn.simpleicons.org/css3/1572B6" alt=""
-                                    loading="lazy">CSS</span>
+                            <span class="tag"><img src="https://cdn.simpleicons.org/python/3776AB" alt="" loading="lazy">Python</span>
+                            <span class="tag"><img src="https://cdn.simpleicons.org/cplusplus/00599C" alt="" loading="lazy">C++</span>
+                            <span class="tag"><img src="https://cdn.simpleicons.org/c/6E7B8B" alt="" loading="lazy">C</span>
+                            <span class="tag"><img src="https://cdn.simpleicons.org/mysql/4479A1" alt="" loading="lazy">MySQL</span>
+                            <span class="tag"><img src="https://cdn.simpleicons.org/html5/E34F26" alt="" loading="lazy">HTML</span>
+                            <span class="tag"><img src="https://cdn.simpleicons.org/css3/1572B6" alt="" loading="lazy">CSS</span>
                         </div>
                     </div>
-                    <div class="skill-group reveal" style="--delay:.06s">
-                        <h3>Frameworks &amp; ML</h3>
+                    <div class="skill-group reveal delay-9">
+                        <h3>Frameworks & ML</h3>
                         <div class="tags">
-                            <span class="tag"><img src="https://cdn.simpleicons.org/tensorflow/FF6F00" alt=""
-                                    loading="lazy">TensorFlow</span>
-                            <span class="tag"><img src="https://cdn.simpleicons.org/keras/D00000" alt=""
-                                    loading="lazy">Keras</span>
-                            <span class="tag"><img src="https://cdn.simpleicons.org/scikitlearn/C97A1A" alt=""
-                                    loading="lazy">Scikit-learn</span>
-                            <span class="tag"><img src="https://cdn.simpleicons.org/opencv/5C3EE8" alt=""
-                                    loading="lazy">OpenCV</span>
-                            <span class="tag"><img src="https://cdn.simpleicons.org/streamlit/FF4B4B" alt=""
-                                    loading="lazy">Streamlit</span>
-                            <span class="tag"><img src="https://cdn.simpleicons.org/flask/8B8B8B" alt=""
-                                    loading="lazy">Flask</span>
+                            <span class="tag"><img src="https://cdn.simpleicons.org/tensorflow/FF6F00" alt="" loading="lazy">TensorFlow</span>
+                            <span class="tag"><img src="https://cdn.simpleicons.org/keras/D00000" alt="" loading="lazy">Keras</span>
+                            <span class="tag"><img src="https://cdn.simpleicons.org/scikitlearn/C97A1A" alt="" loading="lazy">Scikit-learn</span>
+                            <span class="tag"><img src="https://cdn.simpleicons.org/opencv/5C3EE8" alt="" loading="lazy">OpenCV</span>
+                            <span class="tag"><img src="https://cdn.simpleicons.org/streamlit/FF4B4B" alt="" loading="lazy">Streamlit</span>
+                            <span class="tag"><img src="https://cdn.simpleicons.org/flask/8B8B8B" alt="" loading="lazy">Flask</span>
                         </div>
                     </div>
-                    <div class="skill-group reveal" style="--delay:.12s">
-                        <h3>Data &amp; Viz</h3>
+                    <div class="skill-group reveal delay-8">
+                        <h3>Data & Viz</h3>
                         <div class="tags">
-                            <span class="tag tag-text">NumPy</span>
-                            <span class="tag tag-text">Pandas</span>
-                            <span class="tag"><img src="https://cdn.simpleicons.org/plotly/3F4F75" alt=""
-                                    loading="lazy">Plotly</span>
+                            <span class="tag"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/numpy/numpy-original.svg" alt="NumPy" loading="lazy">NumPy</span>
+                            <span class="tag"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pandas/pandas-original.svg" alt="Pandas" loading="lazy">Pandas</span>
+                            <span class="tag"><img src="https://cdn.simpleicons.org/plotly/3F4F75" alt="Plotly" loading="lazy">Plotly</span>
+                            <span class="tag"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/matplotlib/matplotlib-original.svg" alt="Matplotlib" loading="lazy">Matplotlib</span>
                             <span class="tag tag-text">Seaborn</span>
-                            <span class="tag tag-text">Matplotlib</span>
                             <span class="tag tag-text">BeautifulSoup</span>
                         </div>
                     </div>
-                    <div class="skill-group reveal" style="--delay:.18s">
-                        <h3>Tools &amp; Env</h3>
+                    <div class="skill-group reveal delay-7">
+                        <h3>Tools & Env</h3>
                         <div class="tags">
-                            <span class="tag"><img src="https://cdn.simpleicons.org/git/F05032" alt=""
-                                    loading="lazy">Git</span>
-                            <span class="tag"><img src="https://cdn.simpleicons.org/visualstudiocode/007ACC" alt=""
-                                    loading="lazy">VS Code</span>
-                            <span class="tag"><img src="https://cdn.simpleicons.org/googlecolab/D99600" alt=""
-                                    loading="lazy">Colab</span>
-                            <span class="tag"><img src="https://cdn.simpleicons.org/kaggle/0E9FE0" alt=""
-                                    loading="lazy">Kaggle</span>
-                            <span class="tag"><img src="https://cdn.simpleicons.org/anaconda/44A833" alt=""
-                                    loading="lazy">Anaconda</span>
-                            <span class="tag tag-text">Jupyter</span>
+                            <span class="tag"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" alt="Git" loading="lazy">Git</span>
+                            <span class="tag"><img src="https://cdn.simpleicons.org/visualstudiocode/007ACC" alt="VS Code" loading="lazy">VS Code</span>
+                            <span class="tag"><img src="https://cdn.simpleicons.org/googlecolab/D99600" alt="Colab" loading="lazy">Colab</span>
+                            <span class="tag"><img src="https://cdn.simpleicons.org/kaggle/0E9FE0" alt="Kaggle" loading="lazy">Kaggle</span>
+                            <span class="tag"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/anaconda/anaconda-icon.svg" alt="Anaconda" loading="lazy">Anaconda</span>
+                            <span class="tag"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/jupyter/jupyter-original.svg" alt="Jupyter" loading="lazy">Jupyter</span>
                         </div>
                     </div>
                 </div>
@@ -388,24 +282,13 @@
                 </div>
                 <div class="activity-grid">
                     <div class="profile-card kaggle-card reveal">
-                        <div class="profile-head">
-                            <div class="profile-head-left">
-                                <div class="profile-logo" aria-hidden="true">
-                                    <svg viewBox="0 0 24 24" fill="currentColor">
-                                        <path
-                                            d="M18.825 23.859c-.022.092-.117.141-.281.141h-3.139c-.187 0-.351-.082-.492-.248l-5.178-6.589-1.448 1.374v5.111c0 .235-.117.352-.351.352H5.505c-.236 0-.354-.117-.354-.352V.353c0-.233.118-.353.354-.353h2.431c.234 0 .351.12.351.353v14.343l6.203-6.272c.165-.165.33-.246.495-.246h3.239c.144 0 .236.06.285.18.046.149.034.255-.036.315l-6.555 6.344 6.836 8.507c.095.104.117.208.07.336z" />
-                                    </svg>
-                                </div>
-                                <div>
-                                    <h3 class="profile-title">Kaggle</h3>
-                                    <div class="profile-sub"><b>@blamerx</b> · he/him</div>
-                                </div>
-                            </div>
-                            <span class="sync-pill" data-state="loading" data-sync="kaggle">
-                                <span class="sync-dot"></span>
-                                <span class="sync-label">Connecting</span>
-                            </span>
-                        </div>
+      <div class="profile-head">
+        <div class="profile-head-left">
+          <div class="profile-logo" aria-hidden="true"><svg width="20" height="20" aria-hidden="true"><use href="#icon-kaggle"/></svg></div>
+          <div><h3 class="profile-title">Kaggle</h3><div class="profile-sub"><b>@blamerx</b> · he/him</div></div>
+        </div>
+        <span class="sync-pill" data-state="loading" data-sync="kaggle"><span class="sync-dot"></span><span class="sync-label">Connecting</span></span>
+      </div>
                         <div class="kg-body">
                             <div class="kg-donut">
                                 <svg viewBox="0 0 90 90" aria-hidden="true">
@@ -488,24 +371,13 @@
                     </div>
 
                     <div class="profile-card github-card reveal" style="--delay:.06s">
-                        <div class="profile-head">
-                            <div class="profile-head-left">
-                                <div class="profile-logo" aria-hidden="true">
-                                    <svg viewBox="0 0 24 24" fill="currentColor">
-                                        <path
-                                            d="M12 .5C5.73.5.5 5.73.5 12a11.5 11.5 0 0 0 7.86 10.92c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.34-1.3-1.7-1.3-1.7-1.06-.72.08-.7.08-.7 1.17.08 1.79 1.2 1.79 1.2 1.04 1.79 2.73 1.27 3.4.97.1-.76.41-1.27.74-1.56-2.55-.29-5.24-1.28-5.24-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.8 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.12 3.05.74.81 1.18 1.84 1.18 3.1 0 4.43-2.69 5.4-5.25 5.69.42.36.79 1.08.79 2.18v3.23c0 .31.21.67.8.56A11.5 11.5 0 0 0 23.5 12C23.5 5.73 18.27.5 12 .5Z" />
-                                    </svg>
-                                </div>
-                                <div>
-                                    <h3 class="profile-title">GitHub</h3>
-                                    <div class="profile-sub"><b>@BlamerX</b></div>
-                                </div>
-                            </div>
-                            <span class="sync-pill" data-state="loading" data-sync="github">
-                                <span class="sync-dot"></span>
-                                <span class="sync-label">Connecting</span>
-                            </span>
-                        </div>
+      <div class="profile-head">
+        <div class="profile-head-left">
+          <div class="profile-logo" aria-hidden="true"><svg width="20" height="20" aria-hidden="true"><use href="#icon-github"/></svg></div>
+          <div><h3 class="profile-title">GitHub</h3><div class="profile-sub"><b>@BlamerX</b></div></div>
+        </div>
+        <span class="sync-pill" data-state="loading" data-sync="github"><span class="sync-dot"></span><span class="sync-label">Connecting</span></span>
+      </div>
                         <div class="gh-stats">
                             <div class="gh-stat"><b data-github="repos">—</b><span>public repos</span></div>
                             <div class="gh-stat"><b data-github="followers">—</b><span>followers</span></div>
@@ -548,116 +420,90 @@
         </section>
 
         <section class="section" id="journey">
-            <div class="container">
-                <div class="section-head reveal">
-                    <p class="section-label">Journey</p>
-                    <h2 class="section-title">Milestones so far.</h2>
-                </div>
-                <ol class="journey">
-                    <li class="milestone is-latest reveal">
-                        <div class="mile-year">2024</div>
-                        <div class="mile-rail"><span class="mile-dot"></span></div>
-                        <div class="mile-card">
-                            <div class="mile-head">
-                                <h3 class="mile-title">Graduated B.Tech</h3>
-                                <span class="mile-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                        stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                        <path d="M22 10 12 5 2 10l10 5 10-5Z" />
-                                        <path d="M6 12v5c0 1.7 2.7 3 6 3s6-1.3 6-3v-5" />
-                                    </svg>Education</span>
-                            </div>
-                            <p class="mile-sub">Kalinga Institute of Industrial Technology</p>
-                            <div class="mile-metrics"><span class="mile-metric"><b>8.54</b> CGPA</span></div>
-                        </div>
-                    </li>
-                    <li class="milestone is-key reveal" style="--delay:.05s">
-                        <div class="mile-year">2024</div>
-                        <div class="mile-rail"><span class="mile-dot"></span></div>
-                        <div class="mile-card">
-                            <div class="mile-head">
-                                <h3 class="mile-title">Kaggle Notebook Expert</h3>
-                                <span class="mile-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                        stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                        <path d="M12 2 15 9l7 .5-5.5 4.5 2 7-6.5-4-6.5 4 2-7L2 9.5 9 9z" />
-                                    </svg>Achievement</span>
-                            </div>
-                            <p class="mile-sub" data-kaggle="journeySub">Rank — of — · Best rank —</p>
-                            <div class="mile-metrics">
-                                <span class="mile-metric"><b data-kaggle="silver">—</b> silver</span>
-                                <span class="mile-metric"><b data-kaggle="bronze">—</b> bronze</span>
-                                <span class="mile-metric"><b data-kaggle="code">—</b> notebooks</span>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="milestone reveal" style="--delay:.1s">
-                        <div class="mile-year">2023</div>
-                        <div class="mile-rail"><span class="mile-dot"></span></div>
-                        <div class="mile-card">
-                            <div class="mile-head">
-                                <h3 class="mile-title">Data Science Intern</h3>
-                                <span class="mile-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                        stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                        <rect x="2" y="7" width="20" height="14" rx="2" />
-                                        <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
-                                    </svg>Experience</span>
-                            </div>
-                            <p class="mile-sub"><b>Celebal Technologies</b> · Python, ML, Flask, Web Scraping</p>
-                            <div class="mile-metrics">
-                                <span class="mile-metric"><b>470+</b> cities scraped</span>
-                                <span class="mile-metric"><b>2.3</b> MSE</span>
-                                <span class="mile-metric"><b>+40%</b> clarity</span>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="milestone reveal" style="--delay:.15s">
-                        <div class="mile-year">2020</div>
-                        <div class="mile-rail"><span class="mile-dot"></span></div>
-                        <div class="mile-card">
-                            <div class="mile-head">
-                                <h3 class="mile-title">Started B.Tech at KIIT</h3>
-                                <span class="mile-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                        stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                        <path d="M22 10 12 5 2 10l10 5 10-5Z" />
-                                        <path d="M6 12v5c0 1.7 2.7 3 6 3s6-1.3 6-3v-5" />
-                                    </svg>Education</span>
-                            </div>
-                            <p class="mile-sub">Computer Science &amp; Communication Engineering · Bhubaneswar</p>
-                        </div>
-                    </li>
-                    <li class="milestone reveal" style="--delay:.2s">
-                        <div class="mile-year">2019</div>
-                        <div class="mile-rail"><span class="mile-dot"></span></div>
-                        <div class="mile-card">
-                            <div class="mile-head">
-                                <h3 class="mile-title">Completed Class XII</h3>
-                                <span class="mile-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                        stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                        <path d="M22 10 12 5 2 10l10 5 10-5Z" />
-                                        <path d="M6 12v5c0 1.7 2.7 3 6 3s6-1.3 6-3v-5" />
-                                    </svg>Education</span>
-                            </div>
-                            <p class="mile-sub">BIE Andhra Pradesh Board</p>
-                            <div class="mile-metrics"><span class="mile-metric"><b>7.46</b> CGPA</span></div>
-                        </div>
-                    </li>
-                    <li class="milestone reveal" style="--delay:.25s">
-                        <div class="mile-year">2017</div>
-                        <div class="mile-rail"><span class="mile-dot"></span></div>
-                        <div class="mile-card">
-                            <div class="mile-head">
-                                <h3 class="mile-title">Started Class XII</h3>
-                                <span class="mile-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                        stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                        <path d="M22 10 12 5 2 10l10 5 10-5Z" />
-                                        <path d="M6 12v5c0 1.7 2.7 3 6 3s6-1.3 6-3v-5" />
-                                    </svg>Education</span>
-                            </div>
-                            <p class="mile-sub">FIITJEE Junior College · Visakhapatnam</p>
-                        </div>
-                    </li>
-                </ol>
+    <div class="container">
+      <div class="section-head reveal"><p class="section-label">Journey</p><h2 class="section-title">Milestones so far.</h2></div>
+      <ol class="journey">
+        <li class="milestone is-latest reveal">
+          <div class="mile-year">2024</div>
+          <div class="mile-rail"><span class="mile-dot"></span></div>
+          <div class="mile-card">
+            <div class="mile-head">
+              <h3 class="mile-title">Graduated B.Tech</h3>
+              <span class="mile-badge"><svg width="10" height="10" aria-hidden="true"><use href="#icon-graduation"/></svg>Education</span>
             </div>
-        </section>
+            <p class="mile-sub">Kalinga Institute of Industrial Technology</p>
+            <div class="mile-metrics"><span class="mile-metric"><b>8.54</b> CGPA</span></div>
+          </div>
+        </li>
+        <li class="milestone is-key reveal" style="--delay:.05s">
+          <div class="mile-year">2024</div>
+          <div class="mile-rail"><span class="mile-dot"></span></div>
+          <div class="mile-card">
+            <div class="mile-head">
+              <h3 class="mile-title">Kaggle Notebook Expert</h3>
+              <span class="mile-badge"><svg width="10" height="10" aria-hidden="true"><use href="#icon-star"/></svg>Achievement</span>
+            </div>
+            <p class="mile-sub" data-kaggle="journeySub">Rank — of — · Best rank —</p>
+            <div class="mile-metrics">
+              <span class="mile-metric"><b data-kaggle="silver">—</b> silver</span>
+              <span class="mile-metric"><b data-kaggle="bronze">—</b> bronze</span>
+              <span class="mile-metric"><b data-kaggle="code">—</b> notebooks</span>
+            </div>
+          </div>
+        </li>
+        <li class="milestone reveal" style="--delay:.1s">
+          <div class="mile-year">2023</div>
+          <div class="mile-rail"><span class="mile-dot"></span></div>
+          <div class="mile-card">
+            <div class="mile-head">
+              <h3 class="mile-title">Data Science Intern</h3>
+              <span class="mile-badge"><svg width="10" height="10" aria-hidden="true"><use href="#icon-briefcase"/></svg>Experience</span>
+            </div>
+            <p class="mile-sub"><b>Celebal Technologies</b> · Python, ML, Flask, Web Scraping</p>
+            <div class="mile-metrics">
+              <span class="mile-metric"><b>470+</b> cities scraped</span>
+              <span class="mile-metric"><b>2.3</b> MSE</span>
+              <span class="mile-metric"><b>+40%</b> clarity</span>
+            </div>
+          </div>
+        </li>
+        <li class="milestone reveal" style="--delay:.15s">
+          <div class="mile-year">2020</div>
+          <div class="mile-rail"><span class="mile-dot"></span></div>
+          <div class="mile-card">
+            <div class="mile-head">
+              <h3 class="mile-title">Started B.Tech at KIIT</h3>
+              <span class="mile-badge"><svg width="10" height="10" aria-hidden="true"><use href="#icon-graduation"/></svg>Education</span>
+            </div>
+            <p class="mile-sub">Computer Science &amp; Communication Engineering · Bhubaneswar</p>
+          </div>
+        </li>
+        <li class="milestone reveal" style="--delay:.2s">
+          <div class="mile-year">2019</div>
+          <div class="mile-rail"><span class="mile-dot"></span></div>
+          <div class="mile-card">
+            <div class="mile-head">
+              <h3 class="mile-title">Completed Class XII</h3>
+              <span class="mile-badge"><svg width="10" height="10" aria-hidden="true"><use href="#icon-graduation"/></svg>Education</span>
+            </div>
+            <p class="mile-sub">BIE Andhra Pradesh Board</p>
+            <div class="mile-metrics"><span class="mile-metric"><b>7.46</b> CGPA</span></div>
+          </div>
+        </li>
+        <li class="milestone reveal" style="--delay:.25s">
+          <div class="mile-year">2017</div>
+          <div class="mile-rail"><span class="mile-dot"></span></div>
+          <div class="mile-card">
+            <div class="mile-head">
+              <h3 class="mile-title">Started Class XII</h3>
+              <span class="mile-badge"><svg width="10" height="10" aria-hidden="true"><use href="#icon-graduation"/></svg>Education</span>
+            </div>
+            <p class="mile-sub">FIITJEE Junior College · Visakhapatnam</p>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </section>
 
         <section class="section" id="projects">
             <div class="container">
@@ -703,25 +549,12 @@
                             <div class="pc-foot">
                                 <span class="pc-num">01</span>
                                 <div class="pc-links">
-                                    <a class="pc-link" href="https://github.com/BlamerX/Portrait-Generation-Using-GANs"
-                                        target="_blank" rel="noopener">
-                                        <svg viewBox="0 0 24 24" fill="currentColor">
-                                            <path
-                                                d="M12 .5C5.73.5.5 5.73.5 12a11.5 11.5 0 0 0 7.86 10.92c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.34-1.3-1.7-1.3-1.7-1.06-.72.08-.7.08-.7 1.17.08 1.79 1.2 1.79 1.2 1.04 1.79 2.73 1.27 3.4.97.1-.76.41-1.27.74-1.56-2.55-.29-5.24-1.28-5.24-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.8 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.12 3.05.74.81 1.18 1.84 1.18 3.1 0 4.43-2.69 5.4-5.25 5.69.42.36.79 1.08.79 2.18v3.23c0 .31.21.67.8.56A11.5 11.5 0 0 0 23.5 12C23.5 5.73 18.27.5 12 .5Z" />
-                                        </svg>
-                                        GitHub
-                                    </a>
-                                    <a class="pc-link is-kaggle"
-                                        href="https://www.kaggle.com/code/blamerx/beyond-the-canvas" target="_blank"
-                                        rel="noopener">
-                                        <svg viewBox="0 0 24 24" fill="currentColor">
-                                            <path
-                                                d="M18.825 23.859c-.022.092-.117.141-.281.141h-3.139c-.187 0-.351-.082-.492-.248l-5.178-6.589-1.448 1.374v5.111c0 .235-.117
-
-.352-.351.352H5.505c-.236 0-.354-.117-.354-.352V.353c0-.233.118-.353.354-.353h2.431c.234 0 .351.12.351.353v14.343l6.203-6.272c.165-.165.33-.246.495-.246h3.239c.144 0 .236.06.285.18.046.149.034.255-.036.315l-6.555 6.344 6.836 8.507c.095.104.117.208.07.336z" />
-                                        </svg>
-                                        Kaggle
-                                    </a>
+<a class="pc-link" href="https://github.com/BlamerX/Portrait-Generation-Using-GANs" target="_blank" rel="noopener">
+  <svg width="12" height="12" aria-hidden="true"><use href="#icon-github"/></svg>GitHub
+</a>
+<a class="pc-link is-kaggle" href="https://www.kaggle.com/code/blamerx/beyond-the-canvas" target="_blank" rel="noopener">
+  <svg width="12" height="12" aria-hidden="true"><use href="#icon-kaggle"/></svg>Kaggle
+</a>
                                 </div>
                             </div>
                         </div>
@@ -751,24 +584,12 @@
                             <div class="pc-foot">
                                 <span class="pc-num">02</span>
                                 <div class="pc-links">
-                                    <a class="pc-link"
-                                        href="https://github.com/BlamerX/Deep-Learning-Projects/tree/master/Skin%20Disease%20Classification"
-                                        target="_blank" rel="noopener">
-                                        <svg viewBox="0 0 24 24" fill="currentColor">
-                                            <path
-                                                d="M12 .5C5.73.5.5 5.73.5 12a11.5 11.5 0 0 0 7.86 10.92c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.34-1.3-1.7-1.3-1.7-1.06-.72.08-.7.08-.7 1.17.08 1.79 1.2 1.79 1.2 1.04 1.79 2.73 1.27 3.4.97.1-.76.41-1.27.74-1.56-2.55-.29-5.24-1.28-5.24-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.8 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.12 3.05.74.81 1.18 1.84 1.18 3.1 0 4.43-2.69 5.4-5.25 5.69.42.36.79 1.08.79 2.18v3.23c0 .31.21.67.8.56A11.5 11.5 0 0 0 23.5 12C23.5 5.73 18.27.5 12 .5Z" />
-                                        </svg>
-                                        GitHub
-                                    </a>
-                                    <a class="pc-link is-kaggle"
-                                        href="https://www.kaggle.com/code/blamerx/skin-cancer-classification-densenet121-and-aug"
-                                        target="_blank" rel="noopener">
-                                        <svg viewBox="0 0 24 24" fill="currentColor">
-                                            <path
-                                                d="M18.825 23.859c-.022.092-.117.141-.281.141h-3.139c-.187 0-.351-.082-.492-.248l-5.178-6.589-1.448 1.374v5.111c0 .235-.117.352-.351.352H5.505c-.236 0-.354-.117-.354-.352V.353c0-.233.118-.353.354-.353h2.431c.234 0 .351.12.351.353v14.343l6.203-6.272c.165-.165.33-.246.495-.246h3.239c.144 0 .236.06.285.18.046.149.034.255-.036.315l-6.555 6.344 6.836 8.507c.095.104.117.208.07.336z" />
-                                        </svg>
-                                        Kaggle
-                                    </a>
+                                    <a class="pc-link" href="https://github.com/BlamerX/Deep-Learning-Projects/tree/master/Skin%20Disease%20Classification" target="_blank" rel="noopener">
+  <svg width="12" height="12" aria-hidden="true"><use href="#icon-github"/></svg>GitHub
+</a>
+<a class="pc-link is-kaggle" href="https://www.kaggle.com/code/blamerx/skin-cancer-classification-densenet121-and-aug" target="_blank" rel="noopener">
+  <svg width="12" height="12" aria-hidden="true"><use href="#icon-kaggle"/></svg>Kaggle
+</a>
                                 </div>
                             </div>
                         </div>
@@ -802,33 +623,15 @@
                             <div class="pc-foot">
                                 <span class="pc-num">03</span>
                                 <div class="pc-links">
-                                    <a class="pc-link" href="https://github.com/BlamerX/Stock-Price-Prediction-WebSite"
-                                        target="_blank" rel="noopener">
-                                        <svg viewBox="0 0 24 24" fill="currentColor">
-                                            <path
-                                                d="M12 .5C5.73.5.5 5.73.5 12a11.5 11.5 0 0 0 7.86 10.92c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.34-1.3-1.7-1.3-1.7-1.06-.72.08-.7.08-.7 1.17.08 1.79 1.2 1.79 1.2 1.04 1.79 2.73 1.27 3.4.97.1-.76.41-1.27.74-1.56-2.55-.29-5.24-1.28-5.24-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.8 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.12 3.05.74.81 1.18 1.84 1.18 3.1 0 4.43-2.69 5.4-5.25 5.69.42.36.79 1.08.79 2.18v3.23c0 .31.21.67.8.56A11.5 11.5 0 0 0 23.5 12C23.5 5.73 18.27.5 12 .5Z" />
-                                        </svg>
-                                        GitHub
-                                    </a>
-                                    <a class="pc-link is-kaggle"
-                                        href="https://www.kaggle.com/code/blamerx/lstm-for-beginners-yfinance"
-                                        target="_blank" rel="noopener">
-                                        <svg viewBox="0 0 24 24" fill="currentColor">
-                                            <path
-                                                d="M18.825 23.859c-.022.092-.117.141-.281.141h-3.139c-.187 0-.351-.082-.492-.248l-5.178-6.589-1.448 1.374v5.111c0 .235-.117.352-.351.352H5.505c-.236 0-.354-.117-.354-.352V.353c0-.233.118-.353.354-.353h2.431c.234 0 .351.12.351.353v14.343l6.203-6.272c.165-.165.33-.246.495-.246h3.239c.144 0 .236.06.285.18.046.149.034.255-.036.315l-6.555 6.344 6.836 8.507c.095.104.117.208.07.336z" />
-                                        </svg>
-                                        Kaggle
-                                    </a>
-                                    <a class="pc-link is-live"
-                                        href="https://stock-price-prediction-website.streamlit.app/" target="_blank"
-                                        rel="noopener">
-                                        <span class="dot"></span>
-                                        Live demo
-                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                            stroke-linecap="round" stroke-linejoin="round">
-                                            <path d="M7 17 17 7M9 7h8v8" />
-                                        </svg>
-                                    </a>
+                                    <a class="pc-link" href="https://github.com/BlamerX/Stock-Price-Prediction-WebSite" target="_blank" rel="noopener">
+  <svg width="12" height="12" aria-hidden="true"><use href="#icon-github"/></svg>GitHub
+</a>
+<a class="pc-link is-kaggle" href="https://www.kaggle.com/code/blamerx/lstm-for-beginners-yfinance" target="_blank" rel="noopener">
+  <svg width="12" height="12" aria-hidden="true"><use href="#icon-kaggle"/></svg>Kaggle
+</a>
+<a class="pc-link is-live" href="https://stock-price-prediction-website.streamlit.app/" target="_blank" rel="noopener">
+  <span class="dot"></span> Live demo <svg width="12" height="12" aria-hidden="true"><use href="#icon-arrow-up-right"/></svg>
+</a>
                                 </div>
                             </div>
                         </div>
@@ -862,23 +665,12 @@
                             <div class="pc-foot">
                                 <span class="pc-num">04</span>
                                 <div class="pc-links">
-                                    <a class="pc-link" href="https://github.com/BlamerX/AI-Resume-Screener"
-                                        target="_blank" rel="noopener">
-                                        <svg viewBox="0 0 24 24" fill="currentColor">
-                                            <path
-                                                d="M12 .5C5.73.5.5 5.73.5 12a11.5 11.5 0 0 0 7.86 10.92c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.34-1.3-1.7-1.3-1.7-1.06-.72.08-.7.08-.7 1.17.08 1.79 1.2 1.79 1.2 1.04 1.79 2.73 1.27 3.4.97.1-.76.41-1.27.74-1.56-2.55-.29-5.24-1.28-5.24-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.8 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.12 3.05.74.81 1.18 1.84 1.18 3.1 0 4.43-2.69 5.4-5.25 5.69.42.36.79 1.08.79 2.18v3.23c0 .31.21.67.8.56A11.5 11.5 0 0 0 23.5 12C23.5 5.73 18.27.5 12 .5Z" />
-                                        </svg>
-                                        GitHub
-                                    </a>
-                                    <a class="pc-link is-live" href="https://ai-resume-screener-blamerx.streamlit.app"
-                                        target="_blank" rel="noopener">
-                                        <span class="dot"></span>
-                                        Live demo
-                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                            stroke-linecap="round" stroke-linejoin="round">
-                                            <path d="M7 17 17 7M9 7h8v8" />
-                                        </svg>
-                                    </a>
+                                    <a class="pc-link" href="https://github.com/BlamerX/AI-Resume-Screener" target="_blank" rel="noopener">
+  <svg width="12" height="12" aria-hidden="true"><use href="#icon-github"/></svg>GitHub
+</a>
+<a class="pc-link is-live" href="https://ai-resume-screener-blamerx.streamlit.app" target="_blank" rel="noopener">
+  <span class="dot"></span> Live demo <svg width="12" height="12" aria-hidden="true"><use href="#icon-arrow-up-right"/></svg>
+</a>
                                 </div>
                             </div>
                         </div>
@@ -913,24 +705,12 @@
                             <div class="pc-foot">
                                 <span class="pc-num">05</span>
                                 <div class="pc-links">
-                                    <a class="pc-link"
-                                        href="https://github.com/BlamerX/Deep-Learning-Projects/tree/master/Sign%20Languages%20Detection"
-                                        target="_blank" rel="noopener">
-                                        <svg viewBox="0 0 24 24" fill="currentColor">
-                                            <path
-                                                d="M12 .5C5.73.5.5 5.73.5 12a11.5 11.5 0 0 0 7.86 10.92c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.34-1.3-1.7-1.3-1.7-1.06-.72.08-.7.08-.7 1.17.08 1.79 1.2 1.79 1.2 1.04 1.79 2.73 1.27 3.4.97.1-.76.41-1.27.74-1.56-2.55-.29-5.24-1.28-5.24-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.8 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.12 3.05.74.81 1.18 1.84 1.18 3.1 0 4.43-2.69 5.4-5.25 5.69.42.36.79 1.08.79 2.18v3.23c0 .31.21.67.8.56A11.5 11.5 0 0 0 23.5 12C23.5 5.73 18.27.5 12 .5Z" />
-                                        </svg>
-                                        GitHub
-                                    </a>
-                                    <a class="pc-link is-kaggle"
-                                        href="https://www.kaggle.com/code/blamerx/sign-language-eda-100-acc"
-                                        target="_blank" rel="noopener">
-                                        <svg viewBox="0 0 24 24" fill="currentColor">
-                                            <path
-                                                d="M18.825 23.859c-.022.092-.117.141-.281.141h-3.139c-.187 0-.351-.082-.492-.248l-5.178-6.589-1.448 1.374v5.111c0 .235-.117.352-.351.352H5.505c-.236 0-.354-.117-.354-.352V.353c0-.233.118-.353.354-.353h2.431c.234 0 .351.12.351.353v14.343l6.203-6.272c.165-.165.33-.246.495-.246h3.239c.144 0 .236.06.285.18.046.149.034.255-.036.315l-6.555 6.344 6.836 8.507c.095.104.117.208.07.336z" />
-                                        </svg>
-                                        Kaggle
-                                    </a>
+                                    <a class="pc-link" href="https://github.com/BlamerX/Deep-Learning-Projects/tree/master/Sign%20Languages%20Detection" target="_blank" rel="noopener">
+  <svg width="12" height="12" aria-hidden="true"><use href="#icon-github"/></svg>GitHub
+</a>
+<a class="pc-link is-kaggle" href="https://www.kaggle.com/code/blamerx/sign-language-eda-100-acc" target="_blank" rel="noopener">
+  <svg width="12" height="12" aria-hidden="true"><use href="#icon-kaggle"/></svg>Kaggle
+</a>
                                 </div>
                             </div>
                         </div>
@@ -964,33 +744,15 @@
                             <div class="pc-foot">
                                 <span class="pc-num">06</span>
                                 <div class="pc-links">
-                                    <a class="pc-link"
-                                        href="https://github.com/BlamerX/Air-Quality-Index-Prediction-Website"
-                                        target="_blank" rel="noopener">
-                                        <svg viewBox="0 0 24 24" fill="currentColor">
-                                            <path
-                                                d="M12 .5C5.73.5.5 5.73.5 12a11.5 11.5 0 0 0 7.86 10.92c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.34-1.3-1.7-1.3-1.7-1.06-.72.08-.7.08-.7 1.17.08 1.79 1.2 1.79 1.2 1.04 1.79 2.73 1.27 3.4.97.1-.76.41-1.27.74-1.56-2.55-.29-5.24-1.28-5.24-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.8 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.12 3.05.74.81 1.18 1.84 1.18 3.1 0 4.43-2.69 5.4-5.25 5.69.42.36.79 1.08.79 2.18v3.23c0 .31.21.67.8.56A11.5 11.5 0 0 0 23.5 12C23.5 5.73 18.27.5 12 .5Z" />
-                                        </svg>
-                                        GitHub
-                                    </a>
-                                    <a class="pc-link is-kaggle"
-                                        href="https://www.kaggle.com/code/blamerx/india-air-quality-index-eda-prediction"
-                                        target="_blank" rel="noopener">
-                                        <svg viewBox="0 0 24 24" fill="currentColor">
-                                            <path
-                                                d="M18.825 23.859c-.022.092-.117.141-.281.141h-3.139c-.187 0-.351-.082-.492-.248l-5.178-6.589-1.448 1.374v5.111c0 .235-.117.352-.351.352H5.505c-.236 0-.354-.117-.354-.352V.353c0-.233.118-.353.354-.353h2.431c.234 0 .351.12.351.353v14.343l6.203-6.272c.165-.165.33-.246.495-.246h3.239c.144 0 .236.06.285.18.046.149.034.255-.036.315l-6.555 6.344 6.836 8.507c.095.104.117.208.07.336z" />
-                                        </svg>
-                                        Kaggle
-                                    </a>
-                                    <a class="pc-link is-live" href="https://aqi-vov2.onrender.com" target="_blank"
-                                        rel="noopener">
-                                        <span class="dot"></span>
-                                        Live API
-                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                            stroke-linecap="round" stroke-linejoin="round">
-                                            <path d="M7 17 17 7M9 7h8v8" />
-                                        </svg>
-                                    </a>
+                                    <a class="pc-link" href="https://github.com/BlamerX/Air-Quality-Index-Prediction-Website" target="_blank" rel="noopener">
+  <svg width="12" height="12" aria-hidden="true"><use href="#icon-github"/></svg>GitHub
+</a>
+<a class="pc-link is-kaggle" href="https://www.kaggle.com/code/blamerx/india-air-quality-index-eda-prediction" target="_blank" rel="noopener">
+  <svg width="12" height="12" aria-hidden="true"><use href="#icon-kaggle"/></svg>Kaggle
+</a>
+<a class="pc-link is-live" href="https://aqi-vov2.onrender.com" target="_blank" rel="noopener">
+  <span class="dot"></span> Live API <svg width="12" height="12" aria-hidden="true"><use href="#icon-arrow-up-right"/></svg>
+</a>
                                 </div>
                             </div>
                         </div>
@@ -999,232 +761,122 @@
                 </div>
 
                 <div class="cta-row proj-footer reveal">
-                    <a class="btn btn-ghost" href="https://github.com/BlamerX" target="_blank" rel="noopener">
-                        All repositories on GitHub
-                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M7 17 17 7M9 7h8v8" />
-                        </svg>
-                    </a>
-                </div>
+      <a class="btn btn-ghost" href="https://github.com/BlamerX" target="_blank" rel="noopener">All repositories on GitHub<svg width="13" height="13" aria-hidden="true"><use href="#icon-arrow-up-right"/></svg></a>
+    </div>
+</div>
+</section>
+
+<section class="section" id="awards">
+    <div class="container">
+      <div class="section-head reveal"><p class="section-label">Recognition</p><h2 class="section-title">Awards &amp; certificates.</h2></div>
+      <ul class="recognition-list">
+        <li class="recognition-card reveal" data-rec="kaggle">
+          <div class="rec-icon" aria-hidden="true"><svg width="24" height="24" aria-hidden="true"><use href="#icon-kaggle"/></svg></div>
+          <div class="rec-body">
+            <div class="rec-head"><h3 class="rec-title">Kaggle Notebook Expert</h3><span class="rec-issuer">Kaggle</span></div>
+            <p class="rec-sub" data-kaggle="awardsSub">Rank — of — · Top —% in Notebooks</p>
+            <div class="rec-meta">
+              <span class="rec-meta-item"><svg width="11" height="11" aria-hidden="true"><use href="#icon-star"/></svg><span data-kaggle="silver">—</span> silver · <span data-kaggle="bronze">—</span> bronze</span>
+              <span class="rec-meta-dot">·</span>
+              <span class="rec-meta-item"><svg width="11" height="11" aria-hidden="true"><use href="#icon-graduation"/></svg><span data-kaggle="code">—</span> notebooks</span>
             </div>
-        </section>
+          </div>
+          <div class="rec-action">
+            <span class="rec-year">2024</span>
+            <a class="rec-cert-btn" href="https://www.kaggle.com/blamerx" target="_blank" rel="noopener">View profile<svg width="11" height="11" aria-hidden="true"><use href="#icon-arrow-up-right"/></svg></a>
+          </div>
+        </li>
 
-        <section class="section" id="awards">
-            <div class="container">
-                <div class="section-head reveal">
-                    <p class="section-label">Recognition</p>
-                    <h2 class="section-title">Awards &amp; certificates.</h2>
-                </div>
-                <ul class="recognition-list">
-                    <li class="recognition-card reveal" data-rec="kaggle">
-                        <div class="rec-icon" aria-hidden="true">
-                            <svg viewBox="0 0 24 24" fill="currentColor">
-                                <path
-                                    d="M18.825 23.859c-.022.092-.117.141-.281.141h-3.139c-.187 0-.351-.082-.492-.248l-5.178-6.589-1.448 1.374v5.111c0 .235-.117.352-.351.352H5.505c-.236 0-.354-.117-.354-.352V.353c0-.233.118-.353.354-.353h2.431c.234 0 .351.12.351.353v14.343l6.203-6.272c.165-.165.33-.246.495-.246h3.239c.144 0 .236.06.285.18.046.149.034.255-.036.315l-6.555 6.344 6.836 8.507c.095.104.117.208.07.336z" />
-                            </svg>
-                        </div>
-                        <div class="rec-body">
-                            <div class="rec-head">
-                                <h3 class="rec-title">Kaggle Notebook Expert</h3>
-                                <span class="rec-issuer">Kaggle</span>
-                            </div>
-                            <p class="rec-sub" data-kaggle="awardsSub">Rank — of — · Top —% in Notebooks</p>
-                            <div class="rec-meta">
-                                <span class="rec-meta-item">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                        stroke-linecap="round" stroke-linejoin="round">
-                                        <path d="M12 2 15 9l7 .5-5.5 4.5 2 7-6.5-4-6.5 4 2-7L2 9.5 9 9z" />
-                                    </svg>
-                                    <span data-kaggle="silver">—</span> silver · <span data-kaggle="bronze">—</span>
-                                    bronze
-                                </span>
-                                <span class="rec-meta-dot">·</span>
-                                <span class="rec-meta-item">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                        stroke-linecap="round" stroke-linejoin="round">
-                                        <path d="M12 2 3 7v10l9 5 9-5V7l-9-5Z" />
-                                    </svg>
-                                    <span data-kaggle="code">—</span> notebooks
-                                </span>
-                            </div>
-                        </div>
-                        <div class="rec-action">
-                            <span class="rec-year">2024</span>
-                            <a class="rec-cert-btn" href="https://www.kaggle.com/blamerx" target="_blank"
-                                rel="noopener">
-                                View profile
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
-                                    stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M7 17 17 7M9 7h8v8" />
-                                </svg>
-                            </a>
-                        </div>
-                    </li>
-
-                    <li class="recognition-card reveal" data-rec="kpmg" style="--delay:.05s">
-                        <div class="rec-icon" aria-hidden="true">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                stroke-linecap="round" stroke-linejoin="round">
-                                <path
-                                    d="M3 21h18M5 21V7l8-4 8 4v14M9 9h.01M9 12h.01M9 15h.01M15 9h.01M15 12h.01M15 15h.01" />
-                            </svg>
-                        </div>
-                        <div class="rec-body">
-                            <div class="rec-head">
-                                <h3 class="rec-title">Data Analytics Consulting</h3>
-                                <span class="rec-issuer">KPMG</span>
-                            </div>
-                            <p class="rec-sub">Virtual internship programme covering data analytics consulting workflows
-                                and deliverables.</p>
-                            <div class="rec-meta">
-                                <span class="rec-meta-item">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                        stroke-linecap="round" stroke-linejoin="round">
-                                        <path d="M3 3v18h18" />
-                                        <path d="m7 14 4-4 4 4 5-7" />
-                                    </svg>
-                                    Data analytics · Consulting
-                                </span>
-                            </div>
-                        </div>
-                        <div class="rec-action">
-                            <span class="rec-year">2023</span>
-                            <a class="rec-cert-btn"
-                                href="https://drive.google.com/drive/folders/1bnPJVZthHH--HPYl2jPP_p3knLJ-U3Ld?usp=sharing"
-                                target="_blank" rel="noopener">
-                                View complete workflow
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
-                                    stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M7 17 17 7M9 7h8v8" />
-                                </svg>
-                            </a>
-                        </div>
-                    </li>
-
-                    <li class="recognition-card reveal" data-rec="microsoft" style="--delay:.15s">
-                        <div class="rec-icon" aria-hidden="true">
-                            <svg viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M11 2H2v9h9V2zM22 2h-9v9h9V2zM11 13H2v9h9v-9zM22 13h-9v9h9v-9z" />
-                            </svg>
-                        </div>
-                        <div class="rec-body">
-                            <div class="rec-head">
-                                <h3 class="rec-title">AI Classroom Series</h3>
-                                <span class="rec-issuer">Microsoft</span>
-                            </div>
-                            <p class="rec-sub">June session covering foundational AI concepts, Azure ML, and responsible
-                                AI practices.</p>
-                            <div class="rec-meta">
-                                <span class="rec-meta-item">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                        stroke-linecap="round" stroke-linejoin="round">
-                                        <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2z" />
-                                        <path d="M12 8v4l3 3" />
-                                    </svg>
-                                    AI · Azure ML
-                                </span>
-                            </div>
-                        </div>
-                        <div class="rec-action">
-                            <span class="rec-year">2021</span>
-                            <a class="rec-cert-btn"
-                                href="https://drive.google.com/file/d/1672avgKP8nb39Qu8CxUDmu820HJHoTMF/view?usp=sharing"
-                                target="_blank" rel="noopener">
-                                View certificate
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
-                                    stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M7 17 17 7M9 7h8v8" />
-                                </svg>
-                            </a>
-                        </div>
-                    </li>
-
-                    <li class="recognition-card reveal" data-rec="scaler" style="--delay:.1s">
-                        <div class="rec-icon" aria-hidden="true">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M22 10 12 5 2 10l10 5 10-5Z" />
-                                <path d="M6 12v5c0 1.7 2.7 3 6 3s6-1.3 6-3v-5" />
-                            </svg>
-                        </div>
-                        <div class="rec-body">
-                            <div class="rec-head">
-                                <h3 class="rec-title">Other Certificates</h3>
-                                <span class="rec-issuer">Multi</span>
-                            </div>
-                            <p class="rec-sub">Certification covering core Topics from basics to Advance Concepts along
-                                with practical applications.</p>
-                            <div class="rec-meta">
-                                <span class="rec-meta-item">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                        stroke-linecap="round" stroke-linejoin="round">
-                                        <path d="M4 4h16v16H4z" />
-                                        <path d="M4 9h16M9 4v16" />
-                                    </svg>
-                                    AI · ML · DL · DA · ETC.
-                                </span>
-                            </div>
-                        </div>
-                        <div class="rec-action">
-                            <span class="rec-year">2022</span>
-                            <a class="rec-cert-btn"
-                                href="https://drive.google.com/drive/folders/1EFCIo_8TVhM2035w13DWrhji-FN1yhgn?usp=sharing"
-                                target="_blank" rel="noopener">
-                                View other works/certificates
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
-                                    stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M7 17 17 7M9 7h8v8" />
-                                </svg>
-                            </a>
-                        </div>
-                    </li>
-                </ul>
+        <li class="recognition-card reveal" data-rec="kpmg" style="--delay:.05s">
+          <div class="rec-icon" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V7l8-4 8 4v14M9 9h.01M9 12h.01M9 15h.01M15 9h.01M15 12h.01M15 15h.01"/></svg>
+          </div>
+          <div class="rec-body">
+            <div class="rec-head"><h3 class="rec-title">Data Analytics Consulting</h3><span class="rec-issuer">KPMG</span></div>
+            <p class="rec-sub">Virtual internship programme covering data analytics consulting workflows and deliverables.</p>
+            <div class="rec-meta">
+              <span class="rec-meta-item">
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m7 14 4-4 4 4 5-7"/></svg>
+                Data analytics · Consulting
+              </span>
             </div>
+          </div>
+          <div class="rec-action">
+            <span class="rec-year">2023</span>
+            <a class="rec-cert-btn" href="https://drive.google.com/drive/folders/1bnPJVZthHH--HPYl2jPP_p3knLJ-U3Ld?usp=sharing" target="_blank" rel="noopener">View complete workflow<svg width="11" height="11" aria-hidden="true"><use href="#icon-arrow-up-right"/></svg></a>
+          </div>
+        </li>
 
-        </section>
-
-        <section class="contact" id="contact">
-            <div class="container">
-                <div class="section-head reveal">
-                    <p class="section-label">Contact</p>
-                    <h2>Let's build something <em>worth shipping</em>.</h2>
-                    <p>Open to roles and collaborations in data science, ML and applied deep learning.</p>
-                </div>
-                <div class="cta-row reveal" style="--delay:.06s">
-                    <a class="btn btn-primary" id="emailBtn" href="mailto:adarsh.kumar@example.com"
-                        data-email="adarsh.kumar@example.com">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <rect x="2.5" y="4.5" width="19" height="15" rx="2.5" />
-                            <path d="m3 7 9 6 9-6" />
-                        </svg>
-                        <span id="emailLabel">adarsh.kumar@example.com</span>
-                    </a>
-                    <a class="btn btn-ghost" href="https://github.com/BlamerX" target="_blank" rel="noopener">GitHub</a>
-                    <a class="btn btn-ghost" href="https://www.kaggle.com/blamerx" target="_blank"
-                        rel="noopener">Kaggle</a>
-                    <a class="btn btn-ghost" href="https://www.linkedin.com/in/adarshkumar13/" target="_blank"
-                        rel="noopener">LinkedIn</a>
-                </div>
+        <li class="recognition-card reveal" data-rec="microsoft" style="--delay:.15s">
+          <div class="rec-icon" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M11 2H2v9h9V2zM22 2h-9v9h9V2zM11 13H2v9h9v-9zM22 13h-9v9h9v-9z"/></svg>
+          </div>
+          <div class="rec-body">
+            <div class="rec-head"><h3 class="rec-title">AI Classroom Series</h3><span class="rec-issuer">Microsoft</span></div>
+            <p class="rec-sub">June session covering foundational AI concepts, Azure ML, and responsible AI practices.</p>
+            <div class="rec-meta">
+              <span class="rec-meta-item">
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+                AI · Azure ML
+              </span>
             </div>
-        </section>
+          </div>
+          <div class="rec-action">
+            <span class="rec-year">2021</span>
+            <a class="rec-cert-btn" href="https://drive.google.com/file/d/1672avgKP8nb39Qu8CxUDmu820HJHoTMF/view?usp=sharing" target="_blank" rel="noopener">View certificate<svg width="11" height="11" aria-hidden="true"><use href="#icon-arrow-up-right"/></svg></a>
+          </div>
+        </li>
 
-    </main>
-
-    <footer class="site-footer">
-        <div class="container footer-inner">
-            <div>© <span id="year"></span> Adarsh Kumar · Built with HTML, CSS &amp; JavaScript.</div>
-            <div class="footer-links">
-                <a href="https://github.com/BlamerX" target="_blank" rel="noopener">GitHub</a>
-                <a href="https://www.kaggle.com/blamerx" target="_blank" rel="noopener">Kaggle</a>
-                <a href="https://www.linkedin.com/in/adarshkumar13/" target="_blank" rel="noopener">LinkedIn</a>
-
+        <li class="recognition-card reveal" data-rec="scaler" style="--delay:.1s">
+          <div class="rec-icon" aria-hidden="true"><svg width="24" height="24" aria-hidden="true"><use href="#icon-graduation"/></svg></div>
+          <div class="rec-body">
+            <div class="rec-head"><h3 class="rec-title">Other Certificates</h3><span class="rec-issuer">Multi</span></div>
+            <p class="rec-sub">Certification covering core topics from basics to advanced concepts with practical applications.</p>
+            <div class="rec-meta">
+              <span class="rec-meta-item">
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z"/><path d="M4 9h16M9 4v16"/></svg>
+                AI · ML · DL · DA · ETC.
+              </span>
             </div>
-        </div>
-    </footer>
+          </div>
+          <div class="rec-action">
+            <span class="rec-year">2022</span>
+            <a class="rec-cert-btn" href="https://drive.google.com/drive/folders/1EFCIo_8TVhM2035w13DWrhji-FN1yhgn?usp=sharing" target="_blank" rel="noopener">View other works/certificates<svg width="11" height="11" aria-hidden="true"><use href="#icon-arrow-up-right"/></svg></a>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </section>
 
-    <script src="script.js"></script>
+  <section class="contact" id="contact">
+    <div class="container">
+      <div class="section-head reveal"><p class="section-label">Contact</p><h2>Let's build something <em>worth shipping</em>.</h2><p>Open to roles and collaborations in data science, ML and applied deep learning.</p></div>
+      <div class="cta-row reveal" style="--delay:.06s">
+        <a class="btn btn-primary" id="emailBtn" href="mailto:adarsh.kumar@example.com" data-email="adarsh.kumar@example.com">
+          <svg width="14" height="14" aria-hidden="true"><use href="#icon-email"/></svg>
+          <span id="emailLabel">adarsh.kumar@example.com</span>
+        </a>
+        <a class="btn btn-ghost" href="https://github.com/BlamerX" target="_blank" rel="noopener">GitHub</a>
+        <a class="btn btn-ghost" href="https://www.kaggle.com/blamerx" target="_blank" rel="noopener">Kaggle</a>
+        <a class="btn btn-ghost" href="https://www.linkedin.com/in/adarshkumar13/" target="_blank" rel="noopener">LinkedIn</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <div>© <span id="year"></span> Adarsh Kumar · Built with HTML, CSS &amp; JavaScript.</div>
+    <div class="footer-links">
+      <a href="https://github.com/BlamerX" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://www.kaggle.com/blamerx" target="_blank" rel="noopener">Kaggle</a>
+      <a href="https://www.linkedin.com/in/adarshkumar13/" target="_blank" rel="noopener">LinkedIn</a>
+    </div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
 
 </body>
 
