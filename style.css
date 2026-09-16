@@ -1804,7 +1804,7 @@ svg { max-width: 100%; height: auto; }
   display: flex;
   flex-direction: column;
   border: 1px solid var(--border-soft);
-  border-radius: var(--radius);
+  border-radius: var(--radius-lg);
   background: var(--bg-elev);
   transition: all 0.3s var(--ease);
   box-shadow: var(--shadow-sm);
