@@ -1251,6 +1251,146 @@ body::after {
   position: relative;
   z-index: 1;
 }
+
+/* ---- Contributions + Languages, one card --------------------------------
+   Two halves sharing the same mono kicker: grid on top, languages below.
+   The feed carries a per-day count and level but no repository, so cells are
+   shaded by volume alone, inside the existing amber scale. No head band — the
+   icon rides the contributions kicker and the pill rides the languages one. */
+.lang-card {
+  grid-column: 1 / -1;
+}
+.contrib {
+  margin-top: 0;
+}
+.contrib-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 18px;
+  margin-bottom: 14px;
+}
+.contrib-kicker {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+.contrib-logo {
+  width: 26px;
+  height: 26px;
+  border-radius: 8px;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  color: var(--bg-elev);
+  background: linear-gradient(135deg, #24292e, #404448);
+}
+.contrib-title {
+  margin: 0;
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted-2);
+}
+.contrib-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 18px;
+  font-family: var(--mono);
+  font-size: 0.74rem;
+  color: var(--muted);
+}
+.contrib-stats b {
+  color: var(--text);
+  font-weight: 600;
+}
+.contrib-grid {
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-rows: repeat(7, 1fr);
+  gap: 3px;
+  overflow-x: auto;
+  padding-bottom: 6px;
+  animation: contribIn 0.7s var(--ease-out) both;
+}
+@keyframes contribIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+.contrib-cell {
+  width: 11px;
+  height: 11px;
+  border-radius: 2.5px;
+  background: var(--hover-bg);
+  transition: transform 0.2s var(--ease-out);
+}
+.contrib-grid .contrib-cell:hover {
+  transform: scale(1.45);
+}
+.contrib-cell[data-lv="1"] {
+  background: color-mix(in srgb, var(--accent) 34%, var(--hover-bg));
+}
+.contrib-cell[data-lv="2"] {
+  background: color-mix(in srgb, var(--accent) 58%, var(--hover-bg));
+}
+.contrib-cell[data-lv="3"] {
+  background: color-mix(in srgb, var(--accent) 82%, var(--hover-bg));
+}
+.contrib-cell[data-lv="4"] {
+  background: var(--accent);
+}
+.contrib-foot {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 10px;
+}
+.contrib-key-label {
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted-2);
+}
+.contrib-foot .contrib-cell:last-of-type {
+  margin-right: 4px;
+}
+.lang-half {
+  margin-top: 18px;
+  padding-top: 15px;
+  border-top: 1px solid var(--border);
+}
+.lang-kicker {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px 18px;
+}
+.lang-half .lang-bar {
+  margin-top: 12px;
+}
+/* when the feed is down the grid is hidden, so drop the stray divider */
+.contrib[hidden] + .lang-half {
+  margin-top: 2px;
+  padding-top: 0;
+  border-top: 0;
+}
+@media (max-width: 640px) {
+  .lang-half {
+    margin-top: 14px;
+    padding-top: 13px;
+  }
+  .contrib-cell {
+    width: 9px;
+    height: 9px;
+  }
+}
 .kaggle-card::before,
 .github-card::before {
   content: "";
@@ -1349,17 +1489,6 @@ body::after {
   border-radius: 50%;
   background: currentColor;
   flex-shrink: 0;
-}
-.sync-pill.ripple .sync-dot {
-  animation: dotRipple 0.9s var(--ease-out) 2;
-}
-@keyframes dotRipple {
-  from {
-    box-shadow: 0 0 0 0 color-mix(in srgb, var(--kaggle) 55%, transparent);
-  }
-  to {
-    box-shadow: 0 0 0 9px transparent;
-  }
 }
 .sync-pill[data-state="loading"] {
   background: var(--accent-soft);
@@ -1723,16 +1852,17 @@ body::after {
   transform: translateY(-1px);
   box-shadow: 0 6px 16px rgba(32, 190, 255, 0.3);
 }
+/* GitHub ink, mirroring the Kaggle card's soft→solid chip so the two source
+   links read as peers without spending amber on a secondary action. */
 .github-card .profile-link {
-  color: var(--accent);
-  background: var(--accent-soft);
-  border-color: color-mix(in srgb, var(--accent) 25%, transparent);
+  color: #24292e;
+  background: color-mix(in srgb, #24292e 7%, transparent);
+  border-color: color-mix(in srgb, #24292e 25%, transparent);
 }
 .github-card .profile-link:hover {
-  background: var(--accent);
+  background: linear-gradient(135deg, #24292e, #404448);
   color: var(--bg-elev);
   transform: translateY(-1px);
-  box-shadow: 0 6px 16px var(--accent-glow);
 }
 
 .journey {

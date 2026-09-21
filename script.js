@@ -2,10 +2,14 @@
   "use strict";
 
   const App = {
-    /* jinaKey: paste a free API key from jina.ai here to make the Kaggle
-       live feed deterministic; without it the proxy render lane is rate-gated */
-    config: { kaggle: "blamerx", github: "BlamerX", jinaKey: "" },
+    config: { github: "BlamerX" },
 
+    /* THE single source of truth for every Kaggle figure on the page. Kaggle
+       sends no numbers to a browser at all — its profile HTML is a JS shell
+       and its API answers 401 without a token — so these are set by hand,
+       rarely. Percentile, "of <pool>" and the donut sweep all derive from
+       rank + pool, so refreshing the ranking means editing two numbers here
+       and nothing anywhere else. `asOf` is what the pill displays. */
     defaults: {
       kaggle: {
         rank: 448,
@@ -18,6 +22,7 @@
         silver: 4,
         bronze: 10,
         tierLabel: "Notebook Expert",
+        asOf: "Sep 2026",
       },
     },
 
@@ -398,139 +403,11 @@
       return null;
     },
 
-    async fetchKaggle() {
-      this.setSyncPill("kaggle", "loading", "Connecting");
-      this.applyAll(
-        "kaggle",
-        this.defaults.kaggle,
-        this.kaggleExtras(this.defaults.kaggle),
-      );
-      try {
-        const hdr = { "x-return-format": "html" };
-        if (this.config.jinaKey)
-          hdr.Authorization = "Bearer " + this.config.jinaKey;
-        /* the keyless render lane sometimes serves the unrendered shell;
-           retry once with a cache-buster before giving up to Cached */
-        let data = {};
-        for (let i = 0; i < 2 && !Object.keys(data).length; i++) {
-          const res = await fetch(
-            "https://r.jina.ai/https://www.kaggle.com/" +
-              this.config.kaggle +
-              (i ? "?retry=1" : ""),
-            { headers: hdr },
-          );
-          if (!res.ok) throw new Error("proxy " + res.status);
-          /* rendered HTML mode; strip tags so the text regexes keep working */
-          data = this.parseKaggle(
-            (await res.text()).replace(/<[^>]*>/g, " "),
-          );
-        }
-        if (data && Object.keys(data).length) {
-          const merged = Object.assign({}, this.defaults.kaggle, data);
-          this.applyAll("kaggle", merged, this.kaggleExtras(merged));
-          this.updateDonut(merged);
-          this.setSyncPill("kaggle", "live", "Live");
-          const pill = this.$('.sync-pill[data-sync="kaggle"]');
-          if (pill) {
-            pill.classList.remove("ripple");
-            void pill.offsetWidth;
-            pill.classList.add("ripple");
-          }
-        } else {
-          this.updateDonut(this.defaults.kaggle);
-          this.setSyncPill("kaggle", "cached", "Cached");
-        }
-      } catch (err) {
-        this.updateDonut(this.defaults.kaggle);
-        this.setSyncPill("kaggle", "cached", "Cached");
-      }
-    },
-
-    /* all public kernels by votes: same jina render lane as the stats feed —
-       top 3 become the chips, the FULL list drives the hero upvotes sum;
-       when the lane serves the shell instead of the rendered page the
-       curated static chips in the HTML stay put */
-    async fetchNotebooks() {
-      const key = "nbAll";
-      try {
-        const hit = JSON.parse(sessionStorage.getItem(key) || "0");
-        if (hit && Date.now() - hit.ts < 36e5) return this.renderNotebooks(hit.data);
-      } catch (e) {}
-      const hdr = { "x-return-format": "html" };
-      if (this.config.jinaKey) hdr.Authorization = "Bearer " + this.config.jinaKey;
-      const url =
-        "https://r.jina.ai/https://www.kaggle.com/" +
-        this.config.kaggle +
-        "/kernels?sortBy=VoteCount&pageSize=40";
-      for (let i = 0; i < 2; i++) {
-        try {
-          const res = await fetch(url + (i ? "&retry=1" : ""), { headers: hdr });
-          if (!res.ok) continue;
-          const list = this.parseNotebooks(await res.text());
-          if (list.length) {
-            this.renderNotebooks(list);
-            try {
-              sessionStorage.setItem(key, JSON.stringify({ data: list, ts: Date.now() }));
-            } catch (e) {}
-            return;
-          }
-        } catch (e) {}
-      }
-    },
-
-    parseNotebooks(html) {
-      const doc = new DOMParser().parseFromString(html, "text/html");
-      const out = [],
-        seen = {};
-      doc.querySelectorAll("a[href]").forEach((a) => {
-        const m = (a.getAttribute("href") || "").match(/\/code\/blamerx\/([a-z0-9-]+)/);
-        if (!m || seen[m[1]]) return;
-        /* cards render votes as icon-glyph text + count, e.g. "arrow_drop_up162" */
-        let el = a;
-        while (el && !/arrow_drop_up\s*[\d.,]/i.test(el.textContent || ""))
-          el = el.parentElement;
-        seen[m[1]] = 1;
-        if (!el || !el.parentElement) return;
-        const v = el.textContent.match(/arrow_drop_up\s*([\d.,]+)(k?)/i);
-        const title = (a.textContent || "")
-          .replace(/^\s*code/i, "")
-          .split(/\s*(?:Notebook|Kernel)\s*·|Updated/i)[0]
-          .replace(/\s+/g, " ")
-          .trim();
-        if (v && title)
-          out.push({
-            slug: m[1],
-            title: title.slice(0, 40),
-            votes: Math.round(Number(v[1].replace(/,/g, "")) * (v[2] ? 1e3 : 1)),
-          });
-      });
-      return out.sort((x, y) => y.votes - x.votes);
-    },
-
-    renderNotebooks(list) {
-      const box = this.$(".nb-chips");
-      if (!box || !list || !list.length) return;
-      this._nbAll = list;
-      const esc = (s) => s.replace(/[&<>"]/g, (c) => "&#" + c.charCodeAt(0) + ";");
-      box.innerHTML =
-        '<span class="nb-chips-label">From the notebook</span>' +
-        list
-          .slice(0, 3)
-          .map(
-            (n, i) =>
-              '<a class="nb-note" target="_blank" rel="noopener" href="https://www.kaggle.com/' +
-              this.config.kaggle +
-              "/" +
-              n.slug +
-              '"><span class="nb-note-k">Note ' +
-              String(i + 1).padStart(2, "0") +
-              "</span><h4>" +
-              esc(n.title) +
-              "</h4><i class=\"nb-votes\">" +
-              n.votes +
-              "</i></a>",
-          )
-          .join("");
+    applyKaggle() {
+      const data = this.defaults.kaggle;
+      this.applyAll("kaggle", data, this.kaggleExtras(data));
+      this.updateDonut(data);
+      this.setSyncPill("kaggle", "cached", "As of " + data.asOf);
     },
 
     /* extras return computed values, called with NO args.
@@ -555,40 +432,6 @@
       };
     },
 
-    parseKaggle(text) {
-      const out = {};
-      const grab = (re) => {
-        const m = text.match(re);
-        return m ? m[1].replace(/,/g, "") : null;
-      };
-      out.comps = grab(/Competitions\s*\((\d+)\)/i);
-      out.datasets = grab(/Datasets\s*\((\d+)\)/i);
-      out.code = grab(/Code\s*\((\d+)\)/i) || grab(/Notebooks\s*\((\d+)\)/i);
-      out.disc = grab(/Discussions?\s*\((\d+)\)/i);
-      const rankMatch = text.match(/(\d[\d,]*)\s+of\s+(\d[\d,]*)/);
-      if (rankMatch) {
-        out.rank = rankMatch[1].replace(/,/g, "");
-        out.pool = rankMatch[2].replace(/,/g, "");
-      }
-      /* stripped profile text reads e.g. "Medals 4 10 Rank 448 of 60,837" */
-      const medals = text.match(/Medals\s+(\d+)\s+(\d+)/i);
-      if (medals) {
-        out.silver = medals[1];
-        out.bronze = medals[2];
-      } else {
-        out.silver = grab(/(\d+)\s*[Ss]ilver/i);
-        out.bronze = grab(/(\d+)\s*[Bb]ronze/i);
-      }
-      const best =
-        text.match(/([\d,]+)\s*highest ever/i) ||
-        text.match(/highest ever[\s\S]{0,220}?(\d[\d,]*)/i);
-      if (best) out.best = best[1].replace(/,/g, "");
-      Object.keys(out).forEach((k) => {
-        if (out[k] == null) delete out[k];
-      });
-      return out;
-    },
-
     updateDonut(data) {
       const rank = Number(data.rank),
         pool = Number(data.pool);
@@ -600,6 +443,73 @@
       if (donut) donut.style.strokeDashoffset = offset;
       const card = this.$(".kaggle-card");
       if (card) card.style.setProperty("--fill-offset", offset);
+    },
+
+    /* GitHub's daily tally, via a CORS-enabled mirror of it — the one activity
+       feed dense enough to draw. Memoised per tab, and the block stays hidden
+       rather than showing an empty frame if the feed is unreachable. */
+    async initContrib() {
+      const card = this.$("#contribCard"),
+        grid = this.$("#contribGrid"),
+        stats = this.$("#contribStats");
+      if (!card || !grid) return;
+      let days = null;
+      try {
+        const hit = JSON.parse(sessionStorage.getItem("contrib") || "0");
+        if (hit && hit.ts && Date.now() - hit.ts < 36e5) days = hit.days;
+      } catch (e) {}
+      if (!days) {
+        try {
+          const res = await fetch(
+            "https://github-contributions-api.jogruber.de/v4/" +
+              this.config.github +
+              "?y=last",
+          );
+          if (res.ok) {
+            days = (await res.json()).contributions;
+            try {
+              sessionStorage.setItem(
+                "contrib",
+                JSON.stringify({ days: days, ts: Date.now() }),
+              );
+            } catch (e) {}
+          }
+        } catch (e) {}
+      }
+      if (!Array.isArray(days) || days.length < 30) return;
+      let total = 0,
+        active = 0,
+        best = 0,
+        run = 0,
+        cells = "";
+      for (const d of days) {
+        const n = Number(d.count) || 0;
+        const day = String(d.date || "").slice(0, 10).replace(/[^\d-]/g, "");
+        total += n;
+        run = n ? run + 1 : 0;
+        if (run > best) best = run;
+        if (n) active++;
+        cells +=
+          '<i class="contrib-cell" data-lv="' +
+          Math.max(0, Math.min(4, Number(d.level) || 0)) +
+          '" title="' +
+          day +
+          " · " +
+          n +
+          (n === 1 ? " contribution" : " contributions") +
+          '"></i>';
+      }
+      grid.innerHTML = cells;
+      if (stats)
+        stats.innerHTML =
+          "<span><b>" +
+          total +
+          "</b> contributions</span><span><b>" +
+          active +
+          "</b> active days</span><span><b>" +
+          best +
+          "</b>-day best streak</span>";
+      card.hidden = false;
     },
 
     async fetchGithub() {
@@ -1323,8 +1233,8 @@
       this.initCases();
       this.initBandDraw();
       this.initRecWater();
-      this.fetchKaggle();
-      this.fetchNotebooks();
+      this.applyKaggle();
+      this.initContrib();
       this.fetchGithub();
       this.fetchLangs();
     },

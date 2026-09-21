@@ -33,7 +33,7 @@
         href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap"
         rel="stylesheet">
 
-    <link rel="stylesheet" href="style.css?v=27">
+    <link rel="stylesheet" href="style.css?v=41">
 </head>
 
 <body>
@@ -329,7 +329,7 @@
           <div class="profile-logo" aria-hidden="true"><svg width="20" height="20" aria-hidden="true"><use href="#icon-kaggle"/></svg></div>
           <div><h3 class="profile-title">Kaggle</h3><div class="profile-sub"><b>@blamerx</b> · he/him</div></div>
         </div>
-        <span class="sync-pill" data-state="loading" data-sync="kaggle"><span class="sync-dot"></span><span class="sync-label">Connecting</span></span>
+        <span class="sync-pill" data-state="cached" data-sync="kaggle"><span class="sync-dot"></span><span class="sync-label">As of Sep 2026</span></span>
       </div>
                         <div class="kg-body">
                             <div class="kg-donut">
@@ -397,10 +397,7 @@
                             <a class="nb-note" href="https://www.kaggle.com/blamerx/s6e3-ridge-xgb-n-gram-0-91927-cv" target="_blank" rel="noopener"><span class="nb-note-k">Note 03</span><h4>S6E3 · Ridge→XGB + N-gram</h4><i class="nb-votes">136</i></a>
                         </div>
                         <div class="profile-foot">
-                            <span class="profile-source">
-                                <svg width="10" height="10" aria-hidden="true"><use href="#icon-sync"/></svg>
-                                Source: kaggle.com/blamerx
-                            </span>
+                            <span class="profile-source">Source: kaggle.com/blamerx</span>
                             <a class="profile-link" href="https://www.kaggle.com/blamerx" target="_blank"
                                 rel="noopener">
                                 View profile
@@ -437,15 +434,29 @@
                     </div>
 
                     <div class="profile-card lang-card reveal" style="--delay:.12s">
-      <div class="profile-head">
-        <div class="profile-head-left">
-          <div class="profile-logo" aria-hidden="true"><svg width="20" height="20" aria-hidden="true"><use href="#icon-code"/></svg></div>
-          <div><h3 class="profile-title">Languages</h3><div class="profile-sub"><b>@BlamerX</b> public repos</div></div>
-        </div>
-        <span class="sync-pill" data-state="loading" data-sync="langs"><span class="sync-dot"></span><span class="sync-label">Connecting</span></span>
-      </div>
-      <div class="lang-bar" id="langBar" role="img" aria-label="Repository language distribution"></div>
-      <div class="lang-legend" id="langLegend"></div>
+                        <div class="contrib" id="contribCard" hidden>
+                            <div class="contrib-head">
+                                <div class="contrib-kicker">
+                                    <span class="contrib-logo" aria-hidden="true"><svg width="14" height="14" aria-hidden="true"><use href="#icon-code"/></svg></span>
+                                    <h3 class="contrib-title">Daily contributions</h3>
+                                </div>
+                                <div class="contrib-stats" id="contribStats"></div>
+                            </div>
+                            <div class="contrib-grid" id="contribGrid" role="img" aria-label="Daily public contributions over the last 12 months"></div>
+                            <div class="contrib-foot">
+                                <span class="contrib-key-label">Less</span>
+                                <i class="contrib-cell" data-lv="0"></i><i class="contrib-cell" data-lv="1"></i><i class="contrib-cell" data-lv="2"></i><i class="contrib-cell" data-lv="3"></i><i class="contrib-cell" data-lv="4"></i>
+                                <span class="contrib-key-label">More</span>
+                            </div>
+                        </div>
+                        <div class="lang-half">
+                            <div class="lang-kicker">
+                                <h3 class="contrib-title">Languages by repository</h3>
+                                <span class="sync-pill" data-state="loading" data-sync="langs"><span class="sync-dot"></span><span class="sync-label">Connecting</span></span>
+                            </div>
+                            <div class="lang-bar" id="langBar" role="img" aria-label="Repository language distribution"></div>
+                            <div class="lang-legend" id="langLegend"></div>
+                        </div>
                         <div class="profile-foot">
                             <span class="profile-source">
                                 <svg width="10" height="10" aria-hidden="true"><use href="#icon-sync"/></svg>
@@ -1079,7 +1090,7 @@
   </div>
 </footer>
 
-<script src="script.js?v=27"></script>
+<script src="script.js?v=41"></script>
 
 <div class="case-overlay" id="caseOverlay" hidden>
   <div class="case-modal" role="dialog" aria-modal="true" aria-labelledby="caseTitle">
