@@ -1,6 +1,11 @@
 (function () {
   "use strict";
 
+  const TIPS = {
+    day: ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
+    mon: ["January","February","March","April","May","June","July","August","September","October","November","December"],
+  };
+
   const App = {
     config: { github: "BlamerX" },
 
@@ -52,6 +57,54 @@
       if (v == null || v === "") return "—";
       const n = typeof v === "string" ? Number(v.replace(/,/g, "")) : v;
       return isNaN(n) ? String(v) : Number(n).toLocaleString();
+    },
+
+    sig() {
+      return typeof AbortSignal !== "undefined" && AbortSignal.timeout
+        ? AbortSignal.timeout(6000)
+        : undefined;
+    },
+
+    esc(s) {
+      return String(s == null ? "" : s).replace(
+        /[&<>"]/g,
+        (c) => "&#" + c.charCodeAt(0) + ";",
+      );
+    },
+
+    /* One delegated handler for every [data-tip] on the page. Works for nodes
+       built at runtime too, and flips below the element when there is no room
+       above it. */
+    initTip() {
+      const tip = this.$("#tipBox");
+      if (!tip || tip._on) return;
+      tip._on = 1;
+      const show = (el) => {
+        tip.textContent = el.getAttribute("data-tip") || "";
+        const r = el.getBoundingClientRect();
+        tip.classList.add("on");
+        const w = tip.offsetWidth,
+          h = tip.offsetHeight;
+        tip.style.left = Math.round(
+          Math.min(Math.max(r.left + r.width / 2 - w / 2, 8), innerWidth - w - 8),
+        ) + "px";
+        tip.style.top = Math.round(
+          r.top - h - 10 >= 4 ? r.top - h - 10 : r.bottom + 10,
+        ) + "px";
+      };
+      const hide = () => tip.classList.remove("on");
+      const find = (e) => (e.target.closest ? e.target.closest("[data-tip]") : null);
+      document.addEventListener("pointerover", (e) => {
+        const t = find(e);
+        t ? show(t) : hide();
+      });
+      document.addEventListener("focusin", (e) => {
+        const t = find(e);
+        t ? show(t) : hide();
+      });
+      document.addEventListener("pointerdown", hide);
+      document.addEventListener("focusout", hide);
+      addEventListener("scroll", hide, { passive: true });
     },
 
     reduced() {
@@ -161,9 +214,13 @@
         const tick = (now) => {
           const t = Math.min(1, (now - start) / dur);
           const eased = 1 - Math.pow(1 - t, 3);
-          el.innerHTML = (target * eased).toFixed(dec) + unit;
+          /* live data can replace data-count while this is running, so re-read
+             it every frame — otherwise the final frame writes back the stale
+             placeholder and the hero settles on the wrong number */
+          const goal = parseFloat(el.getAttribute("data-count")) || 0;
+          el.innerHTML = (goal * eased).toFixed(dec) + unit;
           if (t < 1) requestAnimationFrame(tick);
-          else el.innerHTML = target.toFixed(dec) + unit;
+          else el.innerHTML = goal.toFixed(dec) + unit;
         };
         requestAnimationFrame(tick);
       };
@@ -183,6 +240,18 @@
         "Deep Learning",
         "Computer Vision",
       ];
+      /* the global reduced-motion block only clamps CSS timings, so this
+         JS loop has to opt out itself; the span is empty in the HTML so it
+         still needs content */
+      if (this.reduced()) {
+        let i = 0;
+        el.textContent = roles[0];
+        setInterval(() => {
+          i = (i + 1) % roles.length;
+          el.textContent = roles[i];
+        }, 2600);
+        return;
+      }
       let ri = 0,
         ci = 0,
         del = false;
@@ -214,8 +283,10 @@
         if (header) header.classList.toggle("scrolled", y > 6);
         if (progress) {
           const h = document.documentElement.scrollHeight - window.innerHeight;
-          progress.style.width =
-            Math.min(100, Math.max(0, h > 0 ? (y / h) * 100 : 0)) + "%";
+          progress.style.setProperty(
+            "--p",
+            Math.min(1, Math.max(0, h > 0 ? y / h : 0)),
+          );
         }
         if (backToTop) backToTop.classList.toggle("visible", y > 600);
         const jn = this.$(".journey");
@@ -464,7 +535,7 @@
             "https://github-contributions-api.jogruber.de/v4/" +
               this.config.github +
               "?y=last",
-          );
+          { signal: this.sig() });
           if (res.ok) {
             days = (await res.json()).contributions;
             try {
@@ -485,21 +556,48 @@
       for (const d of days) {
         const n = Number(d.count) || 0;
         const day = String(d.date || "").slice(0, 10).replace(/[^\d-]/g, "");
+        const dp = day.split("-").map(Number);
+        const dt = new Date(dp[0], (dp[1] || 1) - 1, dp[2] || 1);
+        const when = isNaN(dt)
+          ? day
+          : TIPS.mon[dt.getMonth()].slice(0, 3) + " " + dt.getDate() + " " + dt.getFullYear();
         total += n;
         run = n ? run + 1 : 0;
         if (run > best) best = run;
         if (n) active++;
+        /* banded by the real count rather than the feed's 0-4 level, so a busy
+           day at 25 reads distinctly from one at 6 */
+        const lv = n === 0 ? 0 : n <= 2 ? 1 : n <= 5 ? 2 : n <= 9 ? 3 : n <= 19 ? 4 : 5;
         cells +=
           '<i class="contrib-cell" data-lv="' +
-          Math.max(0, Math.min(4, Number(d.level) || 0)) +
-          '" title="' +
+          lv +
+          '" data-d="' +
           day +
-          " · " +
+          '" data-c="' +
           n +
-          (n === 1 ? " contribution" : " contributions") +
+          '" data-tip="' +
+          when +
+          " · " +
+          (n || "none") +
           '"></i>';
       }
       grid.innerHTML = cells;
+      /* reveal first: measurements are zero while the card is display:none */
+      card.hidden = false;
+      this.fitContrib();
+      this.contribMonths(days, grid);
+      if (!grid._fitBound) {
+        grid._fitBound = 1;
+        let raf = 0;
+        addEventListener(
+          "resize",
+          () => {
+            cancelAnimationFrame(raf);
+            raf = requestAnimationFrame(() => this.fitContrib());
+          },
+          { passive: true },
+        );
+      }
       if (stats)
         stats.innerHTML =
           "<span><b>" +
@@ -509,8 +607,50 @@
           "</b> active days</span><span><b>" +
           best +
           "</b>-day best streak</span>";
-      card.hidden = false;
     },
+
+    /* 53 weeks at GitHub's 11px cells need ~633px, which is wider than this
+       card on a laptop and far wider on a phone, so the cells are sized from
+       the space actually available rather than spilling out of the card. */
+    fitContrib() {
+      const wrap = this.$(".contrib-wrap"),
+        scroll = this.$(".contrib-scroll"),
+        grid = this.$("#contribGrid");
+      if (!wrap || !scroll || !grid || grid.children.length < 14) return;
+      const avail = scroll.clientWidth;
+      if (!avail) return;
+      const weeks = Math.ceil(grid.children.length / 7);
+      /* gap tightens before the cells do, and the rail is hidden under 560px,
+         so all 53 weeks fit from a 320px phone up with no scrolling */
+      const gap = avail < 560 ? 1 : avail < 800 ? 2 : 3;
+      const ideal = (avail - (weeks - 1) * gap) / weeks;
+      wrap.style.setProperty("--cs", Math.max(3, Math.min(13, Math.floor(ideal))) + "px");
+      wrap.style.setProperty("--cg", gap + "px");
+    },
+
+    /* Month labels are placed as a percentage of the row, not in pixels, so
+       they stay over the right week when the cells resize. */
+    contribMonths(days, grid) {
+      const box = this.$("#contribMonths");
+      if (!box || grid.children.length < 9) return;
+      const weeks = Math.ceil(grid.children.length / 7);
+      let out = "",
+        last = -1;
+      for (let w = 0; w < weeks; w++) {
+        const d = days[w * 7];
+        const m = Number(String(d && d.date).slice(5, 7)) - 1;
+        if (m < 0 || m > 11 || m === last) continue;
+        out +=
+          '<span style="--x:' +
+          ((w / weeks) * 100).toFixed(2) +
+          '%">' +
+          "JanFebMarAprMayJunJulAugSepOctNovDec".slice(m * 3, m * 3 + 3) +
+          "</span>";
+        last = m;
+      }
+      box.innerHTML = out;
+    },
+
 
     async fetchGithub() {
       this.setSyncPill("github", "loading", "Connecting");
@@ -518,6 +658,7 @@
       try {
         const r = await fetch("https://api.github.com/users/" + this.config.github, {
           headers: { Accept: "application/vnd.github+json" },
+          signal: this.sig(),
         });
         if (r.ok) {
           const data = await r.json();
@@ -571,7 +712,7 @@
           "https://api.github.com/search/repositories?q=user:" +
             encodeURIComponent(this.config.github) +
             "+fork:false&per_page=100",
-          { headers: { Accept: "application/vnd.github+json" } },
+          { headers: { Accept: "application/vnd.github+json" }, signal: this.sig() },
         );
         if (!r.ok) throw new Error(r.status);
         const list = ((await r.json()).items || []).map((x) => ({
@@ -627,8 +768,13 @@
         .map(
           (r) =>
             '<a class="repo-item" target="_blank" rel="noopener" href="' +
-            (r.u ||
-              "https://github.com/" + this.config.github + "?tab=repositories") +
+            esc(
+              /^https:\/\//.test(r.u || "")
+                ? r.u
+                : "https://github.com/" + this.config.github + "?tab=repositories",
+            ) +
+            '" data-tip="' +
+            esc(r.s ? r.s + (r.s === 1 ? " star" : " stars") : "no stars yet") +
             '"><i style="--c:' +
             (this.langDot[r.l] || "var(--muted-2)") +
             '"></i><b>' +
@@ -731,7 +877,6 @@
         const seg = document.createElement("i");
         seg.className = "lang-seg";
         seg.style.cssText = "width:" + pct + "%;background:" + c;
-        seg.title = name + " " + pct + "%";
         bar.appendChild(seg);
         const it = document.createElement("span");
         it.innerHTML =
@@ -1110,6 +1255,8 @@
       const ov = this.$("#caseOverlay");
       const c = this.caseData[name];
       if (!ov || !c) return;
+      /* remembered so closing can hand focus back to the trigger */
+      this._caseTrigger = document.activeElement;
       const src = this.$("#p-" + name);
       if (src)
         ov.style.setProperty(
@@ -1169,6 +1316,8 @@
       if (!ov || ov.hidden) return;
       ov.hidden = true;
       document.body.classList.remove("case-open");
+      const back = this._caseTrigger;
+      if (back && back.isConnected && back.focus) back.focus();
     },
 
     initCases() {
@@ -1191,6 +1340,24 @@
         if (ov.hidden) return;
         if (e.key === "ArrowLeft") this.stepCase(-1);
         if (e.key === "ArrowRight") this.stepCase(1);
+        /* keep Tab inside the dialog so a keyboard user cannot wander into the
+           page behind it */
+        if (e.key === "Tab") {
+          const items = this.$$(
+            "a[href], button:not([disabled]), [tabindex]:not([tabindex='-1'])",
+            ov,
+          ).filter((el) => el.offsetParent !== null);
+          if (!items.length) return;
+          const first = items[0],
+            last = items[items.length - 1];
+          if (e.shiftKey && document.activeElement === first) {
+            e.preventDefault();
+            last.focus();
+          } else if (!e.shiftKey && document.activeElement === last) {
+            e.preventDefault();
+            first.focus();
+          }
+        }
       });
     },
 
@@ -1233,6 +1400,7 @@
       this.initCases();
       this.initBandDraw();
       this.initRecWater();
+      this.initTip();
       this.applyKaggle();
       this.initContrib();
       this.fetchGithub();

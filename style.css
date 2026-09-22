@@ -6,14 +6,14 @@
   --bg-elev: #f5f2ea;
   --text: #1a1815;
   --text-soft: #423d36;
-  --muted: #7a7369;
-  --muted-2: #a39c90;
+  --muted: #5f584f;
+  --muted-2: #6b645a;
   --border: #ddd7c8;
   --border-soft: #e8e3d6;
-  --accent: #a8560f;
+  --accent: #9a4f0d;
   --accent-2: #c76a1c;
-  --accent-soft: rgba(168, 86, 15, 0.07);
-  --accent-glow: rgba(168, 86, 15, 0.07);
+  --accent-soft: rgba(154, 79, 13, 0.07);
+  --accent-glow: rgba(154, 79, 13, 0.07);
   --hover-bg: #f0e9db;
   --hover-border: #c9bda3;
   --cat-ml: #7c3aed;
@@ -25,6 +25,9 @@
   --cat-nlp: #0369a1;
   --cat-nlp-soft: rgba(3, 105, 161, 0.09);
   --kaggle: #20beff;
+  /* #20beff is only 1.8:1 as text, so anything written in the Kaggle blue uses
+     this darkened same-hue value while fills, dots and rings keep --kaggle */
+  --kaggle-text: #0a6a98;
   --kaggle-soft: rgba(32, 190, 255, 0.09);
   --gh: #24292e;
   --gh-soft: rgba(36, 41, 46, 0.07);
@@ -142,6 +145,25 @@ button:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 3px;
 }
+/* off-screen until focused */
+.skip-link {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  z-index: 300;
+  padding: 10px 16px;
+  border-radius: 8px;
+  background: var(--accent);
+  color: var(--bg-elev);
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none;
+  transform: translateY(-200%);
+  transition: transform 0.2s var(--ease-out);
+}
+.skip-link:focus {
+  transform: none;
+}
 ::-webkit-scrollbar {
   width: 10px;
   height: 10px;
@@ -169,10 +191,12 @@ button:focus-visible {
   top: 0;
   left: 0;
   height: 2px;
-  width: 0;
+  width: 100%;
   background: linear-gradient(90deg, var(--accent), var(--accent-2));
   z-index: 200;
-  transition: width 0.1s linear;
+  transform: scaleX(var(--p, 0));
+  transform-origin: 0 50%;
+  transition: transform 0.1s linear;
   box-shadow: 0 0 12px var(--accent-glow);
 }
 
@@ -301,8 +325,8 @@ button:focus-visible {
   border-radius: 2px;
 }
 .menu-btn {
-  width: 36px;
-  height: 36px;
+  width: 42px;
+  height: 42px;
   display: none;
   place-items: center;
   border: 1px solid var(--border);
@@ -437,7 +461,7 @@ body::after {
 }
 .hero-typer {
   margin: 0 0 30px;
-  font-family: "JetBrains Mono", "Courier New", monospace;
+  font-family: var(--mono);
   font-size: clamp(1rem, 2.2vw, 1.22rem);
   font-weight: 500;
   letter-spacing: -0.01em;
@@ -1002,6 +1026,7 @@ body::after {
   color: var(--accent);
 }
 .score-note .tip {
+  max-width: calc(100vw - 28px);
   position: absolute;
   bottom: calc(100% + 10px);
   left: 50%;
@@ -1034,7 +1059,9 @@ body::after {
   border: 5px solid transparent;
   border-top-color: var(--text);
 }
-.score-note:hover .tip {
+.score-note:hover .tip,
+.score-note:focus .tip,
+.score-note:focus-within .tip {
   opacity: 1;
   transform: translateX(-50%) translateY(0);
 }
@@ -1257,9 +1284,6 @@ body::after {
    The feed carries a per-day count and level but no repository, so cells are
    shaded by volume alone, inside the existing amber scale. No head band — the
    icon rides the contributions kicker and the pill rides the languages one. */
-.lang-card {
-  grid-column: 1 / -1;
-}
 .contrib {
   margin-top: 0;
 }
@@ -1285,7 +1309,7 @@ body::after {
   place-items: center;
   flex-shrink: 0;
   color: var(--bg-elev);
-  background: linear-gradient(135deg, #24292e, #404448);
+  background: linear-gradient(135deg, var(--gh), #404448);
 }
 .contrib-title {
   margin: 0;
@@ -1308,14 +1332,79 @@ body::after {
   color: var(--text);
   font-weight: 600;
 }
+.contrib-wrap {
+  display: flex;
+  gap: 8px;
+}
+.contrib-days {
+  display: grid;
+  grid-template-rows: repeat(7, var(--cs, 11px));
+  gap: var(--cg, 3px);
+  line-height: var(--cs, 11px);
+  padding-top: calc(var(--cs, 11px) + 5px);
+  font-family: var(--mono);
+  font-size: 0.56rem;
+  line-height: 11px;
+  color: var(--muted-2);
+  flex-shrink: 0;
+}
+.contrib-scroll {
+  flex: 1;
+  min-width: 0;
+  padding-bottom: 2px;
+}
+.contrib-inner {
+  position: relative;
+  width: max-content;
+}
+.contrib-months {
+  position: relative;
+  height: 14px;
+  font-family: var(--mono);
+  font-size: 0.56rem;
+  letter-spacing: 0.06em;
+  color: var(--muted-2);
+}
+.contrib-months span {
+  position: absolute;
+  top: 0;
+  left: var(--x, 0);
+}
 .contrib-grid {
   display: grid;
   grid-auto-flow: column;
-  grid-template-rows: repeat(7, 1fr);
-  gap: 3px;
-  overflow-x: auto;
-  padding-bottom: 6px;
+  grid-auto-columns: var(--cs, 11px);
+  grid-template-rows: repeat(7, var(--cs, 11px));
+  gap: var(--cg, 3px);
   animation: contribIn 0.7s var(--ease-out) both;
+}
+/* one reusable node, pinned to the viewport so the scrolling container cannot
+   clip it; content is written by initContrib's hover handler */
+/* Two places only: the contribution cells and the repo rows. Cream chip with
+   the page's own hairline and mono micro-caps rather than a dark dashboard box.
+   left/top are computed in JS from the anchor rect, so flipping needs no
+   transform swap. */
+.tip-box {
+  position: fixed;
+  z-index: 260;
+  padding: 4px 8px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: var(--bg-elev);
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 0.16s var(--ease-out), transform 0.16s var(--ease-out);
+  box-shadow: var(--shadow-sm);
+}
+.tip-box.on {
+  opacity: 1;
+  transform: none;
 }
 @keyframes contribIn {
   from {
@@ -1324,26 +1413,38 @@ body::after {
   }
 }
 .contrib-cell {
-  width: 11px;
-  height: 11px;
-  border-radius: 2.5px;
+  width: var(--cs, 11px);
+  height: var(--cs, 11px);
+  border-radius: calc(var(--cs, 11px) * 0.22);
   background: var(--hover-bg);
-  transition: transform 0.2s var(--ease-out);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--border) 55%, transparent);
+  transition: transform 0.18s var(--ease-out), box-shadow 0.18s var(--ease-out);
 }
 .contrib-grid .contrib-cell:hover {
-  transform: scale(1.45);
+  transform: scale(1.55);
+  box-shadow: inset 0 0 0 1px var(--accent);
 }
+/* six bands, all mixed from the two warm tokens already in the palette:
+   empty, 1-2, 3-5, 6-9, 10-19, 20+ contributions */
 .contrib-cell[data-lv="1"] {
-  background: color-mix(in srgb, var(--accent) 34%, var(--hover-bg));
+  background: color-mix(in srgb, var(--accent) 22%, var(--hover-bg));
+  box-shadow: none;
 }
 .contrib-cell[data-lv="2"] {
-  background: color-mix(in srgb, var(--accent) 58%, var(--hover-bg));
+  background: color-mix(in srgb, var(--accent) 40%, var(--hover-bg));
+  box-shadow: none;
 }
 .contrib-cell[data-lv="3"] {
-  background: color-mix(in srgb, var(--accent) 82%, var(--hover-bg));
+  background: color-mix(in srgb, var(--accent) 62%, var(--hover-bg));
+  box-shadow: none;
 }
 .contrib-cell[data-lv="4"] {
-  background: var(--accent);
+  background: color-mix(in srgb, var(--accent) 85%, var(--hover-bg));
+  box-shadow: none;
+}
+.contrib-cell[data-lv="5"] {
+  background: color-mix(in srgb, var(--accent) 74%, var(--text));
+  box-shadow: none;
 }
 .contrib-foot {
   display: flex;
@@ -1386,9 +1487,9 @@ body::after {
     margin-top: 14px;
     padding-top: 13px;
   }
-  .contrib-cell {
-    width: 9px;
-    height: 9px;
+  /* the rail costs 32px the grid needs more than the labels are worth */
+  .contrib-days {
+    display: none;
   }
 }
 .kaggle-card::before,
@@ -1448,7 +1549,7 @@ body::after {
   box-shadow: 0 6px 16px rgba(32, 190, 255, 0.25);
 }
 .github-card .profile-logo {
-  background: linear-gradient(135deg, #24292e, #404448);
+  background: linear-gradient(135deg, var(--gh), #404448);
   box-shadow: 0 6px 16px rgba(36, 41, 46, 0.28);
 }
 .profile-title {
@@ -1811,7 +1912,7 @@ body::after {
   font-size: 0.68rem;
   color: var(--muted-2);
   letter-spacing: 0.01em;
-  font-family: "JetBrains Mono", "Courier New", monospace;
+  font-family: var(--mono);
 }
 .profile-source svg {
   width: 10px;
@@ -1842,7 +1943,7 @@ body::after {
   white-space: nowrap;
 }
 .kaggle-card .profile-link {
-  color: var(--kaggle);
+  color: var(--kaggle-text);
   background: var(--kaggle-soft);
   border-color: color-mix(in srgb, var(--kaggle) 25%, transparent);
 }
@@ -1855,12 +1956,12 @@ body::after {
 /* GitHub ink, mirroring the Kaggle card's soft→solid chip so the two source
    links read as peers without spending amber on a secondary action. */
 .github-card .profile-link {
-  color: #24292e;
-  background: color-mix(in srgb, #24292e 7%, transparent);
-  border-color: color-mix(in srgb, #24292e 25%, transparent);
+  color: var(--gh);
+  background: color-mix(in srgb, var(--gh) 7%, transparent);
+  border-color: color-mix(in srgb, var(--gh) 25%, transparent);
 }
 .github-card .profile-link:hover {
-  background: linear-gradient(135deg, #24292e, #404448);
+  background: linear-gradient(135deg, var(--gh), #404448);
   color: var(--bg-elev);
   transform: translateY(-1px);
 }
@@ -2156,6 +2257,7 @@ body::after {
   margin-bottom: 26px;
 }
 .filter-btn {
+  min-height: 40px;
   padding: 6px 14px;
   border-radius: 999px;
   font-size: 0.79rem;
@@ -2492,6 +2594,11 @@ body::after {
   border: 1px solid transparent;
   transition: all 0.2s var(--ease);
   background: transparent;
+  /* these are <button> now, so undo the UA defaults that would otherwise
+     change their type and spacing */
+  font-family: inherit;
+  line-height: inherit;
+  cursor: pointer;
 }
 .pc-link svg,
 .profile-link svg,
@@ -2724,7 +2831,7 @@ body::after {
   position: absolute;
   right: 12px;
   bottom: 2px;
-  color: var(--rec-color, var(--accent));
+  color: var(--rec-text, var(--rec-color, var(--accent)));
   opacity: 0.05;
   pointer-events: none;
   z-index: 0;
@@ -2753,7 +2860,7 @@ body::after {
   transition: color 0.25s var(--ease);
 }
 .recognition-card:hover .rec-title {
-  color: var(--rec-color, var(--accent));
+  color: var(--rec-text, var(--rec-color, var(--accent)));
 }
 .rec-issuer {
   display: inline-flex;
@@ -2770,7 +2877,7 @@ body::after {
     var(--rec-color, var(--accent)) 10%,
     transparent
   );
-  color: var(--rec-color, var(--accent));
+  color: var(--rec-text, var(--rec-color, var(--accent)));
   border: 1px solid
     color-mix(in srgb, var(--rec-color, var(--accent)) 22%, transparent);
 }
@@ -2811,7 +2918,7 @@ body::after {
   font-size: 0.74rem;
   font-weight: 600;
   letter-spacing: 0.1em;
-  color: var(--rec-color, var(--accent));
+  color: var(--rec-text, var(--rec-color, var(--accent)));
   border: 1.5px dashed
     color-mix(in srgb, var(--rec-color, var(--accent)) 55%, transparent);
   border-radius: 999px;
@@ -2849,6 +2956,7 @@ body::after {
 }
 .recognition-card[data-rec="kaggle"] {
   --rec-color: var(--kaggle);
+  --rec-text: var(--kaggle-text);
 }
 .recognition-card[data-rec="kpmg"] {
   --rec-color: #0a3a82;
@@ -3052,6 +3160,7 @@ body::after {
   left: 50%;
   z-index: 30;
   min-width: 158px;
+  max-width: min(240px, calc(100vw - 28px));
   padding: 9px 10px;
   border: 1px solid var(--border);
   border-radius: 11px;
@@ -3077,7 +3186,7 @@ body::after {
   transform: translateX(-50%) rotate(45deg);
 }
 .tag.has-proof:hover .proof-pop,
-.tag.has-proof:focus .proof-pop,
+.tag.has-proof:focus-within .proof-pop,
 .proof-pop:hover {
   opacity: 1;
   visibility: visible;
@@ -3160,12 +3269,12 @@ body.case-open {
 }
 .case-close {
   position: absolute;
-  top: 14px;
-  right: 14px;
+  top: 12px;
+  right: 12px;
   display: grid;
   place-items: center;
-  width: 32px;
-  height: 32px;
+  width: 40px;
+  height: 40px;
   border: 1px solid var(--border-soft);
   border-radius: 9px;
   background: var(--bg-2);
@@ -3218,7 +3327,7 @@ body.case-open {
   color: var(--accent);
 }
 .case-title {
-  font-family: "Fraunces", serif;
+  font-family: var(--serif);
   font-size: clamp(1.3rem, 1.1rem + 0.9vw, 1.65rem);
   margin: 6px 0 4px;
 }
@@ -3301,7 +3410,7 @@ body.case-open {
 }
 .case-fact b {
   display: block;
-  font-family: "Fraunces", serif;
+  font-family: var(--serif);
   font-size: 1.05rem;
   color: var(--accent);
   margin-bottom: 2px;
@@ -3404,7 +3513,8 @@ body.case-open {
   .proj-grid {
     grid-template-columns: 1fr;
   }
-  .journey::before {
+  .journey::before,
+  .journey::after {
     left: 80px;
   }
   .milestone {
@@ -3432,7 +3542,8 @@ body.case-open {
   }
 }
 @media (max-width: 560px) {
-  .journey::before {
+  .journey::before,
+  .journey::after {
     left: 16px;
   }
   .milestone {
