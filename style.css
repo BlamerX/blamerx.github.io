@@ -1662,7 +1662,8 @@ body::after {
   transition: stroke-dashoffset 1.8s var(--ease-out) 0.4s;
 }
 .kaggle-card.in .kg-donut .fill {
-  stroke-dashoffset: var(--fill-offset, 11.3);
+  /* 226.2 * (448 / 60837) — top ~1% of the notebooks pool */
+  stroke-dashoffset: 1.67;
 }
 .kg-donut-label {
   position: absolute;

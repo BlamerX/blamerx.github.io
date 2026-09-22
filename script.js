@@ -1,35 +1,12 @@
 (function () {
   "use strict";
 
-  const TIPS = {
-    day: ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
-    mon: ["January","February","March","April","May","June","July","August","September","October","November","December"],
-  };
+  /* month names for contribution-cell tooltips; the donut, rank and tier bars
+     are static in the HTML — Kaggle exposes no browser-readable endpoint */
+  const MON = ["January","February","March","April","May","June","July","August","September","October","November","December"];
 
   const App = {
     config: { github: "BlamerX" },
-
-    /* THE single source of truth for every Kaggle figure on the page. Kaggle
-       sends no numbers to a browser at all — its profile HTML is a JS shell
-       and its API answers 401 without a token — so these are set by hand,
-       rarely. Percentile, "of <pool>" and the donut sweep all derive from
-       rank + pool, so refreshing the ranking means editing two numbers here
-       and nothing anywhere else. `asOf` is what the pill displays. */
-    defaults: {
-      kaggle: {
-        rank: 448,
-        pool: 60837,
-        best: 366,
-        code: 21,
-        datasets: 1,
-        comps: 14,
-        disc: 23,
-        silver: 4,
-        bronze: 10,
-        tierLabel: "Notebook Expert",
-        asOf: "Sep 2026",
-      },
-    },
 
     $(sel, ctx) {
       return (ctx || document).querySelector(sel);
@@ -240,18 +217,9 @@
         "Deep Learning",
         "Computer Vision",
       ];
-      /* the global reduced-motion block only clamps CSS timings, so this
-         JS loop has to opt out itself; the span is empty in the HTML so it
-         still needs content */
-      if (this.reduced()) {
-        let i = 0;
-        el.textContent = roles[0];
-        setInterval(() => {
-          i = (i + 1) % roles.length;
-          el.textContent = roles[i];
-        }, 2600);
-        return;
-      }
+      /* deliberately NOT gated on reduced-motion: letter-by-letter typing is
+         a content change, not animation — the old opt-out branch swapped
+         whole words every few seconds and read as flashing */
       let ri = 0,
         ci = 0,
         del = false;
@@ -442,12 +410,9 @@
       });
     },
 
-    applyAll(prefix, data, extra) {
+    applyAll(prefix, data) {
       this.$$("[data-" + prefix + "]").forEach((el) => {
-        const key = el.getAttribute("data-" + prefix);
-        let val;
-        if (extra && extra[key] !== undefined) val = extra[key]();
-        else val = data[key];
+        const val = data[el.getAttribute("data-" + prefix)];
         if (val === undefined || val === null || val === "") return;
         const formatted =
           typeof val === "number" ? this.fmtNumber(val) : String(val);
@@ -456,64 +421,6 @@
           this.flash(el);
         }
       });
-      this.$$("[data-" + prefix + "-bar]").forEach((el) => {
-        const key = el.getAttribute("data-" + prefix + "-bar");
-        const pct = this.barPercent(prefix, key, data[key]);
-        if (pct != null) el.style.setProperty("--w", pct + "%");
-      });
-    },
-
-    barPercent(source, key, val) {
-      if (val == null || isNaN(Number(val))) return null;
-      const n = Number(val);
-      if (source === "kaggle") {
-        const map = { code: 20, datasets: 5, comps: 25, disc: 25 };
-        const cap = map[key];
-        return cap ? Math.min(100, Math.max(8, (n / cap) * 100)) : null;
-      }
-      return null;
-    },
-
-    applyKaggle() {
-      const data = this.defaults.kaggle;
-      this.applyAll("kaggle", data, this.kaggleExtras(data));
-      this.updateDonut(data);
-      this.setSyncPill("kaggle", "cached", "As of " + data.asOf);
-    },
-
-    /* extras return computed values, called with NO args.
-       They close over `data` to avoid "[object Object]" bugs. */
-    kaggleExtras(data) {
-      const self = this;
-      const fmt = (v) => (v ? self.fmtNumber(v) : "—");
-      const pct =
-        data.rank && data.pool
-          ? Math.max(
-              1,
-              Math.round((Number(data.rank) / Number(data.pool)) * 100),
-            )
-          : 1;
-      return {
-        pool() {
-          return data.pool ? "of " + fmt(data.pool) : "of —";
-        },
-        percentile() {
-          return pct + "%";
-        },
-      };
-    },
-
-    updateDonut(data) {
-      const rank = Number(data.rank),
-        pool = Number(data.pool);
-      if (!rank || !pool) return;
-      const pct = Math.max(0.01, Math.min(1, 1 - rank / pool));
-      const circumference = 2 * Math.PI * 36;
-      const offset = (circumference * (1 - pct)).toFixed(2);
-      const donut = this.$(".kg-donut .fill");
-      if (donut) donut.style.strokeDashoffset = offset;
-      const card = this.$(".kaggle-card");
-      if (card) card.style.setProperty("--fill-offset", offset);
     },
 
     /* GitHub's daily tally, via a CORS-enabled mirror of it — the one activity
@@ -560,7 +467,7 @@
         const dt = new Date(dp[0], (dp[1] || 1) - 1, dp[2] || 1);
         const when = isNaN(dt)
           ? day
-          : TIPS.mon[dt.getMonth()].slice(0, 3) + " " + dt.getDate() + " " + dt.getFullYear();
+          : MON[dt.getMonth()].slice(0, 3) + " " + dt.getDate() + " " + dt.getFullYear();
         total += n;
         run = n ? run + 1 : 0;
         if (run > best) best = run;
@@ -674,8 +581,10 @@
         const list = await this.getRepos();
         const stars = list.reduce((s, x) => s + (x.s || 0), 0);
         this.applyAll("github", { stars });
+        /* heroStars has no data-github key: setAttribute feeds the live
+           count-up, textContent covers the case where it already ran */
         const hs = this.$("#heroStars");
-        if (hs && String(stars) !== hs.getAttribute("data-count")) {
+        if (hs) {
           hs.setAttribute("data-count", stars);
           hs.textContent = stars;
         }
@@ -763,7 +672,7 @@
     renderRepos(list) {
       const box = this.$("#repoList");
       if (!box) return;
-      const esc = (s) => String(s).replace(/[&<>"]/g, (c) => "&#" + c.charCodeAt(0) + ";");
+      const esc = (s) => this.esc(s);
       box.innerHTML = list
         .map(
           (r) =>
@@ -1401,7 +1310,6 @@
       this.initBandDraw();
       this.initRecWater();
       this.initTip();
-      this.applyKaggle();
       this.initContrib();
       this.fetchGithub();
       this.fetchLangs();
