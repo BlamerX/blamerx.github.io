@@ -3757,7 +3757,7 @@ body.case-open {
   border-radius: 10px; padding: 16px 18px;
   background: linear-gradient(160deg, color-mix(in srgb, var(--t) 9%, var(--bg-elev)), var(--bg-elev) 58%);
   box-shadow: var(--shadow-sm);
-  clip-path: polygon(0 0, calc(100% - 18px) 0, 100% 18px, 100% 100%, 0 100%);
+  clip-path: polygon(0 0, calc(100% - 30px) 0, 100% 30px, 100% 100%, 0 100%);
   transition: transform 0.3s var(--ease-out), box-shadow 0.3s var(--ease-out), background 0.3s var(--ease-out);
 }
 .hero .stat:nth-child(2) { --t: var(--kaggle); }
@@ -3768,8 +3768,8 @@ body.case-open {
   transform: translateY(-4px); box-shadow: var(--shadow);
 }
 .hero .stat::after {
-  content: ""; position: absolute; top: 0; right: 0; width: 18px; height: 18px;
-  background: color-mix(in srgb, var(--t) 26%, var(--bg-elev));
+  content: ""; position: absolute; top: 0; right: 0; width: 30px; height: 30px;
+  background: var(--bg-2);
   clip-path: polygon(0 0, 100% 100%, 0 100%); pointer-events: none;
 }
 
@@ -4491,3 +4491,96 @@ body.case-open {
   .case-nav { margin-inline: -20px; padding-inline: 20px; }
 }
 @media (prefers-reduced-motion: reduce) { .flow span b { animation: none; } }
+
+/* ---- PROJECTS — stamp sheet: perforated card edges, engraved vignette bands, postmark metrics, catalogue-code foot ---- */
+#projects {
+  --st-sheet: color-mix(in srgb, var(--bg-3) 62%, var(--bg-elev));
+  --st-paper: var(--bg-elev);
+  --st-rule: color-mix(in srgb, var(--cat-color) 46%, var(--text));
+  --st-perf: 15px;
+  --st-bite: 5.7px;
+}
+#projects .section-title { font-family: var(--serif); }
+#projects .section-sub { font-family: var(--serif); font-style: italic; }
+
+/* ---- the sheet itself ---- */
+#projects .proj-grid {
+  grid-template-columns: repeat(auto-fill, minmax(268px, 1fr)); gap: 30px 24px; grid-auto-rows: auto;
+  padding: 26px 24px; border: 1px solid var(--border); border-radius: 4px; background: var(--st-sheet);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--bg-elev) 45%, transparent), var(--shadow-sm);
+}
+#projects .project-card {
+  flex-direction: column; padding: 12px; border: 0; border-radius: 0; overflow: hidden;
+  background-color: var(--st-paper);
+  background-image:
+    radial-gradient(circle at calc(var(--st-perf) / 2) 0, var(--st-sheet) var(--st-bite), transparent calc(var(--st-bite) + .6px)),
+    radial-gradient(circle at calc(var(--st-perf) / 2) var(--st-perf), var(--st-sheet) var(--st-bite), transparent calc(var(--st-bite) + .6px)),
+    radial-gradient(circle at 0 calc(var(--st-perf) / 2), var(--st-sheet) var(--st-bite), transparent calc(var(--st-bite) + .6px)),
+    radial-gradient(circle at var(--st-perf) calc(var(--st-perf) / 2), var(--st-sheet) var(--st-bite), transparent calc(var(--st-bite) + .6px)),
+    linear-gradient(var(--st-paper), var(--st-paper));
+  background-size: var(--st-perf) var(--st-perf);
+  background-repeat: repeat-x, repeat-x, repeat-y, repeat-y, no-repeat;
+  background-position: 0 0, 0 100%, 0 0, 100% 0, 0 0;
+  box-shadow: 0 2px 6px color-mix(in srgb, var(--text) 12%, transparent);
+  transition: transform .3s var(--ease-out), box-shadow .3s var(--ease-out);
+}
+#projects .project-card:hover {
+  transform: translateY(-6px) rotate(-.5deg) perspective(760px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  box-shadow: 0 12px 22px color-mix(in srgb, var(--text) 20%, transparent);
+}
+#projects .pc-band, #projects .pc-body { background: none; }
+
+/* ---- engraved vignette band ---- */
+#projects .pc-band {
+  padding: 12px 13px 11px; overflow: hidden; border: 1px solid var(--st-rule); border-bottom: 0;
+  background:
+    repeating-linear-gradient(115deg, color-mix(in srgb, var(--cat-color) 26%, transparent) 0 2px, transparent 2px 5px),
+    color-mix(in srgb, var(--cat-color) 17%, var(--st-paper));
+}
+#projects .pc-band::before { top: -30%; right: -18%; width: 130px; height: 130px; opacity: .2; background: radial-gradient(circle, var(--cat-color), transparent 62%); }
+#projects .pc-band::after { content: none; }
+#projects .pc-band > :not(.pc-water) { position: relative; z-index: 1; }
+#projects .pc-band-icon { width: 34px; height: 34px; border-radius: 50%; background: var(--st-paper); border: 1px solid var(--st-rule); color: var(--cat-color); box-shadow: none; }
+#projects .pc-band-icon svg { width: 17px; height: 17px; }
+#projects .project-card:hover .pc-band-icon { transform: rotate(-4deg) scale(1.05); }
+#projects .pc-band-title h3 { color: color-mix(in srgb, var(--cat-color) 74%, var(--text)); font-family: var(--serif); font-weight: 600; font-size: .99rem; letter-spacing: .004em; }
+#projects .project-card:hover .pc-band-title h3 { color: color-mix(in srgb, var(--cat-color) 74%, var(--text)); transform: none; }
+#projects .pc-cat { color: var(--st-rule); font-size: .55rem; letter-spacing: .2em; }
+#projects .pc-cat::before { width: 12px; height: 1px; border-radius: 0; background: currentColor; }
+#projects .pc-live-badge { background: var(--st-paper); border: 1px solid color-mix(in srgb, var(--ok) 52%, transparent); color: var(--ok); border-radius: 0; font-size: .52rem; letter-spacing: .14em; }
+#projects .pc-live-badge .live-dot { background: var(--ok); }
+#projects .pc-water { right: 7px; bottom: -16px; font-size: 4rem; color: var(--cat-color); opacity: .12; }
+
+/* ---- the stamp face ---- */
+#projects .pc-body { padding: 12px 13px 13px; border: 1px solid var(--st-rule); }
+#projects .pc-body > p { margin-bottom: 12px; font-size: .79rem; line-height: 1.56; color: var(--text-soft); }
+/* postmark: value inside a dashed ring, sitting on cancellation bars */
+#projects .pc-metric {
+  gap: 10px; padding: 6px 0 8px; margin-bottom: 11px; border: 0; border-radius: 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--cat-color) 30%, transparent); background: none;
+}
+#projects .project-card:hover .pc-metric { transform: none; border-color: color-mix(in srgb, var(--cat-color) 30%, transparent); }
+#projects .pc-metric-label { font-family: var(--serif); font-size: .62rem; letter-spacing: .18em; color: var(--muted-2); }
+#projects .pc-metric-bar { height: 4px; background: repeating-linear-gradient(90deg, color-mix(in srgb, var(--text) 26%, transparent) 0 6px, transparent 6px 10px); }
+#projects .pc-metric-bar::after { content: none; }
+#projects .pc-metric-bar i { border-radius: 0; background: color-mix(in srgb, var(--cat-color) 84%, var(--text)); }
+#projects .pc-metric-val {
+  font-family: var(--serif); font-weight: 600; font-size: .86rem; color: color-mix(in srgb, var(--cat-color) 78%, var(--text));
+  padding: 7px 8px; border: 1px dashed color-mix(in srgb, var(--cat-color) 62%, transparent); border-radius: 50%;
+  transform: rotate(-9deg); background: color-mix(in srgb, var(--cat-color) 6%, var(--st-paper));
+}
+#projects .tech { order: 0; flex-wrap: wrap; gap: 3px 8px; margin: 0 0 12px; padding: 0; overflow: visible; }
+#projects .tech span { padding: 0; border: 0; border-radius: 0; background: none; font-family: var(--mono); font-size: .55rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); white-space: normal; }
+#projects .tech span::before { content: "\2726"; margin-right: 4px; color: var(--cat-color); font-size: .5rem; }
+#projects .project-card:hover .tech span { background: none; color: var(--text-soft); }
+#projects .pc-foot { border-top: 0; padding-top: 0; }
+#projects .pc-num { position: static; width: auto; height: auto; display: inline; place-items: initial; border: 0; border-radius: 0; background: none; box-shadow: none; font-family: var(--serif); font-size: .84rem; letter-spacing: .1em; color: var(--st-rule); }
+#projects .pc-num::after { content: " ST"; font-size: .56rem; letter-spacing: .16em; }
+#projects .pc-links { gap: 4px; }
+#projects .pc-link { padding: 3px 7px; border-radius: 0; border: 1px solid color-mix(in srgb, var(--text) 16%, transparent); background: var(--st-paper); font-family: var(--mono); font-size: .55rem; letter-spacing: .08em; }
+#projects .pc-link.is-kaggle { color: var(--kaggle-text); background: color-mix(in srgb, var(--kaggle) 12%, var(--st-paper)); border-color: color-mix(in srgb, var(--kaggle) 40%, transparent); }
+#projects .pc-link.is-live { color: var(--ok); background: color-mix(in srgb, var(--ok) 10%, var(--st-paper)); border-color: color-mix(in srgb, var(--ok) 38%, transparent); }
+#projects .filter-btn { border-radius: 0; border: 1px dashed color-mix(in srgb, var(--text) 26%, transparent); background: var(--st-sheet); font-family: var(--mono); font-size: .6rem; letter-spacing: .12em; text-transform: uppercase; box-shadow: none; }
+#projects .filter-btn .count { background: none; }
+#projects .filter-btn:hover { transform: none; background: var(--st-paper); box-shadow: none; }
+#projects .filter-btn.active { background: var(--accent); color: var(--st-paper); border: 1px dashed var(--accent); box-shadow: none; }
