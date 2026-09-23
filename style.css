@@ -4589,3 +4589,49 @@ body.case-open {
 #projects .filter-btn .count { background: none; }
 #projects .filter-btn:hover { transform: none; background: var(--st-paper); box-shadow: none; }
 #projects .filter-btn.active { background: var(--accent); color: var(--st-paper); border: 1px dashed var(--accent); box-shadow: none; }
+
+/* ---- ABOUT — notebook margin doodles: ruled page, red margin rule, highlighter marks, taped note, blobby step circles with crooked arrows ---- */
+
+#about .section-title::after { width:46px; height:3px; margin-top:14px; border-radius:999px; background:color-mix(in srgb, var(--accent) 55%, transparent); box-shadow:none; transform:skewX(-18deg) rotate(-1.2deg); }
+
+/* left: ruled sheet, red margin line, gutter row notes kept from the ledger hand */
+#about .about-text { position:relative; padding:8px 24px 8px 58px; border-right:1px solid var(--border);
+  background: repeating-linear-gradient(to bottom, transparent 0 30px, color-mix(in srgb, var(--border) 52%, transparent) 30px 31px); }
+#about .about-text::before { content:""; position:absolute; left:42px; top:0; bottom:0; width:1.5px; background:color-mix(in srgb, var(--cat-vision) 52%, transparent); }
+#about .about-text > p { margin:0 0 16px; padding:2px 0 16px; border-bottom:0; font-size:1.04rem; line-height:1.85; }
+#about .about-text > p:last-of-type { margin-bottom:0; }
+#about .about-text > p::before { top:10px; font-size:0.6rem; color:var(--muted-2); rotate:-3deg; }
+#about .about-text p b { color:var(--text); font-weight:600; padding:1px 3px; border-radius:5px 3px 6px 3px;
+  background: linear-gradient(100deg, transparent 1%, color-mix(in srgb, var(--accent-2) 32%, transparent) 5% 95%, transparent 99%);
+  -webkit-box-decoration-break:clone; box-decoration-break:clone; }
+#about .about-text p span { color:var(--text); padding:1px 3px; border-radius:4px 6px 3px 6px;
+  background: linear-gradient(-84deg, transparent 2%, color-mix(in srgb, var(--kaggle) 32%, transparent) 6% 94%, transparent 98%);
+  -webkit-box-decoration-break:clone; box-decoration-break:clone; }
+
+/* currently: a note taped to the page */
+#about .currently { position:relative; margin-top:30px; padding:14px 16px; border:1px dashed var(--hover-border); border-radius:3px; background:color-mix(in srgb, var(--accent-2) 8%, var(--bg-elev)); box-shadow:var(--shadow-sm); rotate:-0.7deg; }
+#about .currently:hover { transform:none; box-shadow:var(--shadow); }
+#about .currently::before { content:""; position:absolute; top:-10px; left:50%; translate:-50%; rotate:-2deg; width:76px; height:20px; border-radius:2px; background:color-mix(in srgb, var(--kaggle) 16%, var(--bg-2)); box-shadow:0 1px 2px color-mix(in srgb, var(--text) 12%, transparent); }
+#about .currently-label { border:0; padding:0; margin-right:10px; }
+#about .currently-tag { border-radius:2px; background:var(--bg-elev); border:1px solid var(--border); }
+#about .currently-tag:hover { transform:none; background:var(--accent-soft); }
+
+/* right: the doodled pipeline */
+#about .about-col-right { padding:8px 0 8px 34px; }
+#about .about-kicker { margin:0 0 16px; padding:0; border:0; rotate:-1deg; color:var(--text-soft); }
+#about .about-kicker::after { content:" ← this, every time"; font-family:var(--serif); font-style:italic; font-weight:400; font-size:0.85rem; letter-spacing:0; text-transform:none; color:var(--muted-2); }
+#about .flow-step { grid-template-columns:32px 1fr; gap:12px; padding:9px 4px; margin:0; border:0; border-radius:0; }
+#about .flow-step:hover { background:var(--accent-soft); border-radius:10px; }
+#about .flow-n { width:30px; height:30px; border:2px solid var(--text-soft); border-radius:54% 46% 49% 51% / 47% 53% 45% 55%; background:transparent; rotate:-5deg; color:var(--text); font-size:0.7rem; }
+#about .flow-step:nth-child(2n) .flow-n { rotate:4deg; border-radius:46% 54% 52% 48% / 53% 47% 55% 45%; }
+#about .flow-step.in .flow-n { background:color-mix(in srgb, var(--accent) 10%, transparent); border-color:var(--accent); color:var(--accent); }
+#about .flow-step:not(:last-child) .flow-n::after { content:"↓"; position:absolute; left:50%; top:calc(100% + 2px); font-size:0.85rem; font-weight:400; color:var(--muted-2); transform:translateX(-50%) rotate(6deg) skewX(-8deg); }
+#about .flow-body { display:block; }
+#about .flow-title { display:block; margin:1px 0 2px; font-family:var(--serif); font-style:italic; font-weight:500; font-size:1.02rem; letter-spacing:0; text-transform:none; color:var(--text); }
+#about .flow-title::after { content:none; }
+#about .flow-desc { display:block; margin:0; text-align:left; font-size:0.82rem; }
+
+@media (max-width:900px) {
+  #about .about-text { padding:8px 18px 8px 58px; }
+  #about .about-col-right { padding:22px 6px 8px 52px; }
+}
