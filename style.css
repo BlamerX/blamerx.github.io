@@ -4220,35 +4220,22 @@ body.case-open {
   #projects .project-card:hover { animation: deckShift 0.35s var(--ease-out); }
 }
 
-/* ---- JOURNEY — contact-sheet frames + git-history rail/nodes/hover with curved branch-out ---- */
-/* m-journey.css — MERGE per review: contact sheet supplies the CARD design
-   (frames, grain, vignette, burned FRAME numbers, grease-pencil key shots,
-   sprocket gutters); git history supplies the rail, commit nodes, HOVER
-   (slide off the line, solidify border, accent spine) and the BRANCH-OUT as a
-   CURVE (rounded elbow), plus tag pills / diff-stat metrics / collapse row.
-   No metro elements. Overlay — link after style.css. Scoped to #journey. */
+/* ---- JOURNEY — contact-sheet frames + git-history nodes/hover with curved branch-out ---- */
+/* Contact sheet supplies the CARD design (frames, grain, vignette, burned
+   FRAME numbers, grease-pencil key shots); git history supplies the commit
+   nodes, HOVER (slide, solidify border, accent spine) and the curved
+   branch-out elbow. Sprocket gutters and the dashed rail stripe were removed
+   on review — the section now shares the page background and starts from a
+   slight left padding. Scoped to #journey. */
 
-/* ===== contact-sheet stage ===== */
 #journey { overflow: hidden; }
 #journey .container { position: relative; z-index: 1; }
-#journey .journey { counter-reset: frame; }
+#journey .journey { counter-reset: frame; padding-left: 14px; }
 #journey .milestone { counter-increment: frame; }
-#journey::before, #journey::after {
-  content: ""; position: absolute; top: 0; bottom: 0; width: 20px; z-index: 0;
-  pointer-events: none; background-repeat: repeat-y; background-size: 20px 30px;
-  background-image:
-    radial-gradient(4px 4px at 2px 6px, var(--bg) 98%, transparent),
-    radial-gradient(4px 4px at 18px 6px, var(--bg) 98%, transparent),
-    radial-gradient(4px 4px at 2px 26px, var(--bg) 98%, transparent),
-    radial-gradient(4px 4px at 18px 26px, var(--bg) 98%, transparent),
-    repeating-linear-gradient(180deg, transparent 0 6px, color-mix(in srgb, var(--text) 8%, transparent) 6px 26px, transparent 26px 30px);
-}
-#journey::before { left: 0; border-right: 1px solid color-mix(in srgb, var(--text) 6%, transparent); }
-#journey::after { right: 0; border-left: 1px solid color-mix(in srgb, var(--text) 6%, transparent); }
 
-/* ===== rail (git): dashed first-parent line, --sp progress as solid amber ===== */
-#journey .journey::before { width: 2px; border-radius: 0; background: repeating-linear-gradient(180deg, var(--border) 0 5px, transparent 5px 10px); }
-#journey .journey::after { width: 2px; border-radius: 0; background: linear-gradient(180deg, var(--accent), var(--accent-2)); }
+/* ===== rail stripes removed per review — no edge gutters, no dotted line ===== */
+#journey::before, #journey::after { content: none; }
+#journey .journey::before, #journey .journey::after { display: none; }
 
 /* ===== commit nodes (git) ===== */
 #journey .mile-rail { padding-top: 25px; }
@@ -4325,11 +4312,9 @@ body.case-open {
   }
 }
 @media (max-width: 800px) {
-  #journey .journey::before, #journey .journey::after { left: 80px; }
+  #journey .journey { padding-left: 4px; }
   #journey .mile-rail::after { display: none; }
 }
 @media (max-width: 560px) {
-  #journey::before, #journey::after { width: 10px; background-size: 10px 24px; opacity: 0.7; }
-  #journey .journey::before, #journey .journey::after { left: 16px; }
   #journey .mile-year::before { content: "FR " counter(frame, decimal-leading-zero); }
 }
