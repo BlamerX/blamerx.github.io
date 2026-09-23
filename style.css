@@ -3767,9 +3767,14 @@ body.case-open {
   background: linear-gradient(160deg, color-mix(in srgb, var(--t) 14%, var(--bg-elev)), var(--bg-elev) 58%);
   transform: translateY(-4px); box-shadow: var(--shadow);
 }
-.hero .stat::after {
+.hero .stat::before { /* hairline along the cut, so the fold reads as an edge */
+  content: ""; position: absolute; top: 0; right: 44px; width: 63px; height: 2px;
+  transform-origin: top left; transform: rotate(45deg); border-radius: 1px;
+  background: color-mix(in srgb, var(--t) 45%, var(--border)); pointer-events: none;
+}
+.hero .stat::after { /* folded-under flap: warm paper-back, not white */
   content: ""; position: absolute; top: 0; right: 0; width: 44px; height: 44px;
-  background: var(--bg-2);
+  background: linear-gradient(225deg, color-mix(in srgb, var(--t) 22%, var(--bg-3)), color-mix(in srgb, var(--t) 8%, var(--bg-3)));
   clip-path: polygon(0 0, 100% 100%, 0 100%); pointer-events: none;
 }
 
