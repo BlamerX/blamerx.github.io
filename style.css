@@ -3742,148 +3742,129 @@ body.case-open {
   }
 }
 
+
 /* ==========================================================================
-   MERGED SECTION TREATMENTS (reviewed design board, 2026-09)
+   MERGED SECTION TREATMENTS (review board picks, 2026-09)
    ========================================================================== */
 
-/* ---- HERO — notebook-window plate, spine label, letterpress masthead, ruled ticker stats ---- */
-/* M·HERO — composite: console's notebook-window frame + split's asymmetric
-   layout and dot-grid plate + masthead's letterpress Fraunces and ruled
-   ticker stats. Self-contained; loads over style.css only. */
-
-.hero { padding: 148px 0 88px; }
-/* the window plate owns the interior; drop the split glow blob */
-#home.hero::before { display: none; }
-
-/* — 1 · FRAME: one notebook window, mono title-bar with traffic lights + [RUN] — */
-.hero .container {
-  position: relative; z-index: 1; max-width: 1060px; overflow: hidden;
-  border: 1px solid var(--border); border-radius: var(--radius-lg);
-  background: var(--bg-elev); box-shadow: var(--shadow-lg);
-  padding: 80px clamp(24px, 4vw, 52px) 16px;
-  display: grid;
-  grid-template-columns: 38px minmax(0, 1.05fr) minmax(0, .95fr);
-  column-gap: clamp(26px, 4vw, 56px);
-  align-items: start;
-}
-/* title-bar strip: dots ride the background, filename sits left; its bottom
-   edge is the first masthead double-rule divider */
-.hero .container::before {
-  content: "adarsh_kumar.ipynb";
-  position: absolute; top: 0; left: 0; right: 0; z-index: 2;
-  height: 46px; display: flex; align-items: center; padding: 0 92px 0 78px;
-  font-family: var(--mono); font-size: .72rem; font-weight: 500; letter-spacing: .04em; color: var(--muted-2);
-  background:
-    radial-gradient(circle 5px at 22px 22px, color-mix(in srgb, var(--text) 70%, var(--bg-3)) 99%, transparent),
-    radial-gradient(circle 5px at 40px 22px, var(--accent-2) 99%, transparent),
-    radial-gradient(circle 5px at 58px 22px, var(--ok) 99%, transparent),
-    color-mix(in srgb, var(--bg-3) 60%, var(--bg-elev));
-  border-bottom: 3px double color-mix(in srgb, var(--text) 38%, var(--bg));
-}
-/* [RUN] status chip: the last free title-bar pseudo */
-.hero .container::after {
-  content: "[ RUN ]";
-  position: absolute; top: 11px; right: 14px; z-index: 2;
-  padding: 3px 9px; border-radius: 6px; white-space: nowrap;
-  font-family: var(--mono); font-size: .64rem; font-weight: 600; letter-spacing: .08em;
-  color: color-mix(in srgb, var(--ok) 72%, var(--text));
-  background: var(--ok-soft);
-  border: 1px solid color-mix(in srgb, var(--ok) 30%, transparent);
-}
-
-/* — 2 · LAYOUT: split's asymmetric grid inside the window — */
-/* far-left gutter: eyebrow rotated into a vertical spine label */
-.hero .hero-eyebrow {
-  grid-column: 1; grid-row: 1 / 4; align-self: center; justify-self: center; margin: 0;
-  writing-mode: vertical-rl; transform: rotate(180deg);
-  padding: 14px 7px; gap: 14px; border-radius: 4px;
-  background: color-mix(in srgb, var(--bg-elev) 85%, transparent);
-  border: 1px solid var(--border); border-left: 2px solid var(--accent);
-  font-family: var(--mono); font-size: .64rem; letter-spacing: .18em; text-transform: uppercase;
+/* ---- HERO (as reviewed: ONLY the clipped-corner stat tiles) ---- */
+/* z-hero-tiles.css — the ONLY hero change per review: raised cut-corner stat
+   tiles with a soft category tint and a clipped top-right corner. Rest of the
+   hero is untouched. Overlay — link after style.css. */
+.hero .stat {
+  --t: var(--accent); position: relative;
+  border: 1px solid color-mix(in srgb, var(--t) 28%, var(--border-soft));
+  border-radius: 10px; padding: 16px 18px;
+  background: linear-gradient(160deg, color-mix(in srgb, var(--t) 9%, var(--bg-elev)), var(--bg-elev) 58%);
   box-shadow: var(--shadow-sm);
-  -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+  clip-path: polygon(0 0, calc(100% - 18px) 0, 100% 18px, 100% 100%, 0 100%);
+  transition: transform 0.3s var(--ease-out), box-shadow 0.3s var(--ease-out), background 0.3s var(--ease-out);
+}
+.hero .stat:nth-child(2) { --t: var(--kaggle); }
+.hero .stat:nth-child(3) { --t: var(--gh); }
+.hero .stat:nth-child(4) { --t: var(--cat-web); }
+.hero .stat:hover {
+  background: linear-gradient(160deg, color-mix(in srgb, var(--t) 14%, var(--bg-elev)), var(--bg-elev) 58%);
+  transform: translateY(-4px); box-shadow: var(--shadow);
+}
+.hero .stat::after {
+  content: ""; position: absolute; top: 0; right: 0; width: 18px; height: 18px;
+  background: color-mix(in srgb, var(--t) 26%, var(--bg-elev));
+  clip-path: polygon(0 0, 100% 100%, 0 100%); pointer-events: none;
 }
 
-/* LEFT: masthead-scale letterpress name on split's dot-grid plate */
-.hero .hero-name {
-  grid-column: 2; grid-row: 1 / 4; align-self: center; position: relative; margin: 0;
-  padding: 34px 30px 40px; border-radius: var(--radius-lg); overflow-wrap: break-word;
-  font-weight: 600; font-size: clamp(2.9rem, 5.2vw, 4.6rem); line-height: .94; letter-spacing: -.045em;
-  text-shadow: 0 1px 0 var(--bg-2), 0 2px 1px color-mix(in srgb, var(--bg) 70%, transparent), 0 6px 14px color-mix(in srgb, var(--text) 16%, transparent);
-  background-image:
-    radial-gradient(circle, color-mix(in srgb, var(--accent) 7%, transparent) 1.5px, transparent 1.8px),
-    radial-gradient(340px circle at 25% 30%, color-mix(in srgb, var(--accent) 5%, transparent), transparent 72%);
-  background-size: 18px 18px, 100% 100%;
+/* ---- ABOUT — accounts ledger: hairline rules, margin row numbers, dotted-leader flow table, rubber-stamp steps ---- */
+/* a-ledger — "ACCOUNTS LEDGER": the about section as a ruled accounting book.
+   Zero radius, zero drop shadow, hairlines only; reveal transitions untouched. */
+#about .about-grid {
+  gap: 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
 }
-.hero .hero-name em {
-  background: none; -webkit-text-fill-color: var(--accent); color: inherit;
-  font-style: italic; animation: none;
-  text-shadow: 0 2px 10px color-mix(in srgb, var(--accent) 25%, transparent);
+#about .about-text {
+  counter-reset: ledger-row;
+  padding: 8px 34px 8px 58px;
+  border-right: 1px solid var(--border); /* column gutter as ledger rule */
 }
-/* split's ◊ watermark, pressed under the plate */
-.hero .hero-name::before {
-  content: "\25CA"; position: absolute; right: -2%; bottom: -12%; z-index: -1;
-  font-family: var(--serif); font-weight: 600; font-size: clamp(13rem, 22vw, 20rem);
-  line-height: 1; color: var(--accent); opacity: .07; pointer-events: none; user-select: none;
+#about .about-col-right { padding: 8px 0 8px 34px; }
+
+/* captions: mono uppercase column heads */
+#about .about-kicker, #about .currently-label {
+  border-bottom: 1px solid var(--border); padding-bottom: 6px;
+}
+#about .about-kicker { display: block; margin: 0 0 2px; }
+
+/* every paragraph is a ledger row with a margin row-number */
+#about .about-text > p {
+  counter-increment: ledger-row;
+  position: relative; margin: 0; padding: 14px 0; font-size: 1rem;
+  border-bottom: 1px solid var(--border-soft);
+}
+#about .about-text > p::before {
+  content: counter(ledger-row, decimal-leading-zero);
+  position: absolute; left: -38px; top: 18px;
+  font-family: var(--mono); font-size: 0.65rem; color: var(--muted-2);
+}
+#about .about-text > p:last-of-type { border-bottom: 0; }
+
+/* subtotal band: the .currently strip, wash + inset top/bottom rules */
+#about .currently {
+  display: flex; align-items: center; margin-top: 0; padding: 14px 4px;
+  background: var(--bg-3); border: 0; border-radius: 0;
+  box-shadow: inset 0 1px 0 var(--border), inset 0 -1px 0 var(--border);
+}
+#about .currently:hover { transform: none; box-shadow: inset 0 1px 0 var(--border), inset 0 -1px 0 var(--border); }
+#about .currently-label { border-bottom: 0; padding-bottom: 0; margin-right: 14px; }
+#about .currently-tag {
+  border-radius: 0; border: 1px solid var(--border); background: var(--bg-elev);
+  font-family: var(--mono); font-size: 0.72rem; padding: 3px 10px;
+}
+#about .currently-tag:hover { transform: none; background: var(--accent-soft); }
+
+/* itemized table: flow steps as ruled rows with dotted leaders */
+#about .about-flow::before { display: none; }
+#about .flow-step {
+  grid-template-columns: 34px 1fr; gap: 12px;
+  padding: 13px 4px; margin-right: 0; border-radius: 0;
+  border-bottom: 1px solid var(--border-soft);
+}
+#about .flow-step:last-child { border-bottom: 0; }
+#about .flow-step:hover { background: var(--bg-3); }
+/* rubber-stamp circle in --kaggle-text outline */
+#about .flow-n {
+  width: 30px; height: 30px; font-size: 0.7rem;
+  color: color-mix(in srgb, var(--kaggle-text) 80%, var(--muted));
+  background: transparent;
+  border: 1.5px solid color-mix(in srgb, var(--kaggle-text) 55%, transparent);
+  rotate: -9deg;
+}
+#about .flow-step.in .flow-n {
+  background: transparent;
+  border-color: color-mix(in srgb, var(--kaggle-text) 55%, transparent);
+  color: color-mix(in srgb, var(--kaggle-text) 80%, var(--muted));
+}
+#about .flow-body { display: flex; align-items: baseline; gap: 10px; min-width: 0; }
+#about .flow-title {
+  display: flex; align-items: baseline; margin: 0; flex: 1; min-width: 0;
+  font-size: 0.82rem; font-family: var(--mono);
+  letter-spacing: 0.08em; text-transform: uppercase;
+}
+#about .flow-title::after {
+  content: ""; flex: 1; min-width: 18px; margin-left: 8px;
+  border-bottom: 1px dotted var(--border); /* the leader */
+}
+#about .flow-desc { flex-shrink: 1; min-width: 0; text-align: right; font-size: 0.8rem; }
+
+@media (max-width: 900px) {
+  #about .about-text { border-right: 0; border-bottom: 1px solid var(--border); padding: 8px 20px 8px 50px; }
+  #about .about-col-right { padding: 8px 4px; }
+}
+@media (max-width: 560px) {
+  #about .flow-title::after { display: none; }
+  #about .flow-desc { text-align: left; }
+  #about .about-text > p { padding-left: 2px; }
+  #about .about-text > p::before { left: -34px; }
 }
 
-/* RIGHT: console In[] typer line, lead paragraph, CTAs */
-.hero .hero-typer { grid-column: 3; grid-row: 1; margin: 0 0 6px; font-size: .92rem; color: var(--text-soft); }
-.hero .hero-typer::before { content: "In [ ]:"; margin-right: 10px; font-family: var(--mono); font-weight: 600; color: var(--cat-nlp); }
-.hero .typer-prefix { color: var(--muted); }
-#typer { min-width: 17ch; }
-.hero .hero-lead { grid-column: 3; grid-row: 2; margin: 0 0 26px; max-width: 46ch; font-size: 1.02rem; line-height: 1.7; }
-.hero .cta-row { grid-column: 3; grid-row: 3; }
-
-/* — 4 · STATS: masthead ruled ticker along the window's bottom edge,
-   console tick gauges, split cut-corner on hover only — */
-.hero .stats {
-  grid-column: 1 / -1; grid-row: 4; gap: 0; background-image: none;
-  margin: 44px calc(-1 * clamp(24px, 4vw, 52px)) -16px; padding: 12px 0 10px;
-  padding-inline: clamp(24px, 4vw, 52px);
-  border-top: 3px double color-mix(in srgb, var(--text) 38%, var(--bg)); border-bottom: 0;
-}
-.hero .stat { position: relative; padding: 6px 18px; border-right: 1px solid var(--border); border-radius: 0; background: transparent; }
-.hero .stat:first-child { padding-left: 2px; }
-.hero .stat:last-child { border-right: 0; }
-.hero .stat:hover { background: var(--hover-bg); padding: 6px 18px; clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 0 100%); }
-.hero .stat:hover::after {
-  content: ""; position: absolute; top: 0; right: 0; width: 16px; height: 16px; pointer-events: none;
-  background: color-mix(in srgb, var(--accent) 22%, var(--bg-elev));
-  clip-path: polygon(0 0, 100% 100%, 0 100%);
-}
-.hero .stat-label { font: 500 .58rem/1.5 var(--mono); letter-spacing: .05em; text-transform: uppercase; color: var(--muted-2); }
-.hero .stat-kicker { font-family: var(--mono); font-size: .6rem; letter-spacing: .18em; }
-.hero .stat-num { font-size: clamp(1.5rem, 2.6vw, 1.9rem); font-weight: 600; }
-.hero .stat-bar {
-  height: 7px; margin: 10px 0 4px; border: 1px solid var(--border-soft); border-radius: 2px;
-  background-color: var(--bg-2); overflow: hidden;
-  background-image: repeating-linear-gradient(90deg, transparent 0, transparent calc(10% - 1px), color-mix(in srgb, var(--text) 22%, transparent) calc(10% - 1px), color-mix(in srgb, var(--text) 22%, transparent) 10%);
-}
-.hero .stat-bar i { height: 100%; border-radius: 0; background: linear-gradient(90deg, color-mix(in srgb, var(--accent) 75%, var(--text)), var(--accent-2)); }
-
-/* — compact fallback: unwind spine + split back to one column — */
-@media (max-width: 860px) {
-  .hero { padding: 118px 0 64px; }
-  .hero .container { display: block; padding: 72px 22px 16px; }
-  .hero .hero-eyebrow { display: inline-flex; margin: 0 0 20px; padding: 6px 14px; writing-mode: horizontal-tb; transform: none; border-left: 1px solid var(--border); border-top: 2px solid var(--accent); font-size: .66rem; }
-  .hero .hero-name { padding: 22px 18px 28px; font-size: clamp(2.6rem, 11vw, 3.6rem); }
-  .hero .hero-name::before { font-size: 11rem; bottom: -4%; }
-  .hero .hero-typer { margin: 0 0 14px; }
-  .hero .stats { margin: 36px -22px -16px; padding-inline: 22px; grid-template-columns: 1fr 1fr; }
-  .hero .stat:nth-child(2) { border-right: 0; }
-  .hero .stat:nth-child(n + 3) { border-top: 1px solid var(--border); }
-}
-@media (max-width: 520px) {
-  .hero .stats { grid-template-columns: 1fr; }
-  .hero .stat { border-right: 0; }
-  .hero .stat:nth-child(n + 2) { border-top: 1px solid var(--border); }
-  #typer { min-width: min(17ch, 100%); }
-  .hero .container::before { padding-left: 70px; font-size: .64rem; }
-  .hero .container::after { top: 13px; padding: 2px 7px; font-size: .58rem; }
-}
-
-/* ---- SKILLS — periodic element cells in mixer plates, deck shadows, glowing radar console ---- */
+/* ---- SKILLS — periodic cells + skill-profile frame from periodic, mixer meters/plates, stacked-deck shadows ---- */
 /* m-skills — s-periodic (element-cell tags, framed radar plate, 01–06 rows) merged with
    s-panel (mixer meters, glowing radar, brushed screw headers), and p-stack's stacked-card
    shadow on .radar-card + each .skill-group (shadow + slide only). #skills only. */
@@ -4226,107 +4207,116 @@ body.case-open {
   #projects .pc-metric::after { transition-duration: 0.01s; }
 }
 
-/* ---- JOURNEY — metro line with git commit nodes, film-frame milestone cards ---- */
-/* m-journey.css — COMPOSITE: a metro line carrying git commit nodes, film-frame
-   cards with burned-in frame numbers, ⎇ tag pills / diff-stat metrics / departure
-   strips. One hand: transit rail + gitgraph nodes + film frames. Overlay only —
-   link after style.css. Scoped to #journey; --sp / .past / .in / .show-early kept. */
+/* ---- JOURNEY — contact-sheet frames + git-history rail/nodes/hover with curved branch-out ---- */
+/* m-journey.css — MERGE per review: contact sheet supplies the CARD design
+   (frames, grain, vignette, burned FRAME numbers, grease-pencil key shots,
+   sprocket gutters); git history supplies the rail, commit nodes, HOVER
+   (slide off the line, solidify border, accent spine) and the BRANCH-OUT as a
+   CURVE (rounded elbow), plus tag pills / diff-stat metrics / collapse row.
+   No metro elements. Overlay — link after style.css. Scoped to #journey. */
 
-#journey { --rail-x: 112px; }
+/* ===== contact-sheet stage ===== */
+#journey { overflow: hidden; }
+#journey .container { position: relative; z-index: 1; }
 #journey .journey { counter-reset: frame; }
 #journey .milestone { counter-increment: frame; }
+#journey::before, #journey::after {
+  content: ""; position: absolute; top: 0; bottom: 0; width: 20px; z-index: 0;
+  pointer-events: none; background-repeat: repeat-y; background-size: 20px 30px;
+  background-image:
+    radial-gradient(4px 4px at 2px 6px, var(--bg) 98%, transparent),
+    radial-gradient(4px 4px at 18px 6px, var(--bg) 98%, transparent),
+    radial-gradient(4px 4px at 2px 26px, var(--bg) 98%, transparent),
+    radial-gradient(4px 4px at 18px 26px, var(--bg) 98%, transparent),
+    repeating-linear-gradient(180deg, transparent 0 6px, color-mix(in srgb, var(--text) 8%, transparent) 6px 26px, transparent 26px 30px);
+}
+#journey::before { left: 0; border-right: 1px solid color-mix(in srgb, var(--text) 6%, transparent); }
+#journey::after { right: 0; border-left: 1px solid color-mix(in srgb, var(--text) 6%, transparent); }
 
-/* rail: solid accent metro line; ::after is the progress overlay riding --sp */
-#journey .journey::before { left: calc(var(--rail-x) - 1.5px); width: 3px; border-radius: 3px; background: color-mix(in srgb, var(--accent) 26%, var(--border)); }
-#journey .journey::after { left: calc(var(--rail-x) - 1.5px); width: 3px; border-radius: 3px; height: calc((100% - 40px) * var(--sp, 0)); background: linear-gradient(180deg, var(--accent), var(--accent-2)); }
+/* ===== rail (git): dashed first-parent line, --sp progress as solid amber ===== */
+#journey .journey::before { width: 2px; border-radius: 0; background: repeating-linear-gradient(180deg, var(--border) 0 5px, transparent 5px 10px); }
+#journey .journey::after { width: 2px; border-radius: 0; background: linear-gradient(180deg, var(--accent), var(--accent-2)); }
 
-/* nodes: hollow ring commits on the line */
-#journey .mile-rail { padding-top: 27px; z-index: 3; }
-#journey .mile-dot { width: 13px; height: 13px; background: var(--bg-elev); border: 2.5px solid var(--text); box-shadow: 0 0 0 2px var(--bg); transition: all 0.3s var(--ease-out); }
-#journey .mile-dot.past { background: var(--accent); border-color: var(--accent); }
-#journey .milestone:hover .mile-dot { transform: scale(1.18); background: var(--accent); border-color: var(--text); box-shadow: 0 0 0 2px var(--bg), 0 0 0 6px color-mix(in srgb, var(--accent) 14%, transparent); }
+/* ===== commit nodes (git) ===== */
+#journey .mile-rail { padding-top: 25px; }
+#journey .mile-dot { width: 11px; height: 11px; background: var(--bg); border: 2px solid var(--text); box-shadow: none; transition: all 0.3s var(--ease-out); }
+#journey .mile-dot.past, #journey .milestone:hover .mile-dot { background: var(--text); border-color: var(--text); transform: none; box-shadow: 0 0 0 4px color-mix(in srgb, var(--text) 8%, transparent); }
+#journey .milestone.is-latest .mile-dot { background: var(--accent); border-color: var(--accent); animation: headPulse 2.4s var(--ease) infinite; }
+#journey .milestone.is-latest .mile-dot::after { content: "HEAD"; position: absolute; left: 16px; top: 50%; transform: translateY(-50%); font-family: var(--mono); font-size: 0.52rem; font-weight: 500; letter-spacing: 0.08em; color: var(--accent); background: var(--bg-elev); border: 1px solid color-mix(in srgb, var(--accent) 45%, transparent); border-radius: 99px; padding: 0 5px; white-space: nowrap; }
+#journey .milestone.is-key .mile-dot { width: 13px; height: 13px; background: var(--cat-web); border-color: var(--cat-web); }
+#journey .milestone.is-key .mile-dot::before { content: "\2731"; position: absolute; inset: 0; display: grid; place-items: center; font-size: 0.55rem; line-height: 1; color: var(--bg-elev); }
+#journey .milestone.is-key:hover .mile-dot { background: var(--cat-web); border-color: var(--cat-web); }
 
-/* is-key: transit interchange double ring */
-#journey .milestone.is-key .mile-dot { width: 16px; height: 16px; border-width: 4px; background: var(--bg-elev); border-color: var(--text); box-shadow: 0 0 0 3px var(--bg), 0 0 0 4.5px var(--text); }
-#journey .milestone.is-key:hover .mile-dot { background: var(--accent); }
+/* ===== curved branch-out elbow: rail -> frame (git, hosted on the rail so the
+   frame's ::before stays free for the grease-pencil tab) ===== */
+#journey .mile-rail { position: relative; }
+#journey .mile-rail::after {
+  content: ""; position: absolute; left: calc(50% + 8px); top: 36px; width: 16px; height: 16px;
+  border-left: 2px solid var(--border); border-bottom: 2px solid var(--border);
+  border-radius: 0 0 0 14px; transition: border-color 0.3s var(--ease);
+}
+#journey .milestone:hover .mile-rail::after { border-color: var(--accent); }
+#journey .milestone.is-early .mile-rail::after { border-color: var(--muted); opacity: 0.7; }
 
-/* is-latest: filled accent node + small mono HEAD chip (single marker only) */
-#journey .milestone.is-latest .mile-dot { background: var(--accent); border-color: var(--accent); box-shadow: 0 0 0 2px var(--bg); animation: headPulse 2.6s var(--ease) infinite; }
-#journey .milestone.is-latest .mile-dot::after { content: "HEAD"; position: absolute; left: 17px; top: 50%; transform: translateY(-50%); z-index: 4; font-family: var(--mono); font-size: 0.5rem; font-weight: 500; letter-spacing: 0.08em; color: var(--accent); background: var(--bg-elev); border: 1px solid color-mix(in srgb, var(--accent) 45%, transparent); border-radius: 99px; padding: 1px 5px; white-space: nowrap; }
+/* ===== the frame (contact sheet): ink hairline, vignette + grain ===== */
+#journey .mile-card {
+  border-radius: 2px; border: 1px solid color-mix(in srgb, var(--text) 70%, transparent); border-style: solid; overflow: visible;
+  background:
+    repeating-linear-gradient(45deg, color-mix(in srgb, var(--text) 1.6%, transparent) 0 2px, transparent 2px 4px),
+    linear-gradient(155deg, color-mix(in srgb, var(--bg-3) 55%, var(--bg-elev)) 0%, var(--bg-elev) 52%);
+  box-shadow: inset 0 0 26px color-mix(in srgb, var(--text) 11%, transparent), var(--shadow-sm);
+}
 
-/* branch stub: short rounded connector from node to frame edge */
-#journey .mile-rail::after { content: ""; position: absolute; left: calc(50% + 8px); top: 32px; width: 15px; height: 2px; border-radius: 2px; background: color-mix(in srgb, var(--accent) 45%, var(--border)); transition: background 0.3s var(--ease); }
-#journey .milestone:hover .mile-rail::after { background: var(--accent); }
+/* burned-in FRAME number in the year column (contact sheet) */
+#journey .mile-year { padding-top: 17px; font-size: 1.12rem; color: var(--text-soft); }
+#journey .mile-year::before { content: "FRAME " counter(frame, decimal-leading-zero); display: block; font-family: var(--mono); font-size: 0.52rem; font-weight: 500; letter-spacing: 0.16em; color: var(--muted-2); margin-bottom: 2px; }
 
-/* cards: film frames — square-ish corners, thin ink frame, vignette + soft grain */
-#journey .mile-card { border-radius: 3px; border: 1px solid color-mix(in srgb, var(--text) 55%, transparent); padding: 30px 22px 18px; background: repeating-linear-gradient(45deg, color-mix(in srgb, var(--text) 1.5%, transparent) 0 2px, transparent 2px 4px), linear-gradient(160deg, color-mix(in srgb, var(--bg-3) 45%, var(--bg-elev)), var(--bg-elev) 55%); box-shadow: inset 0 0 24px color-mix(in srgb, var(--text) 8%, transparent), var(--shadow-sm); }
-
-/* burned-in FRAME 0n at the card's top-left corner */
-#journey .mile-card::after { content: "FRAME " counter(frame, decimal-leading-zero); position: absolute; top: 8px; left: 11px; font-family: var(--mono); font-size: 0.52rem; font-weight: 500; letter-spacing: 0.16em; color: var(--muted-2); }
-
-/* grease-pencil tab lives on is-key frames only; no double-marking */
-#journey .mile-card::before { content: none; }
-#journey .milestone.is-key .mile-card::before { content: ""; position: absolute; left: 44px; top: 0; bottom: auto; width: 36px; height: 9px; transform: none; background: linear-gradient(180deg, var(--cat-vision), color-mix(in srgb, var(--cat-vision) 65%, var(--text))); border-radius: 0 0 3px 3px; box-shadow: 0 1px 3px color-mix(in srgb, var(--text) 25%, transparent); transition: none; }
-#journey .milestone:hover .mile-card::before { transform: none; }
-
-/* hover: frame lifts off the sheet on a hard offset shadow */
-#journey .milestone:hover .mile-card { transform: translateY(-3px); background: var(--bg-elev); border-color: var(--text); box-shadow: inset 0 0 24px color-mix(in srgb, var(--text) 8%, transparent), 5px 6px 0 color-mix(in srgb, var(--text) 10%, transparent); }
-
-/* year: destination-board serif, big and quiet, left of the frame */
-#journey .mile-year { font-size: 1.5rem; font-weight: 600; letter-spacing: -0.02em; color: var(--text); padding-top: 21px; }
-
-/* badge: ⎇ outlined git tag pill */
+/* tag pill badge (git) */
 #journey .mile-badge { border-radius: 99px; background: transparent; border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent); color: var(--accent); font-family: var(--mono); font-size: 0.58rem; font-weight: 500; letter-spacing: 0.02em; text-transform: none; }
 #journey .mile-badge::before { content: "\2387"; font-size: 0.72rem; line-height: 1; }
 #journey .milestone:hover .mile-badge { background: var(--accent); color: var(--bg-elev); border-color: var(--accent); }
 
-/* metrics: diff-stat lines, green + markers */
+/* diff-stat metrics (git) */
 #journey .mile-metrics { gap: 4px 18px; }
 #journey .mile-metric { background: none; border: 0; padding: 0 2px; font-family: var(--mono); font-size: 0.68rem; color: var(--muted); }
 #journey .mile-metric::before { content: "+"; width: auto; height: auto; border-radius: 0; background: none; color: var(--ok); font-weight: 700; opacity: 1; }
-#journey .mile-metric b { color: var(--text-soft); }
 #journey .milestone:hover .mile-metric { background: none; border-color: transparent; color: var(--text-soft); }
 
-/* outcome: dotted-leader departure strip bleeding to the frame edges */
-#journey .mile-out { margin: 14px -22px -18px; padding: 9px 22px; border-top: 1px dotted color-mix(in srgb, var(--text) 28%, var(--border)); background: var(--bg-3); color: var(--muted); }
+/* outcome rule (contact sheet's plain hairline — no metro strip) */
+#journey .mile-out { border-top-style: solid; border-top-color: color-mix(in srgb, var(--text) 18%, transparent); }
 #journey .mile-out b { color: var(--accent); }
 
-/* earlier history: dashed outtake frames on the line */
-#journey .journey.show-early .milestone.is-early .mile-dot { border-style: dashed; border-color: var(--muted); background: var(--bg); box-shadow: 0 0 0 2px var(--bg); }
-#journey .milestone.is-early .mile-card { border-style: dashed; }
-#journey .milestone.is-early .mile-rail::after { background: var(--border); }
+/* ===== hover (git): slide off the line, border solidifies, accent spine ===== */
+#journey .milestone:hover .mile-card { transform: translateX(5px); border-color: color-mix(in srgb, var(--accent) 45%, transparent); }
+#journey .milestone:hover .mile-card::after { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; border-radius: 3px 0 0 3px; background: var(--accent); }
 
-/* collapse-history row: dashed ref line, v/^ caret */
+/* grease-pencil tab on key shots (contact sheet) */
+#journey .milestone.is-key .mile-card::before { content: ""; position: absolute; left: 18px; right: auto; top: 0; bottom: auto; width: 38px; height: 11px; transform: none; background: linear-gradient(180deg, var(--cat-vision), color-mix(in srgb, var(--cat-vision) 70%, var(--text))); border-radius: 0 0 3px 0; box-shadow: 1px 2px 3px rgba(26, 24, 21, 0.25); }
+
+/* ===== collapse-history row (git) ===== */
 #journey .mile-earlier { margin-top: 10px; padding-top: 16px; border-top: 1px dashed var(--border); }
 #journey .mile-earlier::after { background: repeating-linear-gradient(90deg, var(--border) 0 4px, transparent 4px 8px); }
 #journey #earlyToggle { color: var(--muted-2); }
-#journey .mile-earlier button:hover { color: var(--accent); }
 #journey .early-caret::before { content: "\25BE"; transition: transform 0.3s var(--ease-out); }
+#journey .mile-earlier button:hover { color: var(--accent); }
 #journey .mile-earlier button[aria-expanded="true"] .early-caret::before { content: "\25B4"; transform: none; }
+
+/* older history: dashed outtake frames, greyed commits */
+#journey .journey.show-early .milestone.is-early .mile-dot { border-color: var(--muted); background: var(--bg-elev); }
+#journey .milestone.is-early .mile-card { border-style: dashed; border-color: var(--muted-2); filter: saturate(0.7); }
 
 @media (prefers-reduced-motion: no-preference) {
   @keyframes headPulse {
-    0%, 100% { box-shadow: 0 0 0 2px var(--bg), 0 0 0 2px color-mix(in srgb, var(--accent) 30%, transparent); }
-    60% { box-shadow: 0 0 0 2px var(--bg), 0 0 0 9px transparent; }
+    0%, 100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 32%, transparent); }
+    60% { box-shadow: 0 0 0 7px transparent; }
   }
 }
-
-/* unwind: calmer as columns tighten; --rail-x tracks style.css grid centers */
-@media (max-width: 860px) {
-  #journey .mile-year { font-size: 1.25rem; padding-top: 23px; }
-  #journey .mile-card { padding: 28px 18px 16px; }
-  #journey .mile-out { margin: 12px -18px -16px; padding: 8px 18px; }
-  #journey .milestone.is-latest .mile-dot::after { font-size: 0.46rem; left: 15px; padding: 0 4px; }
+@media (max-width: 800px) {
+  #journey .journey::before, #journey .journey::after { left: 80px; }
+  #journey .mile-rail::after { display: none; }
 }
-@media (max-width: 800px) { #journey { --rail-x: 83px; } }
 @media (max-width: 560px) {
-  #journey { --rail-x: 17px; }
-  #journey .mile-rail { padding-top: 0; }
-  #journey .mile-rail::after { content: none; }
-  #journey .mile-dot { margin-top: 7px; }
-  #journey .mile-year { font-size: 1rem; padding-top: 0; }
-  #journey .mile-card { padding: 27px 16px 14px; }
-  #journey .mile-card::after { top: 6px; left: 9px; }
-  #journey .mile-out { margin: 12px -16px -14px; padding: 8px 16px; }
-  #journey .milestone.is-latest .mile-dot::after { left: 14px; }
+  #journey::before, #journey::after { width: 10px; background-size: 10px 24px; opacity: 0.7; }
+  #journey .journey::before, #journey .journey::after { left: 16px; }
+  #journey .mile-year::before { content: "FR " counter(frame, decimal-leading-zero); }
 }
