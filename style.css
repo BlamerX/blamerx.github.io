@@ -4318,3 +4318,176 @@ body.case-open {
 @media (max-width: 560px) {
   #journey .mile-year::before { content: "FR " counter(frame, decimal-leading-zero); }
 }
+
+/* ---- HEADER — browser tab bar: editor-tab nav, traffic-light brand dots, autocomplete popup on mobile ---- */
+.site-header { background: color-mix(in srgb, var(--bg-3) 95%, transparent); border-bottom: 1px solid var(--border); }
+.site-header.scrolled {
+  background: var(--bg-3); border-bottom-color: var(--border);
+  -webkit-backdrop-filter: none; backdrop-filter: none;
+}
+.site-header .header-inner {
+  height: 66px; align-items: flex-end; gap: 8px; padding-top: 10px;
+  transition: height 0.3s var(--ease);
+}
+.site-header.scrolled .header-inner { height: 60px; }
+.site-header .brand { padding: 0 10px 9px; gap: 11px; font-size: 1.15rem; }
+/* three window-control dots: one radial-gradient trio, --text/--bronze/--silver all live in :root */
+.site-header .brand::before {
+  content: ""; width: 36px; height: 10px; flex: none;
+  background:
+    radial-gradient(circle at 6px 5px, color-mix(in srgb, var(--text) 55%, var(--bg-3)) 3.6px, transparent 4.2px),
+    radial-gradient(circle at 18px 5px, color-mix(in srgb, var(--bronze) 72%, var(--bg-3)) 3.6px, transparent 4.2px),
+    radial-gradient(circle at 30px 5px, color-mix(in srgb, var(--silver) 68%, var(--bg-3)) 3.6px, transparent 4.2px);
+}
+.site-header .nav { align-items: flex-end; gap: 3px; padding: 0 8px; }
+/* editor tabs resting on the strip — inactive ones sunk into the rail */
+.site-header .nav-link {
+  display: inline-flex; align-items: center; font-family: var(--mono); font-size: 0.72rem;
+  font-weight: 500; letter-spacing: 0.01em; color: var(--muted-2); height: 34px; padding: 0 13px;
+  background: color-mix(in srgb, var(--bg-2) 55%, var(--bg-3));
+  border: 1px solid var(--border); border-bottom: none; border-radius: 8px 8px 0 0;
+  transition: color 0.2s var(--ease), background 0.2s var(--ease), height 0.3s var(--ease);
+}
+.site-header .nav-link:hover {
+  color: var(--text); background: color-mix(in srgb, var(--bg-elev) 70%, var(--bg-3));
+}
+/* active tab: amber top border, raised out of the page paper */
+.site-header .nav .nav-link.active {
+  height: 36px; color: var(--text); background: var(--bg-elev); font-weight: 600;
+  border-top: 2px solid var(--accent);
+  box-shadow: 0 -4px 10px color-mix(in srgb, var(--text) 7%, transparent);
+}
+.site-header .nav .nav-link.active::after { content: none; }
+.site-header.scrolled .nav-link { height: 30px; }
+.site-header.scrolled .nav .nav-link.active { height: 32px; }
+.site-header .menu-btn {
+  margin-bottom: 9px; border-radius: 8px 8px 0 0; border-bottom: none;
+  background: color-mix(in srgb, var(--bg-2) 55%, var(--bg-3));
+}
+/* quiet solid amber scroll hairline — transform: scaleX(var(--p)) stays untouched */
+.progress { background: var(--accent); box-shadow: none; }
+@media (max-width: 800px) {
+  /* autocomplete popup: same tab language, dropped below the strip */
+  .site-header .nav {
+    top: 67px; left: 14px; right: 14px; padding: 10px; gap: 6px;
+    background: var(--bg-3); border: 1px solid var(--border); border-top: none;
+    border-radius: 0 0 var(--radius) var(--radius); box-shadow: var(--shadow-lg);
+    -webkit-backdrop-filter: none; backdrop-filter: none;
+    transition: opacity 0.28s var(--ease), transform 0.28s var(--ease), top 0.3s var(--ease);
+  }
+  body:has(.site-header.scrolled) .site-header .nav { top: 61px; }
+  .site-header .nav-link, .site-header.scrolled .nav-link {
+    height: auto; width: 100%; padding: 10px 13px; border-radius: var(--radius);
+    border: 1px solid var(--border-soft); background: var(--bg-elev);
+  }
+  .site-header .nav-link:hover { background: var(--hover-bg); }
+  .site-header .nav .nav-link.active, .site-header.scrolled .nav .nav-link.active {
+    height: auto; border-top: 1px solid var(--border-soft); background: var(--bg-elev);
+    color: var(--text); box-shadow: inset 3px 0 0 var(--accent);
+  }
+  .site-header .menu-btn { border-bottom: 1px solid var(--border); border-radius: 8px 8px 0 0; }
+}
+
+/* ---- DEEP-DIVE MODAL — opened case file: manila tab, ruled report paper, rubber-stamp kicker, evidence-chain flow ---- */
+
+/* ---- the folder itself: card stock, squared corners, accent-weight border ---- */
+.case-modal {
+  padding: 74px 38px 0;
+  border: 1px solid color-mix(in srgb, var(--accent) 30%, var(--border));
+  border-radius: 4px;
+  background: var(--bg-2);
+}
+.case-modal::before { /* folder tab, top-left — pure shape, no text */
+  content: "";
+  position: absolute;
+  top: 0; left: 26px;
+  width: 152px; height: 38px;
+  border: 1px solid color-mix(in srgb, var(--accent) 30%, var(--border));
+  border-bottom: none;
+  border-radius: 10px 10px 0 0;
+  background: color-mix(in srgb, var(--accent) 16%, var(--bg-elev));
+  pointer-events: none;
+}
+
+/* ---- ruled report paper under the narrative, very low alpha ---- */
+.case-main {
+  padding-right: 6px;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0 27px,
+    color-mix(in srgb, var(--accent) 6%, transparent) 27px 28px
+  );
+}
+
+/* ---- kicker: rubber stamp, double rectangular border, cocked -3deg ---- */
+.case-kicker {
+  display: inline-block;
+  padding: 6px 14px;
+  border: 2px solid color-mix(in srgb, var(--accent) 80%, var(--text));
+  outline: 1px solid color-mix(in srgb, var(--accent) 80%, var(--text));
+  outline-offset: 2px;
+  border-radius: 3px;
+  color: color-mix(in srgb, var(--accent) 80%, var(--text));
+  background: color-mix(in srgb, var(--accent) 5%, transparent);
+  transform: rotate(-3deg);
+  opacity: 0.92;
+}
+
+/* ---- facts: punched-card columns, a strip of holes down the left margin ---- */
+.case-fact {
+  position: relative;
+  padding: 12px 14px 12px 32px;
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  background: var(--bg-elev);
+}
+.case-fact::before { /* punch holes */
+  content: "";
+  position: absolute;
+  left: 9px; top: 8px; bottom: 8px;
+  width: 9px;
+  background-image: radial-gradient(
+    circle at 50% 5px,
+    color-mix(in srgb, var(--text) 30%, transparent) 2.6px,
+    transparent 3px
+  );
+  background-size: 100% 14px;
+  background-repeat: repeat-y;
+}
+
+/* ---- flow: evidence chain — numbered discs linked by dashed segments ---- */
+.flow { gap: 26px 30px; margin-bottom: 14px; }
+.flow i { display: none; } /* the dashed links replace the arrows */
+.flow span {
+  position: relative;
+  border-radius: 999px;
+  border-color: var(--border);
+  background: var(--bg-elev);
+}
+.flow span::after {
+  content: "";
+  position: absolute;
+  top: 50%; left: calc(100% + 4px);
+  width: 24px;
+  border-top: 2px dashed color-mix(in srgb, var(--accent) 55%, transparent);
+}
+.flow span:last-child::after { content: none; }
+.flow span b { background: color-mix(in srgb, var(--accent) 14%, var(--bg-elev)); }
+
+/* ---- close: red-ink X in a circle ---- */
+.case-close {
+  border: 2px solid color-mix(in srgb, var(--cat-vision) 78%, var(--text));
+  border-radius: 50%;
+  background: transparent;
+  color: color-mix(in srgb, var(--cat-vision) 78%, var(--text));
+}
+.case-close:hover { background: color-mix(in srgb, var(--cat-vision) 12%, transparent); color: var(--cat-vision); }
+
+/* ---- nav + focus ---- */
+.case-nav { margin: 26px -38px 0; padding: 12px 38px 16px; background: var(--bg-2); }
+.case-modal :is(button, a):focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+@media (max-width: 640px) {
+  .case-modal { padding: 66px 20px 0; }
+  .case-nav { margin-inline: -20px; padding-inline: 20px; }
+}
+@media (prefers-reduced-motion: reduce) { .flow span b { animation: none; } }
