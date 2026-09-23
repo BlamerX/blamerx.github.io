@@ -3741,3 +3741,592 @@ body.case-open {
     width: var(--w, 0);
   }
 }
+
+/* ==========================================================================
+   MERGED SECTION TREATMENTS (reviewed design board, 2026-09)
+   ========================================================================== */
+
+/* ---- HERO — notebook-window plate, spine label, letterpress masthead, ruled ticker stats ---- */
+/* M·HERO — composite: console's notebook-window frame + split's asymmetric
+   layout and dot-grid plate + masthead's letterpress Fraunces and ruled
+   ticker stats. Self-contained; loads over style.css only. */
+
+.hero { padding: 148px 0 88px; }
+/* the window plate owns the interior; drop the split glow blob */
+#home.hero::before { display: none; }
+
+/* — 1 · FRAME: one notebook window, mono title-bar with traffic lights + [RUN] — */
+.hero .container {
+  position: relative; z-index: 1; max-width: 1060px; overflow: hidden;
+  border: 1px solid var(--border); border-radius: var(--radius-lg);
+  background: var(--bg-elev); box-shadow: var(--shadow-lg);
+  padding: 80px clamp(24px, 4vw, 52px) 16px;
+  display: grid;
+  grid-template-columns: 38px minmax(0, 1.05fr) minmax(0, .95fr);
+  column-gap: clamp(26px, 4vw, 56px);
+  align-items: start;
+}
+/* title-bar strip: dots ride the background, filename sits left; its bottom
+   edge is the first masthead double-rule divider */
+.hero .container::before {
+  content: "adarsh_kumar.ipynb";
+  position: absolute; top: 0; left: 0; right: 0; z-index: 2;
+  height: 46px; display: flex; align-items: center; padding: 0 92px 0 78px;
+  font-family: var(--mono); font-size: .72rem; font-weight: 500; letter-spacing: .04em; color: var(--muted-2);
+  background:
+    radial-gradient(circle 5px at 22px 22px, color-mix(in srgb, var(--text) 70%, var(--bg-3)) 99%, transparent),
+    radial-gradient(circle 5px at 40px 22px, var(--accent-2) 99%, transparent),
+    radial-gradient(circle 5px at 58px 22px, var(--ok) 99%, transparent),
+    color-mix(in srgb, var(--bg-3) 60%, var(--bg-elev));
+  border-bottom: 3px double color-mix(in srgb, var(--text) 38%, var(--bg));
+}
+/* [RUN] status chip: the last free title-bar pseudo */
+.hero .container::after {
+  content: "[ RUN ]";
+  position: absolute; top: 11px; right: 14px; z-index: 2;
+  padding: 3px 9px; border-radius: 6px; white-space: nowrap;
+  font-family: var(--mono); font-size: .64rem; font-weight: 600; letter-spacing: .08em;
+  color: color-mix(in srgb, var(--ok) 72%, var(--text));
+  background: var(--ok-soft);
+  border: 1px solid color-mix(in srgb, var(--ok) 30%, transparent);
+}
+
+/* — 2 · LAYOUT: split's asymmetric grid inside the window — */
+/* far-left gutter: eyebrow rotated into a vertical spine label */
+.hero .hero-eyebrow {
+  grid-column: 1; grid-row: 1 / 4; align-self: center; justify-self: center; margin: 0;
+  writing-mode: vertical-rl; transform: rotate(180deg);
+  padding: 14px 7px; gap: 14px; border-radius: 4px;
+  background: color-mix(in srgb, var(--bg-elev) 85%, transparent);
+  border: 1px solid var(--border); border-left: 2px solid var(--accent);
+  font-family: var(--mono); font-size: .64rem; letter-spacing: .18em; text-transform: uppercase;
+  box-shadow: var(--shadow-sm);
+  -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+}
+
+/* LEFT: masthead-scale letterpress name on split's dot-grid plate */
+.hero .hero-name {
+  grid-column: 2; grid-row: 1 / 4; align-self: center; position: relative; margin: 0;
+  padding: 34px 30px 40px; border-radius: var(--radius-lg); overflow-wrap: break-word;
+  font-weight: 600; font-size: clamp(2.9rem, 5.2vw, 4.6rem); line-height: .94; letter-spacing: -.045em;
+  text-shadow: 0 1px 0 var(--bg-2), 0 2px 1px color-mix(in srgb, var(--bg) 70%, transparent), 0 6px 14px color-mix(in srgb, var(--text) 16%, transparent);
+  background-image:
+    radial-gradient(circle, color-mix(in srgb, var(--accent) 7%, transparent) 1.5px, transparent 1.8px),
+    radial-gradient(340px circle at 25% 30%, color-mix(in srgb, var(--accent) 5%, transparent), transparent 72%);
+  background-size: 18px 18px, 100% 100%;
+}
+.hero .hero-name em {
+  background: none; -webkit-text-fill-color: var(--accent); color: inherit;
+  font-style: italic; animation: none;
+  text-shadow: 0 2px 10px color-mix(in srgb, var(--accent) 25%, transparent);
+}
+/* split's ◊ watermark, pressed under the plate */
+.hero .hero-name::before {
+  content: "\25CA"; position: absolute; right: -2%; bottom: -12%; z-index: -1;
+  font-family: var(--serif); font-weight: 600; font-size: clamp(13rem, 22vw, 20rem);
+  line-height: 1; color: var(--accent); opacity: .07; pointer-events: none; user-select: none;
+}
+
+/* RIGHT: console In[] typer line, lead paragraph, CTAs */
+.hero .hero-typer { grid-column: 3; grid-row: 1; margin: 0 0 6px; font-size: .92rem; color: var(--text-soft); }
+.hero .hero-typer::before { content: "In [ ]:"; margin-right: 10px; font-family: var(--mono); font-weight: 600; color: var(--cat-nlp); }
+.hero .typer-prefix { color: var(--muted); }
+#typer { min-width: 17ch; }
+.hero .hero-lead { grid-column: 3; grid-row: 2; margin: 0 0 26px; max-width: 46ch; font-size: 1.02rem; line-height: 1.7; }
+.hero .cta-row { grid-column: 3; grid-row: 3; }
+
+/* — 4 · STATS: masthead ruled ticker along the window's bottom edge,
+   console tick gauges, split cut-corner on hover only — */
+.hero .stats {
+  grid-column: 1 / -1; grid-row: 4; gap: 0; background-image: none;
+  margin: 44px calc(-1 * clamp(24px, 4vw, 52px)) -16px; padding: 12px 0 10px;
+  padding-inline: clamp(24px, 4vw, 52px);
+  border-top: 3px double color-mix(in srgb, var(--text) 38%, var(--bg)); border-bottom: 0;
+}
+.hero .stat { position: relative; padding: 6px 18px; border-right: 1px solid var(--border); border-radius: 0; background: transparent; }
+.hero .stat:first-child { padding-left: 2px; }
+.hero .stat:last-child { border-right: 0; }
+.hero .stat:hover { background: var(--hover-bg); padding: 6px 18px; clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 0 100%); }
+.hero .stat:hover::after {
+  content: ""; position: absolute; top: 0; right: 0; width: 16px; height: 16px; pointer-events: none;
+  background: color-mix(in srgb, var(--accent) 22%, var(--bg-elev));
+  clip-path: polygon(0 0, 100% 100%, 0 100%);
+}
+.hero .stat-label { font: 500 .58rem/1.5 var(--mono); letter-spacing: .05em; text-transform: uppercase; color: var(--muted-2); }
+.hero .stat-kicker { font-family: var(--mono); font-size: .6rem; letter-spacing: .18em; }
+.hero .stat-num { font-size: clamp(1.5rem, 2.6vw, 1.9rem); font-weight: 600; }
+.hero .stat-bar {
+  height: 7px; margin: 10px 0 4px; border: 1px solid var(--border-soft); border-radius: 2px;
+  background-color: var(--bg-2); overflow: hidden;
+  background-image: repeating-linear-gradient(90deg, transparent 0, transparent calc(10% - 1px), color-mix(in srgb, var(--text) 22%, transparent) calc(10% - 1px), color-mix(in srgb, var(--text) 22%, transparent) 10%);
+}
+.hero .stat-bar i { height: 100%; border-radius: 0; background: linear-gradient(90deg, color-mix(in srgb, var(--accent) 75%, var(--text)), var(--accent-2)); }
+
+/* — compact fallback: unwind spine + split back to one column — */
+@media (max-width: 860px) {
+  .hero { padding: 118px 0 64px; }
+  .hero .container { display: block; padding: 72px 22px 16px; }
+  .hero .hero-eyebrow { display: inline-flex; margin: 0 0 20px; padding: 6px 14px; writing-mode: horizontal-tb; transform: none; border-left: 1px solid var(--border); border-top: 2px solid var(--accent); font-size: .66rem; }
+  .hero .hero-name { padding: 22px 18px 28px; font-size: clamp(2.6rem, 11vw, 3.6rem); }
+  .hero .hero-name::before { font-size: 11rem; bottom: -4%; }
+  .hero .hero-typer { margin: 0 0 14px; }
+  .hero .stats { margin: 36px -22px -16px; padding-inline: 22px; grid-template-columns: 1fr 1fr; }
+  .hero .stat:nth-child(2) { border-right: 0; }
+  .hero .stat:nth-child(n + 3) { border-top: 1px solid var(--border); }
+}
+@media (max-width: 520px) {
+  .hero .stats { grid-template-columns: 1fr; }
+  .hero .stat { border-right: 0; }
+  .hero .stat:nth-child(n + 2) { border-top: 1px solid var(--border); }
+  #typer { min-width: min(17ch, 100%); }
+  .hero .container::before { padding-left: 70px; font-size: .64rem; }
+  .hero .container::after { top: 13px; padding: 2px 7px; font-size: .58rem; }
+}
+
+/* ---- SKILLS — periodic element cells in mixer plates, deck shadows, glowing radar console ---- */
+/* m-skills — s-periodic (element-cell tags, framed radar plate, 01–06 rows) merged with
+   s-panel (mixer meters, glowing radar, brushed screw headers), and p-stack's stacked-card
+   shadow on .radar-card + each .skill-group (shadow + slide only). #skills only. */
+
+/* ---- category hues: one mapping, spent only at low alpha ---- */
+#skills .skill-group { --cat: var(--accent); }
+#skills #sg-languages { --cat: var(--cat-nlp); }
+#skills #sg-frameworks { --cat: var(--cat-ml); }
+#skills #sg-dataviz { --cat: var(--cat-vision); }
+#skills #sg-tools { --cat: var(--cat-web); }
+
+/* ---- the stack-deck: layered-card shadow, widening with a 2px up-left slide ---- */
+#skills .radar-card, #skills .skill-group {
+  border: 1px solid var(--border); border-radius: 10px; background: var(--bg-elev);
+  box-shadow: 0 1px 0 var(--border),
+    3px 4px 0 color-mix(in srgb, var(--cat, var(--accent)) 12%, transparent),
+    var(--shadow-sm);
+  transition: all 0.3s var(--ease);
+}
+#skills .radar-card:hover, #skills .skill-group:hover {
+  transform: translate(-2px, -2px); border-color: var(--hover-border);
+  box-shadow: 0 1px 0 var(--border),
+    6px 8px 0 color-mix(in srgb, var(--cat, var(--accent)) 18%, transparent),
+    var(--shadow);
+}
+#skills .skill-group:target { outline-offset: 10px; }
+
+/* ---- radar console plate: hairline frame, amber corner ticks, glowing analyzer ---- */
+#skills .radar-card { position: relative; overflow: visible; border-radius: var(--radius-lg); }
+#skills .radar-card::before, #skills .radar-card::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 2;
+  background:
+    linear-gradient(var(--accent), var(--accent)) 0 0 / 16px 2px no-repeat,
+    linear-gradient(var(--accent), var(--accent)) 0 0 / 2px 16px no-repeat,
+    linear-gradient(var(--accent), var(--accent)) 100% 0 / 16px 2px no-repeat,
+    linear-gradient(var(--accent), var(--accent)) 100% 0 / 2px 16px no-repeat;
+}
+#skills .radar-card::after {
+  background:
+    linear-gradient(var(--accent), var(--accent)) 0 100% / 16px 2px no-repeat,
+    linear-gradient(var(--accent), var(--accent)) 0 100% / 2px 16px no-repeat,
+    linear-gradient(var(--accent), var(--accent)) 100% 100% / 16px 2px no-repeat,
+    linear-gradient(var(--accent), var(--accent)) 100% 100% / 2px 16px no-repeat;
+}
+#skills .radar-grid { stroke: var(--border); stroke-dasharray: 3 3; }
+#skills .radar-grid.outer { stroke-dasharray: none; stroke: var(--hover-border); stroke-width: 1; }
+#skills .radar-axis { stroke-dasharray: 2 3; }
+#skills .radar-data {
+  stroke: var(--accent); stroke-width: 2; stroke-opacity: 0.95;
+  filter:
+    drop-shadow(0 0 2px color-mix(in srgb, var(--accent) 55%, transparent))
+    drop-shadow(0 0 9px color-mix(in srgb, var(--accent) 30%, transparent));
+}
+#skills .radar-dot { fill: var(--bg-2); }
+
+/* ---- mixer legend: 01–06 numbered channels, LED dots, segmented recessed meters ---- */
+#skills .legend-list { counter-reset: el; gap: 6px; }
+#skills .legend-item {
+  counter-increment: el; grid-template-columns: 20px 10px 1fr 88px 42px; gap: 11px;
+  font-family: var(--mono); font-size: 0.72rem;
+}
+#skills .legend-item::before { content: counter(el, decimal-leading-zero); font-size: 0.6rem; color: var(--muted-2); }
+#skills .legend-item:hover { transform: translateX(2px); }
+#skills .legend-swatch {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: color-mix(in srgb, var(--accent) 82%, var(--text));
+  box-shadow: 0 0 6px var(--accent-glow), 0 0 0 1.5px var(--border-soft);
+}
+#skills .legend-bar {
+  height: 10px; border: 1px solid var(--border-soft); border-radius: 3px; background: var(--bg-3);
+  box-shadow: inset 0 1px 3px color-mix(in srgb, var(--text) 20%, transparent);
+}
+#skills .legend-bar i {
+  border-radius: 2px;
+  background:
+    repeating-linear-gradient(90deg, transparent 0 calc(10% - 1.5px),
+      color-mix(in srgb, var(--bg-3) 55%, var(--text)) calc(10% - 1.5px) 10%),
+    linear-gradient(90deg, var(--accent), var(--accent-2));
+}
+#skills .legend-value {
+  font-family: var(--mono); font-size: 0.68rem; font-weight: 500; color: var(--accent);
+  background: var(--bg-3); border-radius: 4px; padding: 3px 0; text-align: center;
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--text) 10%, transparent),
+    inset 0 1px 2px color-mix(in srgb, var(--text) 16%, transparent);
+}
+
+/* ---- skill group: brushed screw-on header over a periodic cell field ---- */
+#skills .skill-group { --gp: 14px; padding: 0 var(--gp) 12px; overflow: visible; }
+#skills .skill-group h3 {
+  margin: 0 calc(-1 * var(--gp)) 12px; padding: 8px 12px; gap: 10px; align-items: center;
+  font-family: var(--mono); font-size: 0.64rem; letter-spacing: 0.16em; color: var(--text);
+  border: 1px solid var(--border); border-radius: 9px 9px 0 0;
+  background:
+    linear-gradient(color-mix(in srgb, var(--cat) 14%, var(--bg-3)), color-mix(in srgb, var(--cat) 14%, var(--bg-3))) 0 0 / 100% 2px no-repeat,
+    repeating-linear-gradient(180deg, var(--bg-3) 0 2px, color-mix(in srgb, var(--bg-3) 70%, var(--bg-2)) 2px 4px);
+  box-shadow: inset 0 1px 0 var(--bg-2), inset 0 -1px 0 color-mix(in srgb, var(--text) 8%, transparent);
+}
+#skills .skill-group h3::before, #skills .skill-group h3::after {
+  content: ""; width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0;
+  background: radial-gradient(circle at 35% 30%, var(--bg-2), var(--bg-3) 55%,
+    color-mix(in srgb, var(--text) 38%, var(--bg-3)));
+  box-shadow: inset 0 1px 1px color-mix(in srgb, var(--text) 30%, transparent);
+}
+#skills .sg-count {
+  display: inline-flex; align-items: center; gap: 4px; margin-left: auto;
+  padding: 1px 7px; border: 1px solid var(--border); border-radius: 5px; text-transform: none;
+  font-size: 0.6rem; color: var(--muted-2);
+  background: linear-gradient(90deg,
+    color-mix(in srgb, var(--ok) 14%, var(--bg-elev)) 0 55%,
+    color-mix(in srgb, var(--accent-2) 16%, var(--bg-elev)) 55% 80%,
+    color-mix(in srgb, var(--accent) 20%, var(--bg-elev)) 80%);
+  box-shadow: inset 0 1px 0 var(--bg-2);
+}
+#skills .sg-count::before {
+  content: ""; width: 1.5px; height: 9px; border-radius: 1px; background: var(--text);
+  box-shadow: 0 0 2px color-mix(in srgb, var(--text) 45%, transparent);
+}
+
+/* ---- the cells: icon over mono name, category top bar, shared hairlines, weight stripe ---- */
+#skills .tags { display: grid; grid-template-columns: repeat(auto-fill, minmax(86px, 1fr)); gap: 0; }
+#skills .tag {
+  position: relative; flex-direction: column; align-items: center; justify-content: center; gap: 4px;
+  min-height: 74px; padding: 9px 4px 8px; border: none; border-radius: 0;
+  outline: 1px solid var(--border); outline-offset: -0.5px;
+  background: linear-gradient(0deg,
+    color-mix(in srgb, var(--accent) var(--wt, 0%), transparent) 0 2.5px,
+    var(--cell-bg, var(--bg-elev)) 2.5px);
+  color: var(--text-soft); font-family: var(--mono); font-size: 0.62rem; line-height: 1.2; text-align: center;
+}
+#skills .tag.w1 { --wt: 15%; } #skills .tag.w2 { --wt: 35%; } #skills .tag.w3 { --wt: 60%; }
+/* top bar also absorbs the base has-proof dot pseudo, which moves to ::after */
+#skills .tag::before {
+  content: ""; position: absolute; inset: 0 0 auto 0; width: auto; height: 3px;
+  margin-left: 0; border-radius: 0; background: color-mix(in srgb, var(--cat) 70%, var(--bg-elev));
+}
+#skills .tag img { width: 18px; height: 18px; }
+#skills .tag:hover, #skills .tag:focus-within {
+  z-index: 6; transform: translateY(-2px); color: var(--text);
+  --cell-bg: color-mix(in srgb, var(--cat) 7%, var(--bg-elev));
+  outline-color: color-mix(in srgb, var(--cat) 55%, var(--border));
+  box-shadow: inset 0 0 14px color-mix(in srgb, var(--cat) 10%, transparent);
+}
+#skills .tag:hover img { transform: none; }
+#skills .tag.has-proof::after {
+  content: ""; position: absolute; top: 8px; right: 8px; width: 4px; height: 4px;
+  border-radius: 50%; background: var(--accent);
+}
+
+/* ---- proof footnote cards; the cell field never clips them (overflow stays visible) ---- */
+#skills .proof-pop {
+  bottom: auto; top: calc(100% + 7px); border-radius: 3px;
+  border: 1px solid var(--border); border-top: 2px solid color-mix(in srgb, var(--cat, var(--accent)) 70%, var(--bg-elev));
+  background: var(--bg-elev); box-shadow: var(--shadow);
+  transform: translateX(-50%) translateY(-4px);
+}
+#skills .proof-pop::after {
+  top: -5px; bottom: auto; border: 0;
+  border-left: 1px solid var(--border); border-top: 1px solid var(--border);
+  transform: translateX(-50%) rotate(45deg);
+}
+#skills .proof-pop em { border-bottom: 1px solid var(--border-soft); padding-bottom: 3px; }
+
+@media (max-width: 520px) {
+  #skills .skill-group { --gp: 10px; }
+  #skills .radar-card { padding: 22px; }
+}
+
+/* ---- PROJECTS — museum placards at rest, archive-folder morph on hover/focus ---- */
+/* m-projects.css — "MUSEUM WALL, FOLD ON DEMAND": resting state is the p-placard
+   wall treatment; hovering (or keyboard focus within) a card folds it into the
+   p-folder archive look — ruled paper, raised filing tab, rubber-stamp metric,
+   F- filing code and a hard shelf shadow. One fluid ~300ms morph, no reflow. */
+
+/* ---- the wall (resting = placard, 2-col, stable gap) ---- */
+#projects .proj-grid { grid-template-columns: repeat(2, 1fr); gap: 104px 88px; }
+@media (max-width: 800px) { #projects .proj-grid { grid-template-columns: 1fr; gap: 72px 0; } }
+#projects .project-card {
+  position: relative; overflow: visible; border: 1px solid transparent; border-radius: 0;
+  background: transparent; box-shadow: none; transform: none;
+  transition: transform 0.3s var(--ease-out), box-shadow 0.3s var(--ease-out),
+    border-color 0.3s var(--ease-out);
+}
+/* ruled report paper rides inside the same box: an opacity-faded layer, never a bg swap */
+#projects .project-card::before {
+  content: ""; position: absolute; inset: 58px 18px 10px; z-index: 0; pointer-events: none;
+  background:
+    repeating-linear-gradient(to bottom, transparent 0 25px,
+      color-mix(in srgb, var(--border) 80%, transparent) 25px 26px),
+    color-mix(in srgb, var(--bg-elev) 88%, transparent);
+  opacity: 0; transition: opacity 0.3s var(--ease-out);
+}
+/* ---- hover / focus-within: the folder lands on the shelf ---- */
+#projects .project-card:hover, #projects .project-card:focus-within {
+  z-index: 5; border-color: var(--border);
+  transform: translateY(-4px) perspective(700px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  box-shadow: 0 14px 30px color-mix(in srgb, var(--text) 16%, transparent),
+    0 3px 8px color-mix(in srgb, var(--text) 8%, transparent);
+}
+#projects .project-card:hover::before, #projects .project-card:focus-within::before { opacity: 1; }
+#projects .pc-band, #projects .pc-body { position: relative; z-index: 1; }
+
+/* ---- band: placard hairline morphs into a raised filing tab via clip-path ----
+   both polygons share 6 points; resting clip hides a 34px strip that negative
+   margin + padding already fold back into the layout, so nothing reflows */
+#projects .pc-band {
+  margin-top: -34px; padding: 34px 72px 14px 2px; align-items: flex-start;
+  background: transparent; border: 1px solid transparent;
+  border-bottom: 1px solid color-mix(in srgb, var(--cat-color) 38%, var(--border));
+  clip-path: polygon(0 34px, 56% 34px, 64% 34px, 100% 34px, 100% 100%, 0 100%);
+  transition: clip-path 0.3s var(--ease-out), background-color 0.3s var(--ease-out),
+    border-color 0.3s var(--ease-out);
+}
+#projects .pc-band::before, #projects .pc-band::after { content: none; }
+#projects .project-card:hover .pc-band, #projects .project-card:focus-within .pc-band {
+  background: color-mix(in srgb, var(--cat-color) 18%, var(--bg-3));
+  border-color: color-mix(in srgb, var(--cat-color) 48%, var(--border));
+  border-bottom-color: color-mix(in srgb, var(--cat-color) 38%, var(--border));
+  clip-path: polygon(0 0, 56% 0, 64% 34px, 100% 34px, 100% 100%, 0 100%);
+}
+#projects .pc-band-icon {
+  width: 20px; height: 20px; margin-top: 6px; border-radius: 0;
+  background: transparent; color: var(--cat-color); box-shadow: none;
+  transition: transform 0.35s var(--ease-out), background-color 0.3s var(--ease-out),
+    color 0.3s var(--ease-out);
+}
+#projects .pc-band-icon svg { width: 20px; height: 20px; }
+#projects .project-card:hover .pc-band-icon, #projects .project-card:focus-within .pc-band-icon {
+  background: var(--cat-color); color: var(--bg-elev);
+}
+#projects .pc-band-title h3 {
+  font-family: var(--serif); font-size: 1.45rem; font-weight: 500;
+  line-height: 1.2; letter-spacing: -0.012em;
+}
+#projects .project-card:hover .pc-band-title h3, #projects .project-card:focus-within .pc-band-title h3 {
+  color: var(--text); transform: none;
+}
+#projects .pc-cat {
+  display: block; margin-top: 3px; font-family: var(--serif); font-style: italic;
+  font-size: 0.85rem; font-weight: 400; letter-spacing: 0; text-transform: none;
+}
+#projects .pc-cat::before { display: none; }
+#projects .pc-water { font-size: 2.2rem; bottom: -4px; right: 24px; opacity: 0.05; }
+#projects .pc-live-badge { /* brass plate */
+  margin-top: 4px; background: transparent; border: 1px solid color-mix(in srgb, var(--ok) 55%, var(--border));
+  border-radius: 3px; color: var(--muted); letter-spacing: 0.14em;
+}
+#projects .pc-live-badge .live-dot { background: var(--ok); }
+
+/* ---- ghost numeral + "F-0n" filing code that slides in ---- */
+#projects .pc-num {
+  position: absolute; top: -4px; right: 6px; font-family: var(--serif);
+  font-size: 2.7rem; font-weight: 400; letter-spacing: 0; line-height: 1;
+  color: color-mix(in srgb, var(--cat-color) 18%, transparent);
+  transition: color 0.3s var(--ease-out), transform 0.3s var(--ease-out);
+}
+#projects .pc-num::before {
+  content: "F-"; display: inline-block; font-family: var(--mono); font-size: 0.66rem;
+  font-weight: 600; letter-spacing: 0.12em; color: var(--cat-color); vertical-align: 0.9em;
+  opacity: 0; transform: translateX(-8px);
+  transition: opacity 0.3s var(--ease-out), transform 0.3s var(--ease-out);
+}
+#projects .project-card:hover .pc-num, #projects .project-card:focus-within .pc-num {
+  color: color-mix(in srgb, var(--cat-color) 34%, transparent); transform: translateY(2px);
+}
+#projects .project-card:hover .pc-num::before, #projects .project-card:focus-within .pc-num::before {
+  opacity: 1; transform: translateX(0);
+}
+
+/* ---- label copy ---- */
+#projects .pc-body { padding: 16px 2px 0; }
+#projects .pc-body > p { font-size: 0.88rem; color: var(--muted); line-height: 1.72; }
+#projects .pc-metric {
+  position: relative; display: grid; grid-template-columns: auto auto; align-items: baseline;
+  justify-content: space-between; gap: 14px; padding: 3px 0 0; margin: 0 0 16px;
+  background: transparent; border: none;
+}
+#projects .pc-metric-label { font-family: var(--mono); font-variant-caps: small-caps; font-size: 0.68rem; }
+#projects .pc-metric-val { font-family: var(--serif); font-style: italic; font-weight: 500; color: var(--cat-color); }
+#projects .pc-metric-bar { flex: none; order: 3; grid-column: 1 / -1; height: 1px; border-radius: 0; overflow: visible; }
+#projects .pc-metric-bar i { height: 2px; margin-top: -0.5px; border-radius: 0; }
+/* rubber stamp: a pseudo-border presses in, tilting to rest at -2deg */
+#projects .pc-metric::after {
+  content: ""; position: absolute; inset: -7px -10px; pointer-events: none;
+  border: 3px double color-mix(in srgb, var(--cat-color) 80%, transparent);
+  border-radius: 2px; opacity: 0; transform: rotate(1.5deg) scale(0.96);
+  transition: opacity 0.3s var(--ease-out), transform 0.3s var(--ease-out);
+}
+#projects .project-card:hover .pc-metric::after, #projects .project-card:focus-within .pc-metric::after {
+  opacity: 1; transform: rotate(-2deg) scale(1);
+}
+#projects .project-card:hover .pc-metric-label, #projects .project-card:focus-within .pc-metric-label,
+#projects .project-card:hover .pc-metric-val, #projects .project-card:focus-within .pc-metric-val {
+  color: var(--cat-color); transition: color 0.3s var(--ease-out);
+}
+/* engraved material list with slash separators */
+#projects .tech { gap: 0; margin-bottom: 18px; }
+#projects .tech span {
+  background: transparent; padding: 0; font-family: var(--mono); font-size: 0.62rem;
+  font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted-2);
+}
+#projects .project-card:hover .tech span, #projects .project-card:focus-within .tech span {
+  background: transparent; color: var(--muted);
+}
+#projects .tech span:not(:last-child)::after { content: " /"; margin: 0 7px; color: color-mix(in srgb, var(--muted-2) 55%, transparent); }
+#projects .pc-foot { border-top: none; padding-top: 0; }
+
+/* ---- gallery-label links (kept in both states) ---- */
+#projects .pc-links { gap: 16px; }
+#projects .pc-link {
+  padding: 2px 0; border-radius: 0; color: var(--muted); font-family: var(--mono);
+  font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase;
+}
+#projects .pc-link::before { content: "—"; margin-right: 7px; color: color-mix(in srgb, var(--muted-2) 60%, transparent); }
+#projects .pc-link:hover { color: var(--cat-color); background: transparent; border-color: transparent; }
+#projects .pc-case { color: var(--accent); }
+
+/* ---- room directory ---- */
+#projects .proj-filter {
+  counter-reset: room; gap: 26px; margin-bottom: 76px; padding: 0 2px 12px;
+  border-bottom: 1px solid var(--border);
+}
+#projects .filter-btn {
+  counter-increment: room; position: relative; border-radius: 0; padding: 8px 2px;
+  background: transparent; border: none; border-bottom: 2px solid transparent;
+  color: var(--muted); font-size: 0.85rem;
+}
+#projects .filter-btn::before {
+  content: "0" counter(room); margin-right: 9px; font-family: var(--mono);
+  font-size: 0.58rem; letter-spacing: 0.12em; color: var(--muted-2);
+}
+#projects .filter-btn .count { opacity: 0.55; font-family: var(--mono); font-size: 0.6rem; }
+#projects .filter-btn:hover { color: var(--text); background: transparent; transform: none; }
+#projects .filter-btn.active { color: var(--text); background: transparent; border-bottom-color: var(--accent); box-shadow: none; }
+
+/* reduced motion: the fold still happens, just without the tween */
+@media (prefers-reduced-motion: reduce) {
+  #projects .project-card, #projects .project-card::before, #projects .pc-band,
+  #projects .pc-band-icon, #projects .pc-num, #projects .pc-num::before,
+  #projects .pc-metric::after { transition-duration: 0.01s; }
+}
+
+/* ---- JOURNEY — metro line with git commit nodes, film-frame milestone cards ---- */
+/* m-journey.css — COMPOSITE: a metro line carrying git commit nodes, film-frame
+   cards with burned-in frame numbers, ⎇ tag pills / diff-stat metrics / departure
+   strips. One hand: transit rail + gitgraph nodes + film frames. Overlay only —
+   link after style.css. Scoped to #journey; --sp / .past / .in / .show-early kept. */
+
+#journey { --rail-x: 112px; }
+#journey .journey { counter-reset: frame; }
+#journey .milestone { counter-increment: frame; }
+
+/* rail: solid accent metro line; ::after is the progress overlay riding --sp */
+#journey .journey::before { left: calc(var(--rail-x) - 1.5px); width: 3px; border-radius: 3px; background: color-mix(in srgb, var(--accent) 26%, var(--border)); }
+#journey .journey::after { left: calc(var(--rail-x) - 1.5px); width: 3px; border-radius: 3px; height: calc((100% - 40px) * var(--sp, 0)); background: linear-gradient(180deg, var(--accent), var(--accent-2)); }
+
+/* nodes: hollow ring commits on the line */
+#journey .mile-rail { padding-top: 27px; z-index: 3; }
+#journey .mile-dot { width: 13px; height: 13px; background: var(--bg-elev); border: 2.5px solid var(--text); box-shadow: 0 0 0 2px var(--bg); transition: all 0.3s var(--ease-out); }
+#journey .mile-dot.past { background: var(--accent); border-color: var(--accent); }
+#journey .milestone:hover .mile-dot { transform: scale(1.18); background: var(--accent); border-color: var(--text); box-shadow: 0 0 0 2px var(--bg), 0 0 0 6px color-mix(in srgb, var(--accent) 14%, transparent); }
+
+/* is-key: transit interchange double ring */
+#journey .milestone.is-key .mile-dot { width: 16px; height: 16px; border-width: 4px; background: var(--bg-elev); border-color: var(--text); box-shadow: 0 0 0 3px var(--bg), 0 0 0 4.5px var(--text); }
+#journey .milestone.is-key:hover .mile-dot { background: var(--accent); }
+
+/* is-latest: filled accent node + small mono HEAD chip (single marker only) */
+#journey .milestone.is-latest .mile-dot { background: var(--accent); border-color: var(--accent); box-shadow: 0 0 0 2px var(--bg); animation: headPulse 2.6s var(--ease) infinite; }
+#journey .milestone.is-latest .mile-dot::after { content: "HEAD"; position: absolute; left: 17px; top: 50%; transform: translateY(-50%); z-index: 4; font-family: var(--mono); font-size: 0.5rem; font-weight: 500; letter-spacing: 0.08em; color: var(--accent); background: var(--bg-elev); border: 1px solid color-mix(in srgb, var(--accent) 45%, transparent); border-radius: 99px; padding: 1px 5px; white-space: nowrap; }
+
+/* branch stub: short rounded connector from node to frame edge */
+#journey .mile-rail::after { content: ""; position: absolute; left: calc(50% + 8px); top: 32px; width: 15px; height: 2px; border-radius: 2px; background: color-mix(in srgb, var(--accent) 45%, var(--border)); transition: background 0.3s var(--ease); }
+#journey .milestone:hover .mile-rail::after { background: var(--accent); }
+
+/* cards: film frames — square-ish corners, thin ink frame, vignette + soft grain */
+#journey .mile-card { border-radius: 3px; border: 1px solid color-mix(in srgb, var(--text) 55%, transparent); padding: 30px 22px 18px; background: repeating-linear-gradient(45deg, color-mix(in srgb, var(--text) 1.5%, transparent) 0 2px, transparent 2px 4px), linear-gradient(160deg, color-mix(in srgb, var(--bg-3) 45%, var(--bg-elev)), var(--bg-elev) 55%); box-shadow: inset 0 0 24px color-mix(in srgb, var(--text) 8%, transparent), var(--shadow-sm); }
+
+/* burned-in FRAME 0n at the card's top-left corner */
+#journey .mile-card::after { content: "FRAME " counter(frame, decimal-leading-zero); position: absolute; top: 8px; left: 11px; font-family: var(--mono); font-size: 0.52rem; font-weight: 500; letter-spacing: 0.16em; color: var(--muted-2); }
+
+/* grease-pencil tab lives on is-key frames only; no double-marking */
+#journey .mile-card::before { content: none; }
+#journey .milestone.is-key .mile-card::before { content: ""; position: absolute; left: 44px; top: 0; bottom: auto; width: 36px; height: 9px; transform: none; background: linear-gradient(180deg, var(--cat-vision), color-mix(in srgb, var(--cat-vision) 65%, var(--text))); border-radius: 0 0 3px 3px; box-shadow: 0 1px 3px color-mix(in srgb, var(--text) 25%, transparent); transition: none; }
+#journey .milestone:hover .mile-card::before { transform: none; }
+
+/* hover: frame lifts off the sheet on a hard offset shadow */
+#journey .milestone:hover .mile-card { transform: translateY(-3px); background: var(--bg-elev); border-color: var(--text); box-shadow: inset 0 0 24px color-mix(in srgb, var(--text) 8%, transparent), 5px 6px 0 color-mix(in srgb, var(--text) 10%, transparent); }
+
+/* year: destination-board serif, big and quiet, left of the frame */
+#journey .mile-year { font-size: 1.5rem; font-weight: 600; letter-spacing: -0.02em; color: var(--text); padding-top: 21px; }
+
+/* badge: ⎇ outlined git tag pill */
+#journey .mile-badge { border-radius: 99px; background: transparent; border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent); color: var(--accent); font-family: var(--mono); font-size: 0.58rem; font-weight: 500; letter-spacing: 0.02em; text-transform: none; }
+#journey .mile-badge::before { content: "\2387"; font-size: 0.72rem; line-height: 1; }
+#journey .milestone:hover .mile-badge { background: var(--accent); color: var(--bg-elev); border-color: var(--accent); }
+
+/* metrics: diff-stat lines, green + markers */
+#journey .mile-metrics { gap: 4px 18px; }
+#journey .mile-metric { background: none; border: 0; padding: 0 2px; font-family: var(--mono); font-size: 0.68rem; color: var(--muted); }
+#journey .mile-metric::before { content: "+"; width: auto; height: auto; border-radius: 0; background: none; color: var(--ok); font-weight: 700; opacity: 1; }
+#journey .mile-metric b { color: var(--text-soft); }
+#journey .milestone:hover .mile-metric { background: none; border-color: transparent; color: var(--text-soft); }
+
+/* outcome: dotted-leader departure strip bleeding to the frame edges */
+#journey .mile-out { margin: 14px -22px -18px; padding: 9px 22px; border-top: 1px dotted color-mix(in srgb, var(--text) 28%, var(--border)); background: var(--bg-3); color: var(--muted); }
+#journey .mile-out b { color: var(--accent); }
+
+/* earlier history: dashed outtake frames on the line */
+#journey .journey.show-early .milestone.is-early .mile-dot { border-style: dashed; border-color: var(--muted); background: var(--bg); box-shadow: 0 0 0 2px var(--bg); }
+#journey .milestone.is-early .mile-card { border-style: dashed; }
+#journey .milestone.is-early .mile-rail::after { background: var(--border); }
+
+/* collapse-history row: dashed ref line, v/^ caret */
+#journey .mile-earlier { margin-top: 10px; padding-top: 16px; border-top: 1px dashed var(--border); }
+#journey .mile-earlier::after { background: repeating-linear-gradient(90deg, var(--border) 0 4px, transparent 4px 8px); }
+#journey #earlyToggle { color: var(--muted-2); }
+#journey .mile-earlier button:hover { color: var(--accent); }
+#journey .early-caret::before { content: "\25BE"; transition: transform 0.3s var(--ease-out); }
+#journey .mile-earlier button[aria-expanded="true"] .early-caret::before { content: "\25B4"; transform: none; }
+
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes headPulse {
+    0%, 100% { box-shadow: 0 0 0 2px var(--bg), 0 0 0 2px color-mix(in srgb, var(--accent) 30%, transparent); }
+    60% { box-shadow: 0 0 0 2px var(--bg), 0 0 0 9px transparent; }
+  }
+}
+
+/* unwind: calmer as columns tighten; --rail-x tracks style.css grid centers */
+@media (max-width: 860px) {
+  #journey .mile-year { font-size: 1.25rem; padding-top: 23px; }
+  #journey .mile-card { padding: 28px 18px 16px; }
+  #journey .mile-out { margin: 12px -18px -16px; padding: 8px 18px; }
+  #journey .milestone.is-latest .mile-dot::after { font-size: 0.46rem; left: 15px; padding: 0 4px; }
+}
+@media (max-width: 800px) { #journey { --rail-x: 83px; } }
+@media (max-width: 560px) {
+  #journey { --rail-x: 17px; }
+  #journey .mile-rail { padding-top: 0; }
+  #journey .mile-rail::after { content: none; }
+  #journey .mile-dot { margin-top: 7px; }
+  #journey .mile-year { font-size: 1rem; padding-top: 0; }
+  #journey .mile-card { padding: 27px 16px 14px; }
+  #journey .mile-card::after { top: 6px; left: 9px; }
+  #journey .mile-out { margin: 12px -16px -14px; padding: 8px 16px; }
+  #journey .milestone.is-latest .mile-dot::after { left: 14px; }
+}
