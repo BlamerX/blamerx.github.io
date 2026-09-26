@@ -1,5 +1,5 @@
 :root {
-  --mono: "JetBrains Mono", monospace; --serif: "Fraunces", Georgia, serif;
+  --mono: "JetBrains Mono", monospace; --serif: "Fraunces", Georgia, serif; --sans: "Inter", system-ui, sans-serif;
   --bg: #efece4;
   --bg-2: #f7f5ef;
   --bg-3: #e6e2d6;
@@ -2932,6 +2932,15 @@ body::after {
 .recognition-card:hover .rec-year {
   transform: rotate(-6deg) scale(1.08);
 }
+/* multi-certificate card carries a label, not a single misleading year */
+.rec-year-set {
+  letter-spacing: 0.06em;
+  font-variant-numeric: normal;
+  transform: rotate(-3deg);
+}
+.recognition-card:hover .rec-year-set {
+  transform: rotate(-3deg) scale(1.06);
+}
 .rec-cert-btn {
   display: inline-flex;
   align-items: center;
@@ -2954,6 +2963,32 @@ body::after {
   transform: translateY(-2px);
   box-shadow: 0 8px 18px
     color-mix(in srgb, var(--rec-color, var(--accent)) 15%, transparent);
+}
+.recognition-card[data-rec="tcsion"] {
+  /* TCS iON's own --primary; their blue #2469bc sat within 1.21 luminance of
+     Microsoft's tile, so it did not differentiate. Ink is darkened for text. */
+  --rec-color: #e41165;
+  --rec-text: #a3104a;
+}
+/* the official lockup is white-on-transparent: let it sit on the plate full-width */
+.recognition-card[data-rec="tcsion"] .rec-icon {
+  width: 58px;
+  height: 40px;
+  border-radius: 4px;
+  /* base mask geometry is fixed to a 52px square — it would slice this plate */
+  -webkit-mask: none;
+  mask: none;
+}
+.recognition-card[data-rec="tcsion"] .rec-icon img {
+  width: 46px;
+  height: auto;
+  display: block;
+  /* if tcsion.com ever blocks the hotlink, the alt text still reads as a wordmark */
+  font-family: var(--sans);
+  font-size: 0.62rem;
+  font-weight: 600;
+  color: var(--bg-elev);
+  letter-spacing: 0.02em;
 }
 .recognition-card[data-rec="kaggle"] {
   --rec-color: var(--kaggle);
