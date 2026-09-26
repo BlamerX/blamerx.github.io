@@ -1058,6 +1058,30 @@
           ["Viz", "Plotly word clouds"],
         ],
       },
+      "cert-tcsion": {
+        kicker: "TCS iON · Career Edge",
+        title: "Generative AI Essentials",
+        problem:
+          "GenAI tooling moves faster than most curricula — the goal was to finish a structured programme on how these models actually work and where they are usable at work, not just hype.",
+        flowTitle: "What it covered",
+        flow: [
+          "Foundations of generative models",
+          "Prompt design and iteration",
+          "LLM capabilities and limits",
+          "Responsible and safe usage",
+          "Applied workplace workflows",
+        ],
+        approach:
+          "Completed the full two-week programme (12–26 Sep 2026), pairing each concept with a hands-on use case from day-to-day data work.",
+        outcome:
+          "Certificate of completion — the signed certificate is linked under the card.",
+        facts: [
+          ["Issuer", "TCS iON"],
+          ["Programme", "Career Edge"],
+          ["Dates", "12 – 26 Sep 2026"],
+          ["Topic", "Generative AI"],
+        ],
+      },
       "cert-kaggle": {
         kicker: "Kaggle · Notebook Expert",
         title: "Earning Notebook Expert",
@@ -1149,8 +1173,8 @@
           "A certificates trail spanning AI · ML · DL · DA; the full set lives in the linked Drive folder.",
         facts: [
           ["Broad", "AI · ML · DL · DA"],
+          ["Span", "multiple years"],
           ["Full", "set in Drive"],
-          ["Path", "basics → advanced"],
           ["Angle", "practical work"],
         ],
       },
