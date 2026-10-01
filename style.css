@@ -4670,3 +4670,114 @@ body.case-open {
   #about .about-text { padding:8px 18px 8px 58px; }
   #about .about-col-right { padding:22px 6px 8px 52px; }
 }
+
+/* ---- RÉSUMÉ VIEWER — its own family, deliberately NOT the deep-dive case file:
+   a document lightbox. The page behind is dimmed + blurred, the sheet holds the
+   CV full-bleed, and the two exits sit on a wide bar under it. ---- */
+body.resume-open { overflow: hidden; }
+
+.resume-overlay {
+  position: fixed; inset: 0; z-index: 95;
+  display: grid; place-items: center;
+  padding: clamp(14px, 3.2vh, 34px);
+  background: color-mix(in srgb, var(--text) 52%, transparent);
+  -webkit-backdrop-filter: blur(14px) saturate(0.72);
+  backdrop-filter: blur(14px) saturate(0.72);
+  animation: resume-fade 0.24s var(--ease-out);
+}
+.resume-overlay[hidden] { display: none; }
+@keyframes resume-fade { from { opacity: 0; } }
+
+.resume-panel {
+  position: relative;
+  display: flex; flex-direction: column;
+  width: min(1080px, 100%); height: min(92vh, 980px);
+  padding: 14px 14px 0;
+  border: 1px solid color-mix(in srgb, var(--text) 14%, var(--border));
+  border-radius: 22px;
+  background: var(--bg-elev);
+  box-shadow: 0 44px 96px -28px rgba(26, 24, 21, 0.5), 0 0 0 8px color-mix(in srgb, var(--bg-elev) 42%, transparent);
+  animation: resume-rise 0.32s var(--ease-out);
+}
+@keyframes resume-rise {
+  from { opacity: 0; transform: translateY(20px) scale(0.982); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* hairline accent across the top so the sheet reads as a distinct object */
+.resume-panel::before {
+  content: ""; position: absolute; top: 0; left: 26px; right: 26px; height: 2px;
+  border-radius: 0 0 3px 3px;
+  background: linear-gradient(90deg, var(--accent), color-mix(in srgb, var(--cat-vision) 70%, var(--accent)));
+}
+
+.resume-close {
+  position: absolute; top: -13px; right: -13px; z-index: 3;
+  display: grid; place-items: center;
+  width: 40px; height: 40px; padding: 0;
+  border: 1px solid var(--border); border-radius: 50%;
+  background: var(--bg-2); color: var(--text);
+  box-shadow: var(--shadow-sm); cursor: pointer;
+  transition: transform 0.24s var(--ease-out), background 0.24s var(--ease-out), color 0.24s var(--ease-out);
+}
+.resume-close:hover { background: var(--accent); border-color: var(--accent); color: var(--bg-elev); transform: rotate(90deg) scale(1.06); }
+.resume-close:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+.resume-stage {
+  position: relative; flex: 1 1 auto; overflow: hidden;
+  border: 1px solid var(--border-soft); border-radius: 14px;
+  background: var(--bg-2);
+}
+.resume-stage iframe { display: block; width: 100%; height: 100%; border: 0; }
+
+/* shown until Drive paints the document, then the frame covers it */
+.resume-veil {
+  position: absolute; inset: 0; z-index: 1;
+  display: grid; place-content: center; gap: 14px; justify-items: center;
+  background: var(--bg-2);
+  transition: opacity 0.3s var(--ease-out), visibility 0.3s;
+}
+.resume-stage.resume-ready .resume-veil { opacity: 0; visibility: hidden; }
+.resume-veil-bar {
+  display: block; width: 190px; height: 3px; border-radius: 999px;
+  background: color-mix(in srgb, var(--accent) 22%, var(--border-soft));
+  overflow: hidden; position: relative;
+}
+.resume-veil-bar::after {
+  content: ""; position: absolute; inset: 0; width: 44%; border-radius: 999px;
+  background: var(--accent); animation: resume-slide 1.1s var(--ease-out) infinite;
+}
+@keyframes resume-slide { 0% { transform: translateX(-105%); } 100% { transform: translateX(235%); } }
+.resume-veil-label { font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
+
+.resume-bar {
+  display: flex; gap: 12px; align-items: stretch;
+  padding: 14px 2px 16px;
+}
+.resume-btn {
+  flex: 1 1 0; min-height: 54px;
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  padding: 0 22px; border-radius: 14px;
+  font-family: var(--mono); font-size: 0.9rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
+  text-decoration: none; cursor: pointer;
+  transition: transform 0.24s var(--ease-out), box-shadow 0.24s var(--ease-out), background 0.24s var(--ease-out), color 0.24s var(--ease-out);
+}
+.resume-btn-primary { background: var(--accent); color: var(--bg-2); box-shadow: 0 10px 24px -10px color-mix(in srgb, var(--accent) 70%, transparent); }
+.resume-btn-primary:hover { transform: translateY(-3px); box-shadow: 0 18px 32px -12px color-mix(in srgb, var(--accent) 78%, transparent); }
+.resume-btn-ghost { background: var(--bg-2); color: var(--text); border: 1px solid var(--border); }
+.resume-btn-ghost:hover { transform: translateY(-3px); border-color: var(--accent); color: var(--accent); }
+.resume-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.resume-btn:active { transform: translateY(-1px) scale(0.995); }
+
+@media (max-width: 760px) {
+  .resume-panel { height: 94vh; padding: 10px 10px 0; border-radius: 16px; }
+  .resume-close { top: -10px; right: -10px; width: 36px; height: 36px; }
+  .resume-bar { flex-direction: column; gap: 9px; padding-bottom: 12px; }
+  .resume-btn { min-height: 48px; font-size: 0.82rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .resume-overlay, .resume-panel { animation: none; }
+  .resume-veil-bar::after { animation: none; width: 100%; opacity: 0.5; }
+  .resume-close:hover, .resume-btn:hover { transform: none; }
+}
+/* ---- END RÉSUMÉ VIEWER ---- */

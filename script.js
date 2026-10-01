@@ -1294,6 +1294,56 @@
       });
     },
 
+    /* preview the CV in-page instead of shipping the visitor to Drive */
+    RESUME_BASE: "https://drive.google.com/file/d/1sLPLNhHqkDzfMtl0Afeg8qD6gMEyFpLW/preview",
+
+    openResume() {
+      const ov = this.$("#resumeOverlay");
+      if (!ov) return;
+      const fr = this.$("#resumeFrame"),
+        stage = this.$(".resume-stage");
+      /* Drive answers with the current file, never the visitor's cached copy */
+      if (fr && stage) {
+        stage.classList.remove("resume-ready");
+        fr.src = this.RESUME_BASE + "?r=" + Date.now();
+      }
+      this._resumeTrigger = this.$("#resumeBtn");
+      ov.hidden = false;
+      document.body.classList.add("resume-open");
+      const close = this.$("#resumeClose");
+      if (close) close.focus();
+    },
+
+    closeResume() {
+      const ov = this.$("#resumeOverlay");
+      if (!ov || ov.hidden) return;
+      ov.hidden = true;
+      document.body.classList.remove("resume-open");
+      const back = this._resumeTrigger;
+      if (back && back.isConnected && back.focus) back.focus();
+    },
+
+    initResume() {
+      const btn = this.$("#resumeBtn"),
+        ov = this.$("#resumeOverlay");
+      if (!btn || !ov) return;
+      const fr = this.$("#resumeFrame");
+      if (fr)
+        fr.addEventListener("load", () => {
+          if (fr.getAttribute("src") === "about:blank") return;
+          const stage = this.$(".resume-stage");
+          if (stage) stage.classList.add("resume-ready");
+        });
+      btn.addEventListener("click", () => this.openResume());
+      this.$("#resumeClose").addEventListener("click", () => this.closeResume());
+      ov.addEventListener("click", (e) => {
+        if (e.target === ov) this.closeResume();
+      });
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && !ov.hidden) this.closeResume();
+      });
+    },
+
     /* normalize stroke lengths once so band icons can self-draw via CSS */
     initBandDraw() {
       this.$$(".pc-band-icon svg").forEach((s) =>
@@ -1331,6 +1381,7 @@
       this.initTilt();
       this.initHeroGlow();
       this.initCases();
+      this.initResume();
       this.initBandDraw();
       this.initRecWater();
       this.initTip();
