@@ -133,7 +133,7 @@ svg { max-width: 100%; height: auto; }
 /* Shared serif display face */
 .brand, .brand-mark, .hero-name, .section-title, .profile-title,
 .stat-num, .mile-year, .rec-year, .pc-metric-val, .kg-donut-val, .kg-medal b,
-.gh-stat b, .legend-item .legend-value, .radar-axis-value, .pc-num {
+.legend-item .legend-value, .radar-axis-value, .pc-num {
   font-family: var(--serif);
 }
 ::selection {
@@ -1255,7 +1255,7 @@ body::after {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 20px;
-  align-items: start;
+  align-items: stretch;
 }
 .profile-card {
   padding: 22px 24px;
@@ -1279,37 +1279,11 @@ body::after {
   z-index: 1;
 }
 
-/* ---- Contributions + Languages, one card --------------------------------
-   Two halves sharing the same mono kicker: grid on top, languages below.
+/* ---- Contributions + Languages, inside the combined GitHub card ---------
    The feed carries a per-day count and level but no repository, so cells are
-   shaded by volume alone, inside the existing amber scale. No head band — the
-   icon rides the contributions kicker and the pill rides the languages one. */
+   shaded by volume alone, inside the existing amber scale. */
 .contrib {
   margin-top: 0;
-}
-.contrib-head {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px 18px;
-  margin-bottom: 14px;
-}
-.contrib-kicker {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  min-width: 0;
-}
-.contrib-logo {
-  width: 26px;
-  height: 26px;
-  border-radius: 8px;
-  display: grid;
-  place-items: center;
-  flex-shrink: 0;
-  color: var(--bg-elev);
-  background: linear-gradient(135deg, var(--gh), #404448);
 }
 .contrib-title {
   margin: 0;
@@ -1319,18 +1293,6 @@ body::after {
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--muted-2);
-}
-.contrib-stats {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px 18px;
-  font-family: var(--mono);
-  font-size: 0.74rem;
-  color: var(--muted);
-}
-.contrib-stats b {
-  color: var(--text);
-  font-weight: 600;
 }
 .contrib-wrap {
   display: flex;
@@ -1462,10 +1424,17 @@ body::after {
 .contrib-foot .contrib-cell:last-of-type {
   margin-right: 4px;
 }
-.lang-half {
-  margin-top: 18px;
-  padding-top: 15px;
-  border-top: 1px solid var(--border);
+/* the two panel boxes of the GitHub card: languages beside the count tiles,
+   heatmap as the wide band above the stats rail */
+.gh-heat,
+.gh-langs {
+  padding: 12px 14px;
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius);
+  background: color-mix(in srgb, var(--bg-2) 62%, var(--bg-elev));
+}
+.gh-langs {
+  min-width: 0;
 }
 .lang-kicker {
   display: flex;
@@ -1473,27 +1442,17 @@ body::after {
   justify-content: space-between;
   gap: 10px 18px;
 }
-.lang-half .lang-bar {
+.gh-langs .lang-bar {
   margin-top: 12px;
 }
-/* when the feed is down the grid is hidden, so drop the stray divider */
-.contrib[hidden] + .lang-half {
-  margin-top: 2px;
-  padding-top: 0;
-  border-top: 0;
-}
 @media (max-width: 640px) {
-  .lang-half {
-    margin-top: 14px;
-    padding-top: 13px;
-  }
   /* the rail costs 32px the grid needs more than the labels are worth */
   .contrib-days {
     display: none;
   }
 }
 .kaggle-card::before,
-.github-card::before {
+.gh-card::before {
   content: "";
   position: absolute;
   top: -60%;
@@ -1509,7 +1468,7 @@ body::after {
 .kaggle-card::before {
   background: radial-gradient(circle, var(--kaggle-soft), transparent 65%);
 }
-.github-card::before {
+.gh-card::before {
   background: radial-gradient(circle, var(--gh-soft), transparent 65%);
 }
 .profile-head {
@@ -1548,7 +1507,7 @@ body::after {
   background: linear-gradient(135deg, var(--kaggle), #1a9bd9);
   box-shadow: 0 6px 16px rgba(32, 190, 255, 0.25);
 }
-.github-card .profile-logo {
+.gh-card .profile-logo {
   background: linear-gradient(135deg, var(--gh), #404448);
   box-shadow: 0 6px 16px rgba(36, 41, 46, 0.28);
 }
@@ -1662,8 +1621,8 @@ body::after {
   transition: stroke-dashoffset 1.8s var(--ease-out) 0.4s;
 }
 .kaggle-card.in .kg-donut .fill {
-  /* 226.2 * (448 / 60837) — top ~1% of the notebooks pool */
-  stroke-dashoffset: 1.67;
+  /* 226.2 * (378 / 60194) — the unfilled arc is his exact top-0.63% slice */
+  stroke-dashoffset: 1.42;
 }
 .kg-donut-label {
   position: absolute;
@@ -1725,6 +1684,12 @@ body::after {
 }
 .kaggle-card.in .kg-tier-bar i {
   width: var(--w, 0);
+}
+/* the bars are plain counts scaled against the largest tier (23 discussions),
+   so a single dataset reads as 4% — keep it a visible sliver, not an
+   apparently empty track */
+.kaggle-card.in .kg-tier-bar i {
+  min-width: 3px;
 }
 .kg-tier-val {
   font-size: 0.7rem;
@@ -1796,105 +1761,242 @@ body::after {
   font-weight: 500;
   display: block;
 }
-.gh-stats {
+/* ---- combined GitHub card: tiles + languages above, heatmap wide with the
+   stats rail narrowed beside it ---- */
+.gh-card { grid-column: 1 / -1; }
+.gh-top {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 6px;
+  grid-template-columns: 185px 185px 1fr;
+  gap: 14px;
   margin-bottom: 16px;
 }
-.gh-stat {
-  padding: 10px 12px;
-  border-radius: 9px;
-  background: var(--bg);
-  border: 1px solid var(--border-soft);
-  transition: all 0.22s var(--ease);
-  text-align: center;
-}
-.gh-stat:hover {
-  border-color: var(--accent);
-  background: var(--accent-soft);
-  transform: translateY(-2px);
-}
-.gh-stat b {
-  font-size: 1.05rem;
-  font-weight: 500;
-  letter-spacing: -0.02em;
-  color: var(--text);
-  font-variant-numeric: tabular-nums;
-  display: block;
-  line-height: 1.1;
-  min-height: 1.2em;
-}
-.gh-stat span {
-  font-size: 0.6rem;
-  color: var(--muted);
-  letter-spacing: 0.07em;
-  text-transform: uppercase;
-  font-weight: 500;
-  margin-top: 4px;
-  display: block;
-}
-.repo-cap {
-  font-family: var(--mono);
-  font-size: 0.62rem;
-  letter-spacing: 0.09em;
-  text-transform: uppercase;
-  color: var(--muted-2);
-  margin-bottom: 7px;
-}
-.repo-list {
+.gh-tile {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   gap: 2px;
+  padding: 16px 18px;
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius);
+  background: color-mix(in srgb, var(--bg-2) 62%, var(--bg-elev));
+  text-align: center;
 }
-.repo-item {
+.gh-tile b {
+  font-family: var(--mono);
+  font-size: 2.1rem;
+  font-weight: 700;
+  line-height: 1.05;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
+.gh-tile span { font-size: .74rem; font-weight: 600; color: var(--text-soft); }
+.gh-tile em {
+  font-family: var(--mono); font-style: normal;
+  font-size: .56rem; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--muted-2);
+}
+.gh-heat {
+  min-width: 0;
+}
+.gh-strip {
+  display: flex; flex-wrap: wrap; align-items: baseline;
+  justify-content: space-between; gap: 4px 16px;
+  margin-bottom: 10px;
+  font-family: var(--mono); font-size: .62rem; letter-spacing: .04em;
+  color: var(--muted-2);
+}
+.gh-strip-stats { display: inline-flex; align-items: baseline; gap: 10px; }
+.gh-strip-stats b { font-size: .82rem; font-weight: 700; color: var(--text); }
+.gh-strip-stats i { display: inline-block; width: 1px; height: 10px; background: var(--border); }
+.gh-bottom {
+  display: grid;
+  grid-template-columns: 1fr 168px;
+  gap: 18px;
+  margin-bottom: 16px;
+}
+.gh-facts {
+  min-width: 0;
+  border-left: 1px dashed var(--border);
+  padding-left: 18px;
+}
+.gh-facts .contrib-title { margin-bottom: 8px; }
+.gh-fact {
+  display: flex; align-items: baseline; gap: 7px;
+  padding: 7px 0;
+  border-bottom: 1px solid var(--border-soft);
+  font-size: .78rem; color: var(--text-soft);
+}
+.gh-fact:last-child { border-bottom: 0; }
+.gh-fact svg { align-self: center; flex-shrink: 0; color: var(--accent); }
+.gh-fact b {
+  font-family: var(--mono); font-weight: 700; color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
+.gh-fact span {
+  margin-left: auto;
+  font-family: var(--mono); font-size: .54rem;
+  letter-spacing: .06em; text-transform: uppercase; color: var(--muted-2);
+}
+@media (max-width: 1000px) {
+  .gh-top { grid-template-columns: 1fr 1fr; }
+  .gh-langs { grid-column: 1 / -1; }
+}
+/* 53 weeks is only readable with a wide slot, so below 1000px the heatmap
+   takes the whole card and the stats rail becomes a four-up strip */
+@media (max-width: 1000px) {
+  .gh-bottom { grid-template-columns: 1fr; }
+  .gh-facts {
+    border-left: 0; padding-left: 0;
+    border-top: 1px dashed var(--border); padding-top: 12px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2px 14px;
+  }
+  .gh-facts .contrib-title { grid-column: 1 / -1; margin-bottom: 4px; }
+  .gh-fact { border-bottom: 0; padding: 3px 0; }
+}
+@media (max-width: 560px) {
+  .gh-facts { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* ---- Recent activity card: three counts over the events the API actually
+       returned, then the newest of those actions as their own rows ---- */
+.act-counts {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+.act-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 11px 8px 9px;
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius);
+  background: color-mix(in srgb, var(--bg-2) 62%, var(--bg-elev));
+  text-align: center;
+}
+.act-tile b {
+  font-family: var(--mono);
+  font-size: 1.45rem;
+  font-weight: 700;
+  line-height: 1.05;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
+.act-tile span {
+  font-size: .64rem;
+  font-weight: 600;
+  color: var(--text-soft);
+}
+.act-window {
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 6.5px 9px;
-  border-radius: 8px;
-  border: 1px solid transparent;
-  font-size: 0.8rem;
-  color: var(--text);
-  transition: all 0.2s var(--ease);
-  animation: repoIn 0.45s var(--ease-out) backwards;
+  gap: 6px;
+  margin: 9px 0 0;
+  font-family: var(--mono);
+  font-size: .58rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--muted-2);
 }
-.repo-item:nth-child(2) { animation-delay: 0.05s; }
-.repo-item:nth-child(3) { animation-delay: 0.1s; }
-.repo-item:nth-child(4) { animation-delay: 0.15s; }
-.repo-item:nth-child(5) { animation-delay: 0.2s; }
-.repo-item:nth-child(6) { animation-delay: 0.25s; }
-@keyframes repoIn {
-  from {
-    opacity: 0;
-    transform: translateY(5px);
-  }
+.act-window svg { color: var(--accent); flex-shrink: 0; }
+.act-kicker { margin: 10px 0 2px; }
+.act-top {
+  display: flex;
+  flex-direction: column;
 }
-.repo-item:hover {
-  background: var(--accent-soft);
-  border-color: var(--border);
+.act-toprow {
+  display: grid;
+  grid-template-columns: 1fr 84px 26px;
+  align-items: center;
+  gap: 9px;
+  padding: 5px 0;
+  border-bottom: 1px solid var(--border-soft);
+  text-decoration: none;
+  min-width: 0;
 }
-.repo-item i {
-  flex: 0 0 8px;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--c, var(--muted));
-}
-.repo-item b {
-  font-weight: 550;
+.act-toprow:last-child { border-bottom: 0; }
+.act-name {
+  font-size: .76rem;
+  font-weight: 600;
+  color: var(--text-soft);
   min-width: 0;
   overflow: hidden;
-  white-space: nowrap;
   text-overflow: ellipsis;
+  white-space: nowrap;
 }
-.repo-item span {
+.act-toprow:hover .act-name { color: var(--accent); }
+.act-bar {
+  display: block;
+  height: 5px;
+  border-radius: 2px;
+  overflow: hidden;
+  background: color-mix(in srgb, var(--bg-3) 70%, var(--bg-elev));
+}
+.act-bar b {
+  display: block;
+  height: 100%;
+  border-radius: 2px;
+  background: var(--gh);
+}
+.act-n {
+  font-family: var(--mono);
+  font-size: .68rem;
+  font-weight: 700;
+  color: var(--text);
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+.act-feed {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  /* whatever height the card ends up with, the actions absorb the slack
+     instead of leaving it under the footer */
+  justify-content: space-between;
+}
+.act-row {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  min-width: 0;
+  padding: 6px 0;
+  border-bottom: 1px solid var(--border-soft);
+  text-decoration: none;
+}
+.act-row:last-child { border-bottom: 0; }
+.act-verb {
+  font-size: .74rem;
+  color: var(--muted);
+  white-space: nowrap;
+}
+.act-repo {
+  font-size: .78rem;
+  font-weight: 600;
+  color: var(--text-soft);
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.act-row:hover .act-repo { color: var(--accent); }
+.act-when {
   margin-left: auto;
   font-family: var(--mono);
-  font-size: 0.66rem;
+  font-size: .6rem;
+  letter-spacing: .06em;
   color: var(--muted-2);
   white-space: nowrap;
 }
+.act-empty {
+  padding: 12px 0;
+  font-size: .74rem;
+  color: var(--muted);
+}
+.act-empty a { color: var(--accent); }
+.act-card .profile-foot { margin-top: auto; }
 
 .profile-foot {
   display: flex;
@@ -1956,12 +2058,12 @@ body::after {
 }
 /* GitHub ink, mirroring the Kaggle card's soft→solid chip so the two source
    links read as peers without spending amber on a secondary action. */
-.github-card .profile-link {
+.gh-card .profile-link {
   color: var(--gh);
   background: color-mix(in srgb, var(--gh) 7%, transparent);
   border-color: color-mix(in srgb, var(--gh) 25%, transparent);
 }
-.github-card .profile-link:hover {
+.gh-card .profile-link:hover {
   background: linear-gradient(135deg, var(--gh), #404448);
   color: var(--bg-elev);
   transform: translateY(-1px);
@@ -3067,10 +3169,7 @@ body::after {
 .reveal.delay-9 { --delay: 0.35s; }
 .reveal.delay-10 { --delay: 0.4s; }
 
-/* LANGUAGE BAR CARD (full width under the two profile cards) */
-.lang-card {
-  grid-column: 1 / -1;
-}
+/* LANGUAGE BAR */
 .lang-bar {
   display: flex;
   height: 12px;
@@ -4081,7 +4180,7 @@ body.case-open {
 #activity .profile-card { background: var(--bg-elev); border: 1px solid var(--border); }
 
 /* --- faded ghost visa ring bleeding off the page corner --- */
-#activity .kaggle-card::before, #activity .github-card::before {
+#activity .kaggle-card::before, #activity .gh-card::before, #activity .act-card::before {
   content: ""; position: absolute; top: auto; right: -34px; bottom: -34px; left: auto;
   width: 150px; height: 150px; inset: auto -34px -34px auto;
   border: 2px dashed color-mix(in srgb, var(--muted) 35%, transparent); border-radius: 50%;
@@ -4089,7 +4188,8 @@ body.case-open {
   transition: transform .6s var(--ease);
 }
 #activity .kaggle-card::before { border-color: color-mix(in srgb, var(--kaggle) 45%, transparent); }
-#activity .github-card::before { border-color: color-mix(in srgb, var(--gh) 30%, transparent); }
+#activity .gh-card::before { border-color: color-mix(in srgb, var(--gh) 30%, transparent); }
+#activity .act-card::before { border-color: color-mix(in srgb, var(--gh) 22%, transparent); }
 #activity .profile-card:hover::before { transform: rotate(-8deg) scale(1.08); }
 
 /* --- passport header: double hairline rule + rotated logo stamp --- */
@@ -4099,10 +4199,10 @@ body.case-open {
   border: 2px solid var(--muted); color: var(--muted); opacity: .9; transform: rotate(-8deg);
 }
 #activity .kaggle-card .profile-logo { border-color: var(--kaggle); color: var(--kaggle-text); }
-#activity .github-card .profile-logo { border-color: var(--gh); color: var(--gh); }
+#activity .gh-card .profile-logo { border-color: var(--gh); color: var(--gh); }
+#activity .act-card .profile-logo { border-color: var(--gh); color: var(--gh); }
 #activity .profile-card:hover .profile-logo { transform: rotate(-8deg) scale(1.07); }
 #activity .profile-title { font-size: .95rem; letter-spacing: .04em; text-transform: uppercase; }
-#activity .lang-card .contrib-logo { border-radius: 50%; transform: rotate(-8deg); border: 2px solid var(--gh); background: transparent; color: var(--gh); }
 
 /* --- the sync pill becomes the stamped date, in ink --- */
 #activity .sync-pill {
@@ -4133,29 +4233,10 @@ body.case-open {
   background-image: radial-gradient(circle at 5px 7px, var(--bg) 0 3px, transparent 3.2px);
   background-size: 10px 14px; background-repeat: repeat-y;
 }
-#activity .contrib-head { border-bottom: 1.5px dashed var(--border); padding-bottom: 10px; }
-#activity .contrib-kicker::after {
-  content: ""; margin-left: 8px; flex-shrink: 0; width: 44px; height: 15px; opacity: .8;
-  background: repeating-linear-gradient(90deg,
-    var(--text) 0 2px, transparent 2px 4px, var(--text) 4px 5px, transparent 5px 8px,
-    var(--text) 8px 10px, transparent 10px 14px);
-}
 #activity .contrib-wrap {
   background: color-mix(in srgb, var(--bg-3) 60%, var(--bg-elev));
   border: 1px solid var(--border-soft); border-radius: 2px; padding: 10px;
 }
-
-/* --- repo rows get washi-style visa tape marks (the recognition motif) --- */
-#activity .repo-item { position: relative; padding-left: 28px; border-radius: 2px; }
-#activity .repo-item::before {
-  content: ""; position: absolute; left: 5px; top: 50%; width: 11px; height: 17px;
-  transform: translateY(-50%) rotate(-5deg); pointer-events: none;
-  background: color-mix(in srgb, var(--gh) 12%, rgba(255, 255, 255, 0.5));
-  border-left: 1px dashed color-mix(in srgb, var(--text) 10%, transparent);
-  border-right: 1px dashed color-mix(in srgb, var(--text) 10%, transparent);
-  box-shadow: 0 1px 2px color-mix(in srgb, var(--text) 8%, transparent);
-}
-#activity .gh-stat { border-radius: 2px; }
 
 @media (prefers-reduced-motion: no-preference) {
   @keyframes acStampSettle { from { transform: rotate(-8deg) scale(1.25); opacity: 0; } }
@@ -4781,3 +4862,160 @@ body.resume-open { overflow: hidden; }
   .resume-close:hover, .resume-btn:hover { transform: none; }
 }
 /* ---- END RÉSUMÉ VIEWER ---- */
+
+/* ---- CONTEST RATINGS SCOPE CARD (S2) ----
+   Three instrument dials on one shared 800-2000 rating scale, styled as the
+   cream credential tiles of the activity grid. Gaps are rating points, never
+   fabricated percentages. Bottom split rows echo the badge-trio stats strip. */
+.scope-card { grid-column: 1 / -1; }
+.scope-dials {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin: 18px 0 10px;
+}
+.cp-dial {
+  --jin: var(--accent);
+  --jfill: var(--accent-2);
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius);
+  background: color-mix(in srgb, var(--bg-2) 62%, var(--bg-elev));
+  padding: 14px 14px 0;
+  text-align: center;
+  transition: border-color .3s var(--ease), box-shadow .3s var(--ease);
+}
+.cp-dial:hover { border-color: color-mix(in srgb, var(--jin) 45%, var(--border-soft)); box-shadow: var(--shadow-sm); }
+.cp-cc { --jin: #b45309; --jfill: #d97706; }
+.cp-cf { --jin: #15803d; --jfill: #22a04c; }
+.cp-lc { --jin: #a16207; --jfill: #eab308; }
+.cp-scope { display: block; align-self: center; width: 100%; max-width: 190px; margin: 0 auto; }
+.cp-bezel { fill: none; stroke: rgba(26, 24, 21, .26); stroke-width: 6; }
+.cp-scale { fill: none; stroke: var(--border); stroke-width: 8; stroke-linecap: round; }
+.cp-tint { fill: none; stroke: color-mix(in srgb, var(--jfill) 34%, transparent); stroke-width: 8; }
+.cp-hair { stroke: var(--jin); stroke-width: 1.6; opacity: .75; }
+.cp-dotring { fill: none; stroke: var(--jin); stroke-width: 1.4; opacity: .55; transition: r .25s var(--ease-out); }
+.cp-dot { fill: var(--jfill); stroke: var(--bg-elev); stroke-width: 1.5; transition: r .25s var(--ease-out); }
+.cp-dial:hover .cp-dot { r: 6; }
+.cp-dial:hover .cp-dotring { r: 10; }
+.cp-gateline { stroke: var(--jin); stroke-width: 2; stroke-linecap: butt; }
+.cp-gatelbl { font-family: var(--mono); font-size: 7.5px; font-weight: 700; fill: var(--jin); letter-spacing: .04em; paint-order: stroke; stroke: var(--bg-2); stroke-width: 3px; stroke-linejoin: round; }
+.cp-core { fill: #fffdf8; stroke: var(--border-soft); stroke-width: 1; }
+.cp-center { font-family: var(--mono); font-size: 17px; font-weight: 700; fill: var(--jin); }
+.cp-centsub { font-family: var(--mono); font-size: 6.5px; letter-spacing: .18em; fill: var(--muted-2); }
+.cp-end { font-family: var(--mono); font-size: 7px; fill: var(--muted-2); }
+.cp-dname { font-size: .8rem; font-weight: 650; margin-top: 2px; }
+.cp-handle { font-family: var(--mono); font-size: .68rem; font-weight: 500; color: var(--muted-2); }
+.cp-dval { font-family: var(--mono); font-size: .72rem; color: var(--text-soft); margin-top: 3px; }
+.cp-dgap {
+  display: inline-block;
+  align-self: center;
+  font-family: var(--mono); font-size: .68rem;
+  color: var(--jin);
+  background: color-mix(in srgb, var(--jfill) 10%, transparent);
+  border: 1px dashed color-mix(in srgb, var(--jin) 40%, transparent);
+  border-radius: 3px;
+  padding: 2px 8px;
+  margin: 6px 0 12px;
+}
+/* LeetCode difficulty ledger — the only platform that publishes a per-band
+   count, so its slot carries bars. CodeChef and Codeforces publish counts
+   instead of bands, so they fill the same slot with a facts plate. */
+.cp-solved { width: 100%; margin: -4px 0 12px; }
+.cp-solved-cap,
+.cp-facts-cap {
+  font-family: var(--mono); font-size: .52rem; letter-spacing: .16em;
+  text-transform: uppercase; color: var(--muted-2);
+  margin-bottom: 5px; text-align: left;
+}
+.cp-solved-row {
+  display: grid; grid-template-columns: 42px 1fr 62px;
+  align-items: center; gap: 7px;
+  text-align: left; margin-bottom: 4px;
+}
+.cp-solved-row span { font-size: .62rem; color: var(--text-soft); }
+.cp-mini {
+  display: block; height: 5px; border-radius: 3px; overflow: hidden;
+  background: color-mix(in srgb, var(--jin) 13%, transparent);
+}
+.cp-mini b { display: block; height: 100%; min-width: 2px; background: var(--jfill); border-radius: 3px; }
+.cp-solved-row em {
+  font-family: var(--mono); font-size: .6rem; font-style: normal;
+  color: var(--jin); text-align: right; white-space: nowrap;
+}
+/* each band takes LeetCode's own hue — teal easy, amber medium, rose hard.
+   The track, the fill and the figure all read --jin/--jfill, so re-inking the
+   row recolours the whole band instead of just its bar */
+.cp-solved-row[data-cp="lc-easy"]   { --jin: #0f766e; --jfill: #14a89a; }
+.cp-solved-row[data-cp="lc-medium"] { --jin: #b45309; --jfill: #f59e0b; }
+.cp-solved-row[data-cp="lc-hard"]   { --jin: #b3123c; --jfill: #e04468; }
+/* counts with no denominator get no bar — label and figure, ruled like a
+   data plate, so nothing here implies a percentage the APIs never publish */
+.cp-facts { width: 100%; margin: -4px 0 12px; }
+.cp-fact-row {
+  display: grid; grid-template-columns: 1fr auto;
+  align-items: baseline; gap: 7px;
+  text-align: left; margin-bottom: 4px;
+  border-bottom: 1px dotted color-mix(in srgb, var(--jin) 26%, transparent);
+  padding-bottom: 3px;
+}
+.cp-fact-row span { font-size: .62rem; color: var(--text-soft); }
+.cp-fact-row em {
+  font-family: var(--mono); font-size: .6rem; font-style: normal;
+  color: var(--jin); text-align: right; white-space: nowrap;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .cp-mini b { transition: width .6s var(--ease-out); }
+}
+/* badge-trio split strip: real counts only, mono figures over small-caps labels */
+.cp-split {
+  display: flex;
+  justify-content: space-around;
+  gap: 6px;
+  border-top: 1px solid rgba(26, 24, 21, .12);
+  margin: auto -14px 0;
+  padding: 10px 12px 12px;
+}
+.cp-split div { flex: 1 1 0; min-width: 0; }
+.cp-split b { display: block; font-family: var(--mono); font-size: .82rem; font-weight: 700; color: var(--text); }
+.cp-split span { display: block; font-family: var(--mono); font-size: .52rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted-2); margin-top: 2px; }
+.cp-links { display: inline-flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+/* The three arena buttons take the same chip as "View profile", but stay
+   neutral-inked: three solid brand fills side by side would shout, so each
+   platform speaks through its own mark instead. */
+.scope-card .profile-link {
+  color: var(--text);
+  background: color-mix(in srgb, var(--bg-3) 55%, var(--bg-elev));
+  border-color: var(--border-soft);
+}
+.scope-card .profile-link:hover {
+  background: var(--hover-bg);
+  border-color: var(--muted);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
+}
+.cp-links svg { flex-shrink: 0; }
+/* the card links pin every svg to 11px and nudge all of them on hover; a brand
+   mark needs more room than an arrow and must stay put while the arrow moves */
+.cp-links .profile-link > svg:first-child {
+  width: 14px;
+  height: 14px;
+  transform: none;
+}
+.cp-links .cp-cc > svg:first-child { color: #5b4638; }
+.cp-links .cp-cf > svg:first-child { color: #1f8acb; }
+.cp-links .cp-lc > svg:first-child { color: #dd8500; }
+@media (max-width: 520px) {
+  /* the card foot stretches its links full-width; three brand chips side by
+     side read denser than three stacked bars */
+  .cp-links .profile-link { width: auto; }
+}
+@media (max-width: 640px) {
+  .scope-dials { grid-template-columns: 1fr; }
+  .cp-scope { max-width: 220px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cp-dot, .cp-dotring { transition: none; }
+}
+/* ---- END CONTEST RATINGS SCOPE CARD ---- */

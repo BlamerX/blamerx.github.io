@@ -428,8 +428,7 @@
        rather than showing an empty frame if the feed is unreachable. */
     async initContrib() {
       const card = this.$("#contribCard"),
-        grid = this.$("#contribGrid"),
-        stats = this.$("#contribStats");
+        grid = this.$("#contribGrid");
       if (!card || !grid) return;
       let days = null;
       try {
@@ -459,6 +458,7 @@
         active = 0,
         best = 0,
         run = 0,
+        cur = 0,
         cells = "";
       for (const d of days) {
         const n = Number(d.count) || 0;
@@ -488,6 +488,22 @@
           (n || "none") +
           '"></i>';
       }
+      /* current streak: walk back from the newest day; a zero today or
+         yesterday has not broken a streak yet, so it is skipped */
+      for (let i = days.length - 1; i >= 0; i--) {
+        const n = Number(days[i].count) || 0;
+        if (n) cur++;
+        else if (cur === 0 && i >= days.length - 2) continue;
+        else break;
+      }
+      const set = (k, v) => {
+        const el = this.$('[data-ghc="' + k + '"]');
+        if (el) el.textContent = v;
+      };
+      set("total", total);
+      set("active", active);
+      set("best", best);
+      set("cur", cur);
       grid.innerHTML = cells;
       /* reveal first: measurements are zero while the card is display:none */
       card.hidden = false;
@@ -505,15 +521,6 @@
           { passive: true },
         );
       }
-      if (stats)
-        stats.innerHTML =
-          "<span><b>" +
-          total +
-          "</b> contributions</span><span><b>" +
-          active +
-          "</b> active days</span><span><b>" +
-          best +
-          "</b>-day best streak</span>";
     },
 
     /* 53 weeks at GitHub's 11px cells need ~633px, which is wider than this
@@ -527,9 +534,10 @@
       const avail = scroll.clientWidth;
       if (!avail) return;
       const weeks = Math.ceil(grid.children.length / 7);
-      /* gap tightens before the cells do, and the rail is hidden under 560px,
-         so all 53 weeks fit from a 320px phone up with no scrolling */
-      const gap = avail < 560 ? 1 : avail < 800 ? 2 : 3;
+      /* the gap gives way before the cells do, and below 400px it closes
+         entirely: 53 weeks at the 3px floor then need 159px, which even a
+         320px phone can hand over, so the newest week is never clipped */
+      const gap = avail < 400 ? 0 : avail < 560 ? 1 : avail < 800 ? 2 : 3;
       const ideal = (avail - (weeks - 1) * gap) / weeks;
       wrap.style.setProperty("--cs", Math.max(3, Math.min(13, Math.floor(ideal))) + "px");
       wrap.style.setProperty("--cg", gap + "px");
@@ -559,6 +567,504 @@
     },
 
 
+    /* ---- contest rating dials -------------------------------------------
+       Shared 800-2000 scale: needle angle = 0.2deg per rating point, so the
+       three dials stay comparable. The rating is the only input — needle, band
+       tint, gate tick, gap chip and aria text all derive from it, so any rating
+       change redraws the whole instrument. Codeforces answers cross-origin,
+       LeetCode publishes through the leetcard SVG, CodeChef profile HTML comes
+       back through the jina relay; a failed fetch leaves the hand-plotted
+       values already in the HTML untouched. */
+    cpPt(r, R) {
+      const a = ((0.2 * r - 370) * Math.PI) / 180;
+      return [84 + R * Math.cos(a), 84 + R * Math.sin(a)];
+    },
+
+    /* Official floors. CodeChef star bands and Codeforces titles are the
+       published ones; LeetCode hands out percentile badges (his profile reads
+       "Knight — Top 25% site-wide") rather than rating titles, so that dial
+       counts to the next whole hundred instead of inventing a rank name. */
+    cpTiers: {
+      cc: [
+        [1000, "1★"],
+        [1200, "2★"],
+        [1500, "3★"],
+        [1800, "4★"],
+        [2100, "5★"],
+        [2400, "6★"],
+        [3000, "7★"],
+      ],
+      cf: [
+        [1200, "Pupil"],
+        [1400, "Specialist"],
+        [1600, "Expert"],
+        [1900, "Candidate Master"],
+        [2200, "Master"],
+        [2400, "International Master"],
+        [2600, "Grandmaster"],
+        [3000, "Legendary Grandmaster"],
+      ],
+    },
+
+    cpBand(key, rating) {
+      if (key === "lc") {
+        const hi = (Math.floor(rating / 100) + 1) * 100;
+        return { lo: hi - 100, hi: hi, name: "", cur: "" };
+      }
+      const t = this.cpTiers[key];
+      let lo = 800,
+        cur = "";
+      for (let i = 0; i < t.length; i++) {
+        if (t[i][0] <= rating) {
+          lo = t[i][0];
+          cur = t[i][1];
+        } else return { lo: lo, hi: t[i][0], name: t[i][1], cur: cur };
+      }
+      return { lo: lo, hi: null, name: "", cur: cur };
+    },
+
+    plotCp(key, rating) {
+      const r = Math.max(800, Math.min(2000, rating));
+      const [x, y] = this.cpPt(r, 54);
+      /* the hair starts outside the r=27 core circle, never at the hub: the
+         printed rating and its CURRENT caption live inside that disc */
+      const [x0, y0] = this.cpPt(r, 31);
+      const hair = this.$('[data-cp="' + key + '-hair"]');
+      if (!hair) return;
+      hair.setAttribute("x1", x0.toFixed(1));
+      hair.setAttribute("y1", y0.toFixed(1));
+      hair.setAttribute("x2", x.toFixed(1));
+      hair.setAttribute("y2", y.toFixed(1));
+      ["cp-dotring", "cp-dot"].forEach((cls) => {
+        const el = this.$('[data-cp="' + key + "-" + cls.split("-")[1] + '"]');
+        if (!el) return;
+        el.setAttribute("cx", x.toFixed(1));
+        el.setAttribute("cy", y.toFixed(1));
+      });
+      const c = this.$('[data-cp="' + key + '-center"]');
+      if (c) c.textContent = rating;
+    },
+
+    /* the gate tick marks the floor being chased; nothing to chase inside the
+       scale means both tick and number come off the dial */
+    cpGate(key, floor) {
+      const line = this.$('[data-cp="' + key + '-gateline"]');
+      const lbl = this.$('[data-cp="' + key + '-gatellbl"]');
+      if (!line || !lbl) return;
+      const shown = floor != null && floor <= 2000;
+      line.style.display = shown ? "" : "none";
+      /* a floor sitting on the scale end is already named by the end label */
+      const lblShown = shown && floor < 1950;
+      lbl.style.display = lblShown ? "" : "none";
+      if (!shown) return;
+      const [x1, y1] = this.cpPt(floor, 54);
+      const [x2, y2] = this.cpPt(floor, 68);
+      line.setAttribute("x1", x1.toFixed(1));
+      line.setAttribute("y1", y1.toFixed(1));
+      line.setAttribute("x2", x2.toFixed(1));
+      line.setAttribute("y2", y2.toFixed(1));
+      if (!lblShown) return;
+      const a = ((0.2 * floor - 370) * Math.PI) / 180;
+      const lx = Math.min(154, Math.max(14, 84 + Math.cos(a) * 80));
+      const ly = Math.min(150, Math.max(9, 84 + Math.sin(a) * 80 + 3));
+      lbl.setAttribute("x", lx.toFixed(1));
+      lbl.setAttribute("y", ly.toFixed(1));
+      lbl.textContent = floor;
+    },
+
+    /* the coloured arc is the band the needle currently sits in */
+    cpTint(key, b) {
+      const p = this.$('[data-cp="' + key + '-tint"]');
+      if (!p) return;
+      const lo = Math.max(800, b.lo);
+      const hi = Math.min(2000, b.hi == null ? 2000 : b.hi);
+      if (hi - lo < 20) {
+        p.style.display = "none";
+        return;
+      }
+      p.style.display = "";
+      const [x1, y1] = this.cpPt(lo, 62);
+      const [x2, y2] = this.cpPt(hi, 62);
+      p.setAttribute(
+        "d",
+        "M" +
+          x1.toFixed(1) +
+          " " +
+          y1.toFixed(1) +
+          " A62 62 0 " +
+          ((hi - lo) * 0.2 > 180 ? 1 : 0) +
+          " 1 " +
+          x2.toFixed(1) +
+          " " +
+          y2.toFixed(1),
+      );
+    },
+
+    cpNames: { cc: "CodeChef", cf: "Codeforces", lc: "LeetCode contest" },
+
+    cpRender(key, rating) {
+      if (!rating) return false;
+      this.plotCp(key, rating);
+      /* the dial face ships with no reading on it, so the needle group only
+         becomes visible once a live rating has actually been plotted */
+      const g = this.$('[data-cp="' + key + '-svg"] .cp-reading');
+      if (g) g.style.display = "";
+      const b = this.cpBand(key, rating);
+      const gap = this.$('[data-cp="' + key + '-gap"]');
+      if (gap)
+        gap.innerHTML =
+          b.hi == null
+            ? "<b>" + b.cur + "</b> · highest band"
+            : "+" +
+              (b.hi - rating) +
+              " to <b>" +
+              (b.name || b.hi) +
+              "</b>" +
+              (b.name ? " @ " + b.hi : "");
+      this.cpGate(key, b.hi);
+      this.cpTint(key, b);
+      const svg = this.$('[data-cp="' + key + '-svg"]');
+      if (svg) {
+        const target = b.name || (b.hi == null ? "" : "next mark");
+        svg.setAttribute(
+          "aria-label",
+          this.cpNames[key] +
+            " rating " +
+            rating +
+            (b.cur ? ", " + b.cur : "") +
+            (b.hi == null
+              ? "."
+              : "; " +
+                target +
+                " at " +
+                b.hi +
+                ", " +
+                (b.hi - rating) +
+                " points away."),
+        );
+      }
+      return true;
+    },
+
+    async fetchCf() {
+      const r = await fetch(
+        "https://codeforces.com/api/user.info?handles=blamerx_08",
+        { signal: this.sig() },
+      );
+      const j = await r.json();
+      if (!r.ok || j.status !== "OK" || !j.result || !j.result[0])
+        throw new Error("cf");
+      const u = j.result[0];
+      this.cpRender("cf", u.rating);
+      const val = this.$('[data-cp="cf-val"]');
+      const rank = u.rank ? u.rank.charAt(0).toUpperCase() + u.rank.slice(1) : "unranked";
+      if (val) val.textContent = u.rating + " · " + rank;
+      const sub = this.$('[data-cp="cf-sub"]');
+      if (sub) sub.textContent = u.rating === u.maxRating ? "= MAX" : "MAX " + u.maxRating;
+      const peak = this.$('[data-cp="cf-peak"]');
+      if (peak) peak.textContent = u.maxRating;
+      if (u.registrationTimeSeconds) {
+        const d = new Date(u.registrationTimeSeconds * 1000);
+        const joined = this.$('[data-cp="cf-joined"]');
+        if (joined)
+          joined.textContent =
+            "JanFebMarAprMayJunJulAugSepOctNovDec".slice(d.getMonth() * 3, d.getMonth() * 3 + 3) +
+            " " +
+            String(d.getFullYear()).slice(2);
+      }
+      const country = this.$('[data-cp="cf-country"]');
+      if (country && u.country) country.textContent = u.country;
+      this.fetchCfExtras();
+      return true;
+    },
+
+    /* two more anonymous-CORS calls, both small: user.rating is the rated-round
+       history and user.status is his submission list, from which the solved
+       count is the set of distinct problems with an OK verdict */
+    async fetchCfExtras() {
+      const key = "cfExtras";
+      try {
+        const hit = JSON.parse(sessionStorage.getItem(key) || "0");
+        if (hit && hit.v === 1 && Date.now() - hit.ts < 18e5)
+          return this.applyCfExtras(hit.data);
+      } catch (e) {}
+      try {
+        const [rating, status] = await Promise.all([
+          fetch("https://codeforces.com/api/user.rating?handle=blamerx_08", {
+            signal: this.sig(),
+          }).then((r) => r.json()),
+          fetch(
+            "https://codeforces.com/api/user.status?handle=blamerx_08&from=1&count=10000",
+            { signal: this.sig() },
+          ).then((r) => r.json()),
+        ]);
+        if (rating.status !== "OK" || status.status !== "OK") return;
+        const rounds = rating.result || [];
+        const solved = new Set(
+          (status.result || [])
+            .filter((s) => s.verdict === "OK" && s.problem)
+            .map((s) => s.problem.contestId + s.problem.index),
+        );
+        const rated = rounds.filter((r) => r.oldRating);
+        const data = {
+          solved: solved.size,
+          rounds: rounds.length,
+          jump: rated.length
+            ? Math.max(...rated.map((r) => r.newRating - r.oldRating))
+            : null,
+        };
+        try {
+          sessionStorage.setItem(
+            key,
+            JSON.stringify({ v: 1, ts: Date.now(), data: data }),
+          );
+        } catch (e) {}
+        this.applyCfExtras(data);
+      } catch (e) {}
+    },
+
+    applyCfExtras(d) {
+      if (!d) return;
+      const put = (k, v) => {
+        const el = this.$('[data-cp="' + k + '"]');
+        if (el && v != null) el.textContent = v;
+      };
+      put("cf-solved", d.solved);
+      put("cf-rounds", d.rounds);
+      put("cf-jump", d.jump == null ? null : (d.jump > 0 ? "+" : "") + d.jump);
+      if (d.solved) {
+        this._cfSolved = d.solved;
+        this.updateCpTotal();
+      }
+    },
+
+    async fetchLc() {
+      const r = await fetch(
+        "https://leetcard.jacoblin.cool/BlamerX?theme=light&extension=contest",
+        { signal: this.sig() },
+      );
+      if (!r.ok) throw new Error("lc");
+      const doc = new DOMParser().parseFromString(
+        await r.text(),
+        "image/svg+xml",
+      );
+      const g = (id) => {
+        const el = doc.getElementById(id);
+        return el ? el.textContent.trim() : null;
+      };
+      const rating = Number(g("ext-contest-rating"));
+      if (!rating) throw new Error("lc-rating");
+      this.cpRender("lc", rating);
+      const pct = g("ext-contest-percentage");
+      const val = this.$('[data-cp="lc-val"]');
+      if (val) val.textContent = rating + (pct ? " · top " + pct : "");
+      const solved = parseInt(g("total-solved-text"), 10);
+      if (solved) {
+        const sc = this.$('[data-cp="lc-solved"]');
+        if (sc) sc.textContent = solved;
+        this._cpLcSolved = solved;
+        this.updateCpTotal();
+      }
+      /* the card prints "72 / 969" per difficulty, i.e. solved out of the pool,
+         so the meter fill is that same real ratio rather than a made-up one */
+      ["easy", "medium", "hard"].forEach((d) => {
+        const m = (g(d + "-solved-count") || "").match(/(\d+)\s*\/\s*(\d+)/);
+        const row = this.$('[data-cp="lc-' + d + '"]');
+        if (!m || !row) return;
+        const val = row.querySelector("em");
+        const fill = row.querySelector(".cp-mini b");
+        if (val) val.textContent = m[1] + " / " + m[2];
+        if (fill) {
+          fill.style.width =
+            Math.min(100, (Number(m[1]) / Number(m[2])) * 100).toFixed(1) + "%";
+          /* a solved count above zero always leaves a visible sliver, zero
+             stays genuinely empty */
+          fill.style.minWidth = Number(m[1]) ? "2px" : "0";
+        }
+      });
+      const box = this.$(".cp-solved");
+      if (box)
+        box.setAttribute(
+          "aria-label",
+          "LeetCode problems solved out of problems available: " +
+            ["easy", "medium", "hard"]
+              .map((d) => {
+                const raw = g(d + "-solved-count");
+                return raw
+                  ? d + " " + raw.replace(/\s*\/\s*/, " of ")
+                  : null;
+              })
+              .filter(Boolean)
+              .join(", ") +
+            ".",
+        );
+      this.fetchLcExtras();
+      return true;
+    },
+
+    /* the badge and acceptance rate only exist on the profile page itself,
+       which the relay returns as text; purely an upgrade, the dial is already
+       drawn from leetcard by the time this lands */
+    async fetchLcExtras() {
+      const key = "lcProfile";
+      const put = (sel, v) => {
+        const el = this.$(sel);
+        if (el && v) el.textContent = v;
+      };
+      try {
+        const hit = JSON.parse(sessionStorage.getItem(key) || "0");
+        if (hit && Date.now() - hit.ts < 18e5) {
+          put('[data-cp="lc-badge"]', hit.data.badge);
+          put('[data-cp="lc-acc"]', hit.data.acc);
+          return;
+        }
+        const r = await fetch("https://r.jina.ai/https://leetcode.com/BlamerX/", {
+          signal:
+            typeof AbortSignal !== "undefined" && AbortSignal.timeout
+              ? AbortSignal.timeout(15000)
+              : undefined,
+        });
+        if (!r.ok) return;
+        const txt = await r.text();
+        const badge = (txt.match(/\nLevel\s*\n+([A-Za-z]+)/) || [])[1];
+        const accNum = (txt.match(/([\d.]+)%\s*\nAcceptance/) || [])[1];
+        const acc = accNum ? accNum + "%" : null;
+        if (!badge && !acc) return;
+        try {
+          sessionStorage.setItem(
+            key,
+            JSON.stringify({ ts: Date.now(), data: { badge: badge, acc: acc } }),
+          );
+        } catch (e) {}
+        put('[data-cp="lc-badge"]', badge);
+        put('[data-cp="lc-acc"]', acc);
+      } catch (e) {}
+    },
+
+    /* CodeChef has no CORS API, but the jina reader relay fetches the public
+       profile server-side and echoes Access-Control-Allow-Origin for GETs
+       (X-Return-Format/X-Target-Selector pass preflight). Free tier is ~20
+       req/min per IP, so a visitor gets one parsed profile cached for 30min;
+       any failure just keeps the values already printed in the HTML. */
+    async fetchCc() {
+      const key = "ccProfile";
+      try {
+        const hit = JSON.parse(sessionStorage.getItem(key) || "0");
+        if (hit && hit.v === 2 && Date.now() - hit.ts < 18e5) return this.applyCc(hit.data);
+      } catch (e) {}
+      const r = await fetch("https://r.jina.ai/https://www.codechef.com/users/blamerx", {
+        headers: {
+          "X-Return-Format": "html",
+          "X-Target-Selector": ".user-profile-container",
+        },
+        signal:
+          typeof AbortSignal !== "undefined" && AbortSignal.timeout
+            ? AbortSignal.timeout(15000)
+            : undefined,
+      });
+      if (!r.ok) throw new Error("cc");
+      const doc = new DOMParser().parseFromString(await r.text(), "text/html");
+      const a = doc.querySelector(".rating-container .rating");
+      const rating = a ? parseInt(a.textContent, 10) : 0;
+      if (!rating) throw new Error("cc-parse");
+      const txt = doc.body ? doc.body.textContent : "";
+      const mx = txt.match(/Highest Rating (\d+)/);
+      const ct = txt.match(/Contests Participated:\s*(\d+)/);
+      const sv = txt.match(/Total Problems Solved:\s*(\d+)/);
+      /* .global-rank sits in the rating-graph tooltips and names the place he
+         took in ONE round; the sidebar list is the standing itself, and the
+         badge widgets carry the tiers CodeChef actually awarded */
+      const ranks = {};
+      doc.querySelectorAll(".widget-rating .rating-ranks li").forEach((li) => {
+        const n = li.querySelector("strong");
+        if (!n || !/^\d[\d,]*$/.test(n.textContent.trim())) return;
+        const v = Number(n.textContent.replace(/,/g, ""));
+        const label = li.textContent.toLowerCase();
+        if (/global/.test(label) && ranks.global == null) ranks.global = v;
+        else if (/country/.test(label) && ranks.country == null) ranks.country = v;
+      });
+      const badges = [...doc.querySelectorAll(".widget.badges .badge")]
+        .map((b) => {
+          const title = (b.querySelector(".badge__title") || {}).textContent || "";
+          const m = title.match(/^(.+?)\s*-\s*(\w+)\s+Badge/i);
+          return m ? { name: m[1].trim(), tier: m[2] } : null;
+        })
+        .filter(Boolean);
+      const data = {
+        rating: rating,
+        max: mx ? Number(mx[1]) : null,
+        contests: ct ? Number(ct[1]) : null,
+        solved: sv ? Number(sv[1]) : null,
+        global: ranks.global == null ? null : ranks.global,
+        country: ranks.country == null ? null : ranks.country,
+        badges: badges,
+      };
+      try {
+        sessionStorage.setItem(key, JSON.stringify({ v: 2, ts: Date.now(), data: data }));
+      } catch (e) {}
+      return this.applyCc(data);
+    },
+
+    applyCc(d) {
+      if (!d || !d.rating) return false;
+      this.cpRender("cc", d.rating);
+      const star = this.cpBand("cc", d.rating).cur;
+      const val = this.$('[data-cp="cc-val"]');
+      if (val)
+        val.textContent =
+          d.rating + (star ? " · " + star : "") + (d.max ? " · " + d.max + " max" : "");
+      const set = (k, v, comma) => {
+        const el = this.$('[data-cp="' + k + '"]');
+        if (el && v != null) el.textContent = comma ? this.fmtNumber(v) : v;
+      };
+      set("cc-solved", d.solved);
+      set("cc-contests", d.contests);
+      set("cc-rank", d.global, true);
+      set("cc-country", d.country, true);
+      /* the captions are the badges' own names, so a promotion or a different
+         badge lands with the right label instead of a stale one */
+      ["cc-badge1", "cc-badge2"].forEach((k, i) => {
+        const em = this.$('[data-cp="' + k + '"]');
+        const b = d.badges && d.badges[i];
+        if (!em || !b) return;
+        const cap = em.parentElement.querySelector("span");
+        if (cap) cap.textContent = b.name.toLowerCase();
+        em.textContent = b.tier;
+      });
+      if (d.solved) {
+        this._ccSolved = d.solved;
+        this.updateCpTotal();
+      }
+      return true;
+    },
+
+    updateCpTotal() {
+      const total = this.$('[data-cp="total"]');
+      if (!total) return;
+      const parts = [this._ccSolved, this._cfSolved, this._cpLcSolved].filter(
+        (v) => v != null,
+      );
+      /* a "＋" on the figure means at least this much — one of the three
+         arenas is still unread, so the sum is a floor rather than a total */
+      total.textContent = parts.length
+        ? parts.reduce((a, b) => a + b, 0) + (parts.length === 3 ? "" : "+")
+        : "—";
+    },
+
+    async fetchCp() {
+      this.setSyncPill("scope", "loading", "Connecting");
+      const [cf, lc, cc] = await Promise.allSettled([
+        this.fetchCf(),
+        this.fetchLc(),
+        this.fetchCc(),
+      ]);
+      const ok = (x) => x.status === "fulfilled" && x.value;
+      const live = [ok(cf), ok(lc), ok(cc)].filter(Boolean).length;
+      if (live === 3) this.setSyncPill("scope", "live", "Live");
+      else if (live) this.setSyncPill("scope", "cached", live + " of 3 live");
+      else this.setSyncPill("scope", "cached", "Unavailable");
+    },
+
     async fetchGithub() {
       this.setSyncPill("github", "loading", "Connecting");
       let anySuccess = false;
@@ -576,7 +1082,6 @@
           anySuccess = true;
         }
       } catch (e) {}
-      this.renderRepos(this.repoFallback);
       try {
         const list = await this.getRepos();
         const stars = list.reduce((s, x) => s + (x.s || 0), 0);
@@ -594,11 +1099,9 @@
         );
         const shipped = this.$("#lastShipped");
         if (newest && shipped) shipped.textContent = this.relWhen(newest);
-        this.renderRepos(
-          list.slice().sort((a, b) => (a.p < b.p ? 1 : -1)).slice(0, 6),
-        );
         anySuccess = true;
       } catch (e) {}
+      if (await this.fetchSocial()) anySuccess = true;
       this.setSyncPill(
         "github",
         anySuccess ? "live" : "cached",
@@ -606,8 +1109,246 @@
       );
     },
 
-    /* ONE search-API call feeds the repo list, star count and the language
-       card — promise-memoised so both callers share a single request,
+    /* open PR / issue counts from the search API — one extra request per
+       kind, cached with the repo list so a reload never re-spends quota */
+    async fetchSocial() {
+      let key = "ghSocial";
+      try {
+        const hit = JSON.parse(sessionStorage.getItem(key) || "0");
+        if (hit && Date.now() - hit.ts < 36e5) {
+          this.applyAll("github", hit.data);
+          return true;
+        }
+      } catch (e) {}
+      const q = (kind) =>
+        fetch(
+          "https://api.github.com/search/issues?q=author:" +
+            encodeURIComponent(this.config.github) +
+            "+" + kind + "&per_page=1",
+          { headers: { Accept: "application/vnd.github+json" }, signal: this.sig() },
+        )
+          .then((r) => (r.ok ? r.json() : Promise.reject(r.status)))
+          .then((j) => j.total_count);
+      try {
+        const [prs, issues] = await Promise.all([q("type:pr"), q("type:issue")]);
+        this.applyAll("github", { prs: prs, issues: issues });
+        try {
+          sessionStorage.setItem(
+            key,
+            JSON.stringify({ data: { prs: prs, issues: issues }, ts: Date.now() }),
+          );
+        } catch (e) {}
+        return true;
+      } catch (e) {}
+      return false;
+    },
+
+    /* Recent public actions. PushEvent payloads ship no commit list and
+       PullRequestEvent only a stub (url/id/number/head/base — no title, no
+       merged_at), so the tiles count pushes and PRs OPENED, never commits or
+       merges, and the strip names the exact event set the numbers cover. */
+    async fetchAct() {
+      this.setSyncPill("act", "loading", "Connecting");
+      const key = "ghEvents";
+      try {
+        const hit = JSON.parse(sessionStorage.getItem(key) || "0");
+        if (hit && hit.data && hit.data.length && Date.now() - hit.ts < 9e5) {
+          this.applyAct(hit.data);
+          return;
+        }
+      } catch (e) {}
+      try {
+        const r = await fetch(
+          "https://api.github.com/users/" +
+            encodeURIComponent(this.config.github) +
+            "/events/public?per_page=100",
+          {
+            headers: { Accept: "application/vnd.github+json" },
+            signal: this.sig(),
+          },
+        );
+        if (!r.ok) throw new Error(r.status);
+        const raw = await r.json();
+        if (!Array.isArray(raw) || !raw.length) throw new Error("empty");
+        const list = raw.map((e) => {
+          const p = e.payload || {};
+          return {
+            t: e.type,
+            a: p.action || "",
+            r: (e.repo && e.repo.name) || "",
+            n: p.number ?? (p.pull_request && p.pull_request.number) ?? null,
+            f: p.ref_type === "branch" || p.ref_type === "tag" ? p.ref : "",
+            k: p.ref_type || "",
+            w: e.created_at,
+          };
+        });
+        /* the events feed is not reliably newest-first — a repo made public in
+           September can land between two October pushes */
+        list.sort((a, b) => Date.parse(b.w) - Date.parse(a.w));
+        try {
+          sessionStorage.setItem(key, JSON.stringify({ data: list, ts: Date.now() }));
+        } catch (e) {}
+        this.applyAct(list);
+      } catch (e) {
+        this.setSyncPill("act", "cached", "Unavailable");
+        this.applyAct(null);
+      }
+    },
+
+    applyAct(list) {
+      const feed = this.$("#actFeed");
+      if (!feed) return;
+      const put = (sel, val) => {
+        const el = this.$(sel);
+        if (el) el.textContent = val;
+      };
+      const dead =
+        '<div class="act-empty">No event feed just now — the <a href="https://github.com/BlamerX?tab=activity" target="_blank" rel="noopener">activity tab</a> still lists it.</div>';
+      if (!list || !list.length) {
+        put('[data-act="window"]', "Feed unavailable");
+        const kicker = this.$(".act-kicker");
+        if (kicker) kicker.remove();
+        const bars = this.$("#actTop");
+        if (bars) bars.remove();
+        feed.innerHTML = dead;
+        return;
+      }
+      /* stars and forks are not work on a repo, so they count nowhere in
+         this card — not in the tiles and not in the feed */
+      const work = list.filter((e) => e.t !== "WatchEvent" && e.t !== "ForkEvent");
+      let pushes = 0;
+      let opened = 0;
+      const repos = new Set();
+      for (const e of work) {
+        if (!e.r) continue;
+        repos.add(e.r);
+        if (e.t === "PushEvent") pushes++;
+        if (e.t === "PullRequestEvent" && /^open/i.test(e.a)) opened++;
+      }
+      put('[data-act="pushes"]', this.fmtNumber(pushes));
+      put('[data-act="opened"]', this.fmtNumber(opened));
+      put('[data-act="repos"]', this.fmtNumber(repos.size));
+
+      const pushBy = new Map();
+      for (const e of work) {
+        if (e.t === "PushEvent" && e.r) pushBy.set(e.r, (pushBy.get(e.r) || 0) + 1);
+      }
+      const top = Array.from(pushBy.entries())
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 3);
+      const box = this.$("#actTop");
+      if (box) {
+        const max = top.length ? top[0][1] : 1;
+        box.innerHTML = top
+          .map(
+            (t) =>
+              '<a class="act-toprow" href="https://github.com/' +
+              this.esc(t[0]) +
+              '" target="_blank" rel="noopener">' +
+              '<span class="act-name">' + this.esc(this.actName(t[0])) + "</span>" +
+              '<i class="act-bar"><b style="width:' + ((t[1] / max) * 100).toFixed(1) + '%"></b></i>' +
+              '<span class="act-n">' + t[1] + "</span></a>",
+          )
+          .join("") || '<div class="act-empty">No pushes in this window.</div>';
+        if (top.length) {
+          box.setAttribute(
+            "aria-label",
+            "Pushes by repository, busiest first: " +
+              top.map((t) => this.actName(t[0]) + " " + t[1]).join(", ") + ".",
+          );
+        }
+      }
+
+      const days = Math.max(
+        1,
+        Math.round((Date.now() - new Date(list[list.length - 1].w)) / 864e5),
+      );
+      /* a full page proves only the page, not the period around it */
+      put(
+        '[data-act="window"]',
+        list.length >= 100
+          ? "Latest " + list.length + " public events"
+          : "Past " + days + " day" + (days === 1 ? "" : "s"),
+      );
+
+      const rows = [];
+      const seen = new Set();
+      for (const e of work) {
+        const html = this.actRow(e);
+        if (!html) continue;
+        /* repeat pushes to one repo earn a single line of news, and a PR that
+           was opened then merged the same week is one row, not two */
+        const id = e.n ? e.t + "#" + e.n : e.t + "|" + e.r + "|" + e.f;
+        if (seen.has(id)) continue;
+        seen.add(id);
+        rows.push(html);
+        if (rows.length === 4) break;
+      }
+      feed.innerHTML = rows.join("") || dead;
+      this.setSyncPill("act", "live", "Live");
+    },
+
+    actName(repo) {
+      const parts = repo.split("/");
+      return (parts[0] || "").toLowerCase() === this.config.github.toLowerCase()
+        ? parts[1] || repo
+        : repo;
+    },
+
+    actRow(e) {
+      if (!e.r) return "";
+      const shown = this.actName(e.r);
+      let verb = "";
+      let href = "https://github.com/" + e.r;
+      if (e.t === "PushEvent") verb = "pushed to";
+      else if (e.t === "CreateEvent" && e.f)
+        verb = "created " + this.actRef(e);
+      else if (e.t === "DeleteEvent" && e.f)
+        verb = "deleted " + this.actRef(e);
+      else if (e.t === "PublicEvent") verb = "made public";
+      else if (e.t === "PullRequestEvent" && e.n) {
+        if (/merge/i.test(e.a)) verb = "merged PR #" + e.n;
+        else if (/close/i.test(e.a)) verb = "closed PR #" + e.n;
+        else if (/reopen/i.test(e.a)) verb = "reopened PR #" + e.n;
+        else if (/open/i.test(e.a)) verb = "opened PR #" + e.n;
+        href += "/pull/" + e.n;
+      } else if (e.t === "IssuesEvent" && e.n) {
+        const ia = /close/i.test(e.a)
+          ? "closed"
+          : /reopen/i.test(e.a)
+            ? "reopened"
+            : /open/i.test(e.a)
+              ? "opened"
+              : "";
+        if (!ia) return "";
+        verb = ia + " issue #" + e.n;
+        href += "/issues/" + e.n;
+      } else return "";
+      if (!verb) return "";
+      const m = Math.floor((Date.now() - new Date(e.w)) / 6e4);
+      const when =
+        m < 60
+          ? m + "m ago"
+          : m < 1440
+            ? Math.floor(m / 60) + "h ago"
+            : m < 10080
+              ? Math.floor(m / 1440) + "d ago"
+              : this.relWhen(e.w);
+      return (
+        '<a class="act-row" href="' + href + '" target="_blank" rel="noopener">' +
+        '<span class="act-verb">' + this.esc(verb) + "</span>" +
+        '<span class="act-repo">' + this.esc(shown) + "</span>" +
+        '<span class="act-when">' + this.esc(when) + "</span></a>"
+      );
+    },
+
+    actRef(e) {
+      const name = e.f.length > 20 ? e.f.slice(0, 20) + "…" : e.f;
+      return (e.k === "tag" ? "tag " : "branch ") + name;
+    },
+
+    /* ONE search-API call feeds the star count and the language panel —
+       promise-memoised so both callers share a single request,
        cached in sessionStorage for 1h */
     getRepos() {
       if (this._reposP) return this._reposP;
@@ -640,26 +1381,6 @@
       return this._reposP;
     },
 
-    repoFallback: [
-      { n: "AI-Resume-Screener", l: "Python" },
-      { n: "Air-Quality-Index-Prediction-Website", l: "Python" },
-      { n: "Kaggle-Playground-Predection-Competition", l: "Jupyter Notebook" },
-      { n: "Stock-Price-Prediction-WebSite", l: "Python" },
-      { n: "Kaggle-Competitions", l: "Jupyter Notebook" },
-      { n: "Age-and-Gender-Predictor", l: "Python" },
-    ],
-
-    /* repo-list dots reuse the exact language-card tones so every
-       language reads the same colour across the page */
-    langDot: {
-      "Jupyter Notebook": "var(--accent)",
-      Python: "var(--kaggle)",
-      HTML: "var(--cat-vision)",
-      CSS: "var(--cat-nlp)",
-      "C++": "var(--accent-2)",
-      C: "var(--muted-2)",
-    },
-
     relWhen(p) {
       if (!p) return "recently";
       const days = Math.floor((Date.now() - new Date(p)) / 864e5);
@@ -667,32 +1388,6 @@
       if (days < 31) return days + "d ago";
       const mo = Math.floor(days / 30.4);
       return mo < 12 ? mo + "mo ago" : Math.floor(mo / 12) + "y ago";
-    },
-
-    renderRepos(list) {
-      const box = this.$("#repoList");
-      if (!box) return;
-      const esc = (s) => this.esc(s);
-      box.innerHTML = list
-        .map(
-          (r) =>
-            '<a class="repo-item" target="_blank" rel="noopener" href="' +
-            esc(
-              /^https:\/\//.test(r.u || "")
-                ? r.u
-                : "https://github.com/" + this.config.github + "?tab=repositories",
-            ) +
-            '" data-tip="' +
-            esc(r.s ? r.s + (r.s === 1 ? " star" : " stars") : "no stars yet") +
-            '"><i style="--c:' +
-            (this.langDot[r.l] || "var(--muted-2)") +
-            '"></i><b>' +
-            esc(r.n) +
-            "</b><span>" +
-            this.relWhen(r.p) +
-            "</span></a>",
-        )
-        .join("");
     },
 
     /* which project cards actually used each skill — hovering a tag
@@ -794,8 +1489,9 @@
       });
     },
 
+    /* the card's one Live pill covers the language panel too — both read the
+       same repo list, so a second status light would only repeat itself */
     async fetchLangs() {
-      this.setSyncPill("langs", "loading", "Connecting");
       this.renderLangs(this.langFallback);
       try {
         const list = await this.getRepos();
@@ -814,10 +1510,8 @@
         if (rest) dist.push(["Other", Math.round((rest / total) * 100)]);
         dist[0][1] += 100 - dist.reduce((s, e) => s + e[1], 0);
         this.renderLangs(dist);
-        this.setSyncPill("langs", "live", "Live");
       } catch (e) {
         this.renderLangs(this.langFallback);
-        this.setSyncPill("langs", "cached", "Cached");
       }
     },
 
@@ -1388,6 +2082,8 @@
       this.initContrib();
       this.fetchGithub();
       this.fetchLangs();
+      this.fetchAct();
+      this.fetchCp();
     },
   };
 
